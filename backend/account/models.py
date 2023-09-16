@@ -9,7 +9,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class User(AbstractUser):
     middle_name = models.CharField(max_length=255, verbose_name=_("Middle Name"), blank=True, null=True, unique=False)
     phone_number = PhoneNumberField(blank=True, null=True, verbose_name=_("Phone Number"))
-    business_name = models.DateField(verbose_name=_("Business Name"), blank=True, null=True)
+    business_name = models.CharField(max_length=255, verbose_name=_("Business Name"), blank=True, null=True, unique=False)
     last_ip = models.GenericIPAddressField(verbose_name=_("Last IP Address"), null=True, blank=True)
 
     def __str__(self):

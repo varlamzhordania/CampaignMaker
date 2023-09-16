@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Internal Apps
     'account',
-    'campaign,'
+    'campaign',
+
+    # External Apps
+
 ]
 
 MIDDLEWARE = [
