@@ -1,0 +1,109 @@
+
+:root {
+    --bs-body-bg: #EBEEF6 !important;
+    --primary-color: #6366f1;
+    --warning-color: #F97316;
+    --primary-color-text: #fff;
+    --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    --bs-primary: var(--primary-color) !important;
+    --bs-warning: var(--warning-color) !important;
+}
+
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+.content-part {
+    background-image: url(./../img/Auth-page-bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.border-always {
+    border: 2px solid var(--primary-color) !important;
+}
+
+.p-title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 400;
+    color: grey;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    bottom: 0;
+    margin: auto;
+    font-size: 1.7rem;
+    color: grey;
+}
+
+.shadow-0 {
+    box-shadow: none !important;
+}
+
+.outline-0 {
+    outline-width: 0 !important;
+}
+
+.divider {
+    display: block;
+    position: relative;
+    margin: 1rem 0 2.5rem 0;
+}
+
+.divider span {
+    position: absolute;
+    display: inline;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 2.2;
+    font-size: 16px;
+    text-transform: uppercase;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+    border-radius: 50%;
+    background-color: white;
+}
+
+
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.all-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+audio, canvas, embed, iframe, img, object, svg, video {
+    display: block;
+    vertical-align: middle;
+}
+
+.outline-warning {
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color) !important;
+}
+
+.outline-warning:hover {
+    background-color: var(--warning-color) !important;
+    color: white !important;
+}

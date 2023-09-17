@@ -35,7 +35,9 @@ class CampaignType(models.Model):
         populate_from="name",
         editable=True,
         unique=True,
-        verbose_name=_("Safe URL")
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
     )
     price = models.DecimalField(
         max_digits=10,
@@ -76,7 +78,9 @@ class CampaignZip(models.Model):
         populate_from="name",
         editable=True,
         unique=True,
-        verbose_name=_("Safe URL")
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
     )
     code = models.CharField(
         max_length=16,
@@ -106,7 +110,7 @@ class Campaign(models.Model):
         get_user_model(),
         verbose_name=_("Customer"),
         related_name="campaign_customer",
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         blank=False, null=False,
         help_text=_("format: required")
     )
@@ -128,7 +132,7 @@ class Campaign(models.Model):
         help_text=_("format: required")
     )
     zips = models.ManyToManyField(
-        CampaignZip, blank=False, null=False,verbose_name=_("Zip")
+        CampaignZip, verbose_name=_("Zips")
     )
     total = models.PositiveIntegerField(
         default=1,
@@ -139,6 +143,7 @@ class Campaign(models.Model):
         validators=[MinValueValidator(int(1))],
     )
     status = models.CharField(
+        max_length=31,
         choices=CAMPAIGN_STATUS,
         blank=False,
         null=False,
@@ -197,7 +202,9 @@ class CampaignSMSType(models.Model):
         populate_from="name",
         editable=True,
         unique=True,
-        verbose_name=_("Safe URL")
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
     )
     is_active = models.BooleanField(verbose_name=_("Published"), default=False)
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
@@ -218,14 +225,16 @@ class CampaignSMS(models.Model):
         related_name="campaign_sms",
         blank=False,
         null=False,
+        on_delete=models.CASCADE,
         help_text=_("format: required, belonging campaign")
     )
-    type = models.OneToOneField(
+    type = models.ForeignKey(
         CampaignSMSType,
         verbose_name=_("Salutation Type"),
         related_name="campaignSMS_type",
         blank=False,
         null=False,
+        on_delete=models.PROTECT,
         help_text=_("format: required, SMS type")
     )
     body = models.TextField(
@@ -257,7 +266,9 @@ class CampaignEmailType(models.Model):
         populate_from="name",
         editable=True,
         unique=True,
-        verbose_name=_("Safe URL")
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
     )
     is_active = models.BooleanField(verbose_name=_("Published"), default=False)
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
@@ -278,13 +289,15 @@ class CampaignEmail(models.Model):
         related_name="campaign_email",
         blank=False,
         null=False,
+        on_delete=models.PROTECT,
         help_text=_("format: required, belonging campaign")
     )
-    type = models.OneToOneField(
+    type = models.ForeignKey(
         CampaignSMSType,
         verbose_name=_("Salutation Type"),
         related_name="campaignEmail_type",
         blank=False,
+        on_delete=models.PROTECT,
         null=False,
         help_text=_("format: required, Email type")
     )
@@ -323,6 +336,7 @@ class CampaignAudio(models.Model):
         related_name="campaign_audio",
         blank=False,
         null=False,
+        on_delete=models.PROTECT,
         help_text=_("format: required, belonging campaign")
     )
     file = models.FileField(
