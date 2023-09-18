@@ -95,8 +95,8 @@ class CampaignZip(models.Model):
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
-        verbose_name = _("Campaign Type")
-        verbose_name_plural = _("Campaign Types")
+        verbose_name = _("Campaign Zip")
+        verbose_name_plural = _("Campaign Zips")
 
     def __str__(self):
         return self.name

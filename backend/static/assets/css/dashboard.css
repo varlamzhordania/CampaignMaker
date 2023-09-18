@@ -1,3 +1,24 @@
+:root {
+    --primary-color: #6366f1;
+    --warning-color: #F97316;
+    --primary-color-text: #fff;
+    --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    --bs-primary: var(--primary-color) !important;
+    --bs-warning: var(--warning-color) !important;
+}
+
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 main {
     min-height: 88vh;
 }
@@ -34,4 +55,58 @@ main {
     display: block;
     background-color: #374151;
     color: white;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.step-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    transition: .4s;
+    border: none;
+}
+
+/*.step-button[aria-expanded="true"] {*/
+/*    width: 60px;*/
+/*    height: 60px;*/
+/*    background-color: var(--bs-primary-bg-subtle);*/
+/*    color: var(--bs-body-color);*/
+/*}*/
+
+.done {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.step-item {
+    z-index: 10;
+    text-align: center;
+}
+
+#progress {
+    -webkit-appearance: none;
+    position: absolute;
+    width: 95%;
+    z-index: 5;
+    height: 2px;
+    margin-left: 18px;
+    margin-bottom: 18px;
+}
+
+#progress::-webkit-progress-value {
+    background-color: var(--bs-primary);
+    transition: .5s ease;
+}
+
+#progress::-webkit-progress-bar {
+    background-color: lightgrey;
+
 }
