@@ -1,0 +1,43 @@
+{% load static %}
+{% url "campaign:dashboard" as dashboard %}
+<nav class="navbar navbar-expand-lg bg-white border-bottom border-2">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+        <a class="navbar-brand py-3" href="#">
+            <img src="{% static "assets/img/dashboard-logo.png" %}" alt="Bootstrap" width="100%" height="30">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == dashboard %}active{% endif %}" aria-current="page"
+                       href="{{ dashboard }}">Dashboard</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button class="btn btn-primary btn-lg rounded-circle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
+                           href="{% url "account:profile" %}">
+                            <i class="bi bi-person-fill"></i>
+                            <strong>Profile</strong>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
+                           href="{% url "account:logout" %}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <strong>Logout</strong>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

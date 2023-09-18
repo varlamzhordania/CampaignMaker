@@ -1,0 +1,110 @@
+{% extends "dashboard/index.html" %}
+{% block content %}
+    <section>
+        <form class="needs-validation" novalidate action="." enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="row row-cols-1 row-cols-lg-2 w-100 g-2">
+                <div class="col position-relative">
+                    <div class="mb-3">
+                        <label for="{{ form.email.name }}" class="form-label">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        <div class="invalid-feedback">
+                            Email is required!
+                        </div>
+                    </div>
+                </div>
+                <div class="col position-relative">
+                    <div class="mb-3">
+                        <label for="{{ form.phone_number.name }}"
+                               class="form-label">{{ form.phone_number.label }}</label>
+                        {{ form.phone_number }}
+                        <div class="invalid-feedback">
+                            phone is a required field
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 w-100 g-2">
+                <div class="col position-relative ">
+                    <div class="mb-3">
+                        <label for="{{ form.first_name.name }}"
+                               class="form-label">{{ form.first_name.label }}</label>
+                        {{ form.first_name }}
+                        <div class="invalid-feedback">
+                            first name is a required field
+                        </div>
+                    </div>
+                </div>
+                <div class="col position-relative ">
+                    <div class="mb-3">
+                        <label for="{{ form.middle_name.name }}"
+                               class="form-label">{{ form.middle_name.label }}</label>
+                        {{ form.middle_name }}
+                    </div>
+                </div>
+                <div class="col position-relative ">
+                    <div class="mb-3">
+                        <label for="{{ form.last_name.name }}" class="form-label">{{ form.last_name.label }}</label>
+                        {{ form.last_name }}
+                        <div class="invalid-feedback">
+                            last name is a required field
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-lg-1 w-100 g-2">
+                <div class="col position-relative ">
+                    <div class="mb-3">
+                        <label for="{{ form.business_name.name }}"
+                               class="form-label">{{ form.business_name.label }}</label>
+                        {{ form.business_name }}
+                        <div class="invalid-feedback">
+                            business_name is a required field
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary float-end" type="submit" role="button">Save</button>
+        </form>
+    </section>
+    <hr/>
+    <section>
+        <form class="needs-validation" novalidate action="{% url "account:changePassword" %}"
+              enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="row row-cols-1 w-100 g-2">
+                <div class="col position-relative">
+                    <div class="mb-3">
+                        <label for="{{ password_form.old_password.name }}"
+                               class="form-label">{{ password_form.old_password.label }}</label>
+                        {{ password_form.old_password }}
+                        <div class="invalid-feedback">
+                            old password is required!
+                        </div>
+                    </div>
+                </div>
+                <div class="col position-relative">
+                    <div class="mb-3">
+                        <label for="{{ password_form.new_password1.name }}"
+                               class="form-label">{{ password_form.new_password1.label }}</label>
+                        {{ password_form.new_password1 }}
+                        <div class="invalid-feedback">
+                            new password must be at least 8 characters
+                        </div>
+                    </div>
+                </div>
+                <div class="col position-relative">
+                    <div class="mb-3">
+                        <label for="{{ password_form.new_password2.name }}"
+                               class="form-label">{{ password_form.new_password2.label }}</label>
+                        {{ password_form.new_password2 }}
+                        <div class="invalid-feedback">
+                            Please confirm your new password
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary float-end" type="submit" role="button">Change Password</button>
+        </form>
+    </section>
+{% endblock %}

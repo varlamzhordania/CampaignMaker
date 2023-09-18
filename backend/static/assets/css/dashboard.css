@@ -1,0 +1,37 @@
+main {
+    min-height: 88vh;
+}
+
+.nav-link {
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-link::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--bs-primary);
+    height: 2px;
+    transition: 0.3s;
+}
+
+.nav-link:hover::after, .nav-link:active::after, .nav-link:focus::after {
+    width: 100%;
+}
+
+.nav-link.active::after {
+    width: 100% !important;
+}
+
+.footer {
+    position: relative;
+    display: block;
+    background-color: #374151;
+    color: white;
+}

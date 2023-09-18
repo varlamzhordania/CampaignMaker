@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ Title }}</title>
-    <link href={% static 'assets/css/index.css' %} rel="stylesheet" type="text/css"/>
     <link href={% static 'assets/bootstrap/css/bootstrap.min.css' %} rel="stylesheet" type="text/css"/>
     <link href={% static 'assets/bootstrap-icons/bootstrap-icons.css' %} rel="stylesheet" type="text/css"/>
+    <link href={% static 'assets/css/dashboard.css' %} rel="stylesheet" type="text/css"/>
 </head>
 </head>
 <body>
@@ -15,8 +15,8 @@
     <div class="toast-container position-fixed top-0 end-0 p-3">
         {% for message in messages %}
             <div
-                 class="toast {% if message.tags == 'error' %} bg-danger {% elif message.tags == 'info' %} bg-primary {% elif message.tags == 'success' %} bg-success {% else %} bg-primary {% endif %}"
-                 role="alert" aria-live="assertive" aria-atomic="true">
+                    class="toast {% if message.tags == 'error' %} bg-danger {% elif message.tags == 'info' %} bg-primary {% elif message.tags == 'success' %} bg-success {% else %} bg-primary {% endif %}"
+                    role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body text-white">
                     {{ message }}
                 </div>
@@ -24,9 +24,13 @@
         {% endfor %}
     </div>
 {% endif %}
-{% block content %}
+{% include "dashboard/header.html" %}
+<main class="container py-5">
+    {% block content %}
 
-{% endblock %}
+    {% endblock %}
+</main>
+{% include "dashboard/footer.html" %}
 <script src={% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}></script>
 <script src={% static 'assets/js/index.js' %}></script>
 

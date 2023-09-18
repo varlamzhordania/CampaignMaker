@@ -1,18 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
-def Login(request, *args, **kwargs):
-    my_context = {"Title": "Login"}
-    return render(request, "login.html", my_context)
+@login_required(login_url="/")
+def Dashboard(request, *args, **kwargs):
+    my_context = {"Title": f"Dashboard | {request.user.username}", }
+    return render(request, "dashboard/dashboard.html", my_context)
 
 
-def AdminLogin(request, *args, **kwargs):
-    my_context = {"Title": "Admin Login"}
-    return render(request, "admin_login.html", my_context)
-
-
-def Register(request, *args, **kwargs):
-    my_context = {"Title": "Register"}
-    return render(request, "register.html", my_context)

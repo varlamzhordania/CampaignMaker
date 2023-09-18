@@ -7,7 +7,7 @@
         <option name="settingsModule" value="core/settings/development.py" />
         <option name="manageScript" value="manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
-        <option name="doNotUseTestRunner" value="false" />
+        <option name="doNotUseTestRunner" value="true" />
         <option name="trackFilePattern" value="" />
       </configuration>
     </facet>
@@ -23,7 +23,21 @@
     <option name="format" value="PLAIN" />
     <option name="myDocStringFormat" value="Plain" />
   </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/backend/account" />
+        <option value="$MODULE_DIR$/backend/campaign" />
+        <option value="$MODULE_DIR$/backend/core" />
+      </list>
+    </option>
+  </component>
   <component name="TemplatesService">
-    <option name="TEMPLATE_CONFIGURATION" value="Django" />
+    <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
+    <option name="TEMPLATE_FOLDERS">
+      <list>
+        <option value="$MODULE_DIR$/backend/templates" />
+      </list>
+    </option>
   </component>
 </module>

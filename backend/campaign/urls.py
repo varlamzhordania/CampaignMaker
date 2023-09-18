@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import Login, Register, AdminLogin
+from .views import Dashboard
 
 app_name = 'campaign'
 
 urlpatterns = [
-    path("", Login, name="login"),
-    path("admin_login/", AdminLogin, name="admin_login"),
-    path("register/", Register, name="register"),
+
+    # user urls
+    path("dashboard/", Dashboard, name="dashboard"),
 ]

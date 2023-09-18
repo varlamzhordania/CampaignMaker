@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <main class="d-flex justify-content-between align-items-center gap-0 vh-100 ">
-        <div class="content-part d-flex flex-1 h-100 hidden justify-content-end align-items-center w-50">
+        <div class="d-sm-none d-none d-md-none d-lg-flex content-part flex-1 h-100 hidden justify-content-end align-items-center w-50">
             <p class="w-50 text-body-tertiary text-center px-4 p-title">
                 Start your digital marketing with us. We are here to
                 help you...
@@ -36,6 +36,7 @@
                             <input type="password" class="password form-control border-always outline-0 shadow-0 lh-lg"
                                    name="password"
                                    id="password"
+                                   minlength="8"
                                    placeholder="****" required>
                             <i class="bi bi-eye-slash-fill password-toggle" id="password-toggle"></i>
                             <div class="invalid-feedback">
@@ -59,13 +60,8 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center gap-2 w-100">
                     <a class="btn btn-outline-warning outline-warning border-2 w-100 fw-bold"
-                       href="{% url "campaign:register" %}">
+                       href="{% url "account:register" %}">
                         Register
-                    </a>
-                    <a class="btn btn-primary w-100 fw-bold"
-                       href="{% url "campaign:admin_login" %}"
-                    >
-                        Admin
                     </a>
                 </div>
             </form>

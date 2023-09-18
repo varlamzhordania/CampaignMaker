@@ -80,6 +80,9 @@ body {
     background-color: white;
 }
 
+.full-height{
+    min-height: 100vh;
+}
 
 .flex-1 {
     flex: 1 1 0%;
@@ -107,3 +110,4 @@ audio, canvas, embed, iframe, img, object, svg, video {
     background-color: var(--warning-color) !important;
     color: white !important;
 }
+
