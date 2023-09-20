@@ -110,3 +110,43 @@ main {
     background-color: lightgrey;
 
 }
+
+.custom-file-input {
+    width: 20%;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    display: none;
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Choose';
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    border: none;
+    margin: auto;
+    left: 0;
+    right: 0;
+    justify-self: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.custom-file-input::after {
+    content: '';
+    display: none !important;
+}
+
+.custom-file-input:hover::before {
+    background: #0056b3;
+}
+
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: 'Choose audio file';
+}

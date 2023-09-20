@@ -1,5 +1,7 @@
+{% load custom_tags %}
 {% load static %}
 {% url "campaign:dashboard" as dashboard %}
+{% url "campaign:adminCampaigns" as campaigns %}
 <nav class="navbar navbar-expand-lg bg-white border-bottom border-2">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
@@ -10,11 +12,20 @@
             <img src="{% static "assets/img/dashboard-logo.png" %}" alt="Bootstrap" width="100%" height="30">
         </a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-3 gap-2">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == dashboard %}active{% endif %}" aria-current="page"
+                    <a class="nav-link {% if request.path == dashboard %}active{% endif %}"
+                       {% if request.path == campaigns %}aria-current="page"{% endif %}
                        href="{{ dashboard }}">Dashboard</a>
                 </li>
+                {% if request.user|has_group:"admin" %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == campaigns %}active{% endif %}"
+                           {% if request.path == campaigns %}aria-current="page"{% endif %}
+                           href="{{ campaigns }}">Campaigns</a>
+                    </li>
+                {% endif %}
+
             </ul>
             <div class="dropdown">
                 <button class="btn btn-primary btn-lg rounded-circle" type="button" data-bs-toggle="dropdown"

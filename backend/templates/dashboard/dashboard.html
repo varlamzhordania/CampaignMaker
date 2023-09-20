@@ -73,7 +73,7 @@
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-1" class="form-label">Zip #1</label>
                                     <select id="zip-1" class="form-select" name="select-1">
-                                        <option selected>Select an option</option>
+                                        <option disabled>Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -82,7 +82,7 @@
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-2" class="form-label">Zip #2</label>
                                     <select id="zip-2" class="form-select" name="select-2">
-                                        <option selected>Select an option</option>
+                                        <option disabled>Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -91,7 +91,7 @@
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-3" class="form-label">Zip #3</label>
                                     <select id="zip-3" class="form-select" name="select-3">
-                                        <option selected>Select an option</option>
+                                        <option disabled>Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -107,99 +107,132 @@
 
                     </div>
                 </div>
-                      <div class="card border-0">
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                SMS
-                            </h3>
-                            <p class="text-muted">
-                                Create sms content
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                forms
+                <form>
+                    <div class="card border-0">
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                             data-bs-parent="#steps-list">
+                            <div class="card-header p-5 pb-0 bg-transparent border-0 ">
+                                <h3 class="fw-bold">
+                                    SMS
+                                </h3>
+                                <p class="text-muted">
+                                    Create sms content
+                                </p>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="step-next btn btn-primary my-4 float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Next <i class="bi bi-chevron-right"></i>
-                            </button>
+                            <div class="card-body p-5">
+                                <div class="row g-3">
+                                    <div class="col col-12 col-md-6 col-lg-4">
+                                        <label for="{{ form2.type.name }}"
+                                               class="form-label">{{ form2.type.label }}</label>
+                                        {{ form2.type }}
+                                    </div>
+                                    <div class="col col-12">
+                                        <label for="{{ form2.body.name }}"
+                                               class="form-label">{{ form2.body.label }}</label>
+                                        {{ form2.body }}
+                                    </div>
+                                </div>
+                                <button class="step-back btn btn-primary my-4 float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <button class="step-next btn btn-primary my-4 float-end collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                    Next <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                 <div class="card border-0">
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Email
-                            </h3>
-                            <p class="text-muted">
-                                Create email content
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                forms
+                    <div class="card border-0">
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                             data-bs-parent="#steps-list">
+                            <div class="card-header p-5 pb-0 bg-transparent border-0 ">
+                                <h3 class="fw-bold">
+                                    Email
+                                </h3>
+                                <p class="text-muted">
+                                    Create email content
+                                </p>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="step-next btn btn-primary my-4 float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseForth" aria-expanded="false" aria-controls="collapseForth">
+                            <div class="card-body p-5">
+                                <div class="row g-3">
+                                    <div class="col col-12 col-md-6 col-lg-4">
+                                        <label for="{{ form3.type.name }}"
+                                               class="form-label">{{ form3.type.label }}</label>
+                                        {{ form3.type }}
+                                    </div>
+                                    <div class="col col-12">
+                                        <label for="{{ form3.subject.name }}"
+                                               class="form-label">{{ form3.subject.label }}</label>
+                                        {{ form3.subject }}
+                                    </div>
+                                    <div class="col col-12">
+                                        <label for="{{ form3.body.name }}"
+                                               class="form-label">{{ form3.body.label }}</label>
+                                        {{ form3.body }}
+                                    </div>
+                                </div>
+                                <button class="step-back btn btn-primary my-4 float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <button class="step-next btn btn-primary my-4 float-end collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseForth" aria-expanded="false"
+                                        aria-controls="collapseForth">
 
-                                Next
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-              <div class="card border-0">
-                    <div id="collapseForth" class="collapse" aria-labelledby="headingForth"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Audio
-                            </h3>
-                            <p class="text-muted">
-                                Upload your audio file
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                forms
+                                    Next
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="btn btn-primary my-4 float-end" role="button" type="submit">
-                                Submit
-                            </button>
                         </div>
                     </div>
-                </div>
+                    <div class="card border-0">
+                        <div id="collapseForth" class="collapse" aria-labelledby="headingForth"
+                             data-bs-parent="#steps-list">
+                            <div class="card-header p-5 pb-0 bg-transparent border-0 ">
+                                <h3 class="fw-bold">
+                                    Audio
+                                </h3>
+                                <p class="text-muted">
+                                    Upload your audio file
+                                </p>
+                            </div>
+                            <div class="card-body p-5">
+                                <div class="row g-3">
+                                    <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
+                                        {{ form4.file }}
+                                        <label for="{{ form4.file.name }}"
+                                               class="form-label my-2">{{ form4.file.label }}</label>
+                                        <p class="text-danger fs-6 fst-italic my-2">{{ form4.file.help_text }}</p>
+                                    </div>
+                                </div>
+                                <button class="step-back btn btn-primary my-4 float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <button class="btn btn-primary my-4 float-end" role="button" type="submit">
+                                    Pay Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </form>

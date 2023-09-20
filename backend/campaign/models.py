@@ -6,7 +6,6 @@ from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 import os
-from pydub import AudioSegment
 from .validators import validate_file_size, validate_file_extension, validate_file_duration
 from datetime import datetime
 
@@ -15,6 +14,7 @@ from datetime import datetime
 
 CAMPAIGN_STATUS = (
     ("cancel", "Canceled"),
+    ("payment", "Waiting for payment"),
     ("wait", "Waiting for approval"),
     ("processing", "Processing"),
     ("complete", "Complete"),
@@ -147,7 +147,7 @@ class Campaign(models.Model):
         choices=CAMPAIGN_STATUS,
         blank=False,
         null=False,
-        default="wait",
+        default="payment",
         verbose_name=_("Status"),
     )
     date_start = models.DateTimeField(
@@ -164,7 +164,7 @@ class Campaign(models.Model):
         verbose_name_plural = _("Campaigns")
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     def get_sms(self):
         queryset = CampaignSMS.objects.filter(campaign_id=self.id)
@@ -249,7 +249,7 @@ class CampaignSMS(models.Model):
         verbose_name_plural = _("CampaignSMSes")
 
     def __str__(self):
-        return self.campaign
+        return self.campaign.__str__()
 
 
 class CampaignEmailType(models.Model):
@@ -293,7 +293,7 @@ class CampaignEmail(models.Model):
         help_text=_("format: required, belonging campaign")
     )
     type = models.ForeignKey(
-        CampaignSMSType,
+        CampaignEmailType,
         verbose_name=_("Salutation Type"),
         related_name="campaignEmail_type",
         blank=False,
@@ -320,7 +320,7 @@ class CampaignEmail(models.Model):
         verbose_name_plural = _("CampaignEmails")
 
     def __str__(self):
-        return self.campaign
+        return self.campaign.__str__()
 
 
 def generate_filename(instance, filename):
@@ -344,9 +344,9 @@ class CampaignAudio(models.Model):
         verbose_name=_("File"),
         help_text=_("format: Only .mp3, .m4a and .wav files are allowed."),
         validators=[
-            validate_file_duration,
             validate_file_extension,
-            validate_file_size
+            validate_file_size,
+            validate_file_duration,
         ],
         blank=False,
         null=False,
@@ -359,4 +359,4 @@ class CampaignAudio(models.Model):
         verbose_name_plural = _("CampaignAudios")
 
     def __str__(self):
-        return self.campaign
+        return self.campaign.__str__()

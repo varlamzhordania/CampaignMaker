@@ -1,0 +1,55 @@
+{% extends "dashboard/index.html" %}
+{% block content %}
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Total</th>
+            <th scope="col">Email sent</th>
+            <th scope="col">SMS sent</th>
+            <th scope="col">Voice Broadcasting</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr>
+                <th scope="row">{{ campaign.id }}</th>
+                <td>{{ campaign.total }}</td>
+                <td>
+                    <div class="col">
+                        <p class="text-wrap text-truncate">
+                            {{ campaign.campaign_email.body }}
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <div class="col ">
+                        <p class="text-wrap text-truncate">
+                            {{ campaign.campaign_sms.body }}
+                        </p>
+                    </div>
+                </td>
+                <td>
+                    <audio controls>
+                        <source src="{{ campaign.campaign_audio.file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </td>
+                <td>
+                    {% if campaign.status == "cancel" %}
+                        <button class="btn btn-secondary">Canceled</button>
+                    {% elif campaign.status == "wait" %}
+                        <button class="btn btn-warning text-truncate">Waiting for approval</button>
+                    {% elif campaign.status == "processing" %}
+                        <button class="btn btn-info">Processing</button>
+                    {% elif campaign.status == "complete" %}
+                        <button class="btn btn-success">Complete</button>
+                    {% endif %}
+                    {{ s }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

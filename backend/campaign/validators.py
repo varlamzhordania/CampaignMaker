@@ -1,3 +1,9 @@
+from django.core.exceptions import ValidationError
+from pydub import AudioSegment
+from django.conf import settings
+import os
+
+
 def validate_file_size(value):
     if value.size > 20 * 1024 * 1024:
         raise ValidationError("File size cannot exceed 20MB.")
@@ -11,7 +17,11 @@ def validate_file_extension(value):
 
 
 def validate_file_duration(value):
-    audio = AudioSegment.from_file(value.path)
-    duration_in_seconds = len(audio)
-    if duration_in_seconds > 45:
-        raise ValidationError('File duration cannot exceed 45 seconds.')
+    try:
+        audio = AudioSegment.from_file(value)
+        duration_in_seconds = len(audio)
+        max_duration = 45 * 1000
+        if duration_in_seconds > max_duration:
+            raise ValidationError('File duration cannot exceed 45 seconds.')
+    except Exception as e:
+        raise ValidationError(e)

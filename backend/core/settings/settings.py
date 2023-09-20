@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     # Internal Apps
     'account',
     'campaign',
-
+    'checkout',
     # External Apps
 
 ]
