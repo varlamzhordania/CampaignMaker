@@ -6,11 +6,20 @@ from core.utils import fancy_message, is_admin
 
 
 # Create your views here.
+@login_required(login_url="/")
+@user_passes_test(is_admin)
+def AdminCampaignActions(request, id, status, *args, **kwargs):
+    queryset = Campaign.objects.get(pk=id)
+    queryset.status = str(status)
+    queryset.save()
+    fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
+    return redirect("campaign:adminCampaigns")
+
 
 @login_required(login_url="/")
 @user_passes_test(is_admin)
 def AdminCampaignList(request, *args, **kwargs):
-    queryset = Campaign.objects.all()
+    queryset = Campaign.objects.all().order_by("-id")
     my_context = {"Title": "Campaign List", "campaigns": queryset}
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 

@@ -4,6 +4,7 @@ Campaign maker details
 
 This is a Django website project. Follow the steps below to set up and run the project locally.
 <hr>
+
 ## Getting Started
 
 1. Clone this repository to your local machine.
@@ -48,7 +49,7 @@ pip install -r requirements.txt
 
 ## Database Setup
 
-5. Run the following commands to set up the database:
+5Run the following commands to set up the database:
 
 ```
 python manage.py makemigrations

@@ -38,9 +38,11 @@
                 </td>
                 <td>
                     {% if campaign.status == "cancel" %}
-                        <button class="btn btn-secondary">Canceled</button>
+                        <button class="btn btn-danger">Canceled</button>
+                    {% elif campaign.status == "payment" %}
+                        <button class="btn btn-secondary text-truncate">Waiting for payment</button>
                     {% elif campaign.status == "wait" %}
-                        <button class="btn btn-warning text-truncate">Waiting for approval</button>
+                        <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="processing" %}" class="btn btn-warning text-truncate">Waiting for approval</a>
                     {% elif campaign.status == "processing" %}
                         <button class="btn btn-info">Processing</button>
                     {% elif campaign.status == "complete" %}
