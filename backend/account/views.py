@@ -72,7 +72,6 @@ def Logout(request, *args, **kwargs):
 
 @unauthenticated_user
 def Register(request, *args, **kwargs):
-    form = StylesCustomUserCreationForm()
     if request.method == "POST":
         form = StylesCustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -82,6 +81,15 @@ def Register(request, *args, **kwargs):
             return redirect("campaign:dashboard")
         else:
             fancy_message(request, form.errors, level="error")
-            return redirect(request.META["HTTP_REFERER"])
+    previous_data = {
+        "first_name": request.POST.get("first_name", None),
+        "middle_name": request.POST.get("middle_name", None),
+        "last_name": request.POST.get("last_name", None),
+        "email": request.POST.get("email", None),
+        "username": request.POST.get("username", None),
+        "business_name": request.POST.get("business_name", None),
+        "phone_number": request.POST.get("phone_number", None),
+    }
+    form = StylesCustomUserCreationForm(initial=previous_data)
     my_context = {"Title": "Register", "form": form}
     return render(request, "register.html", my_context)

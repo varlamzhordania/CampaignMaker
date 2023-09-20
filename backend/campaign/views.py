@@ -27,6 +27,9 @@ def AdminCampaignList(request, *args, **kwargs):
 @login_required(login_url="/")
 def Dashboard(request, *args, **kwargs):
     payment = request.GET.get("payment_success", None)
+    campaign_data = {}
+    campaign_sms_data = {}
+    campaign_email_data = {}
     if payment and payment == "true":
         fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
     elif payment and payment == "false":
@@ -71,20 +74,16 @@ def Dashboard(request, *args, **kwargs):
                         return redirect(f"/checkout/payment/{campaign_obj.id}/")
                     else:
                         fancy_message(request, form4.errors, level="error")
-                        return redirect(request.META["HTTP_REFERER"])
                 else:
                     fancy_message(request, form3.errors, level="error")
-                    return redirect(request.META["HTTP_REFERER"])
             else:
                 fancy_message(request, form2.errors, level="error")
-                return redirect(request.META["HTTP_REFERER"])
         else:
             fancy_message(request, form1.errors, level="error")
-            return redirect(request.META["HTTP_REFERER"])
-    form1 = CampaignForm()
-    form2 = CampaignSMSForm()
-    form3 = CampaignEmailForm()
-    form4 = CampaignAudioForm()
+    form1 = CampaignForm(initial=campaign_data)
+    form2 = CampaignSMSForm(initial=campaign_sms_data)
+    form3 = CampaignEmailForm(initial=campaign_email_data)
+    form4 = CampaignAudioForm(request.FILES)
     zips = CampaignZip.objects.filter(is_active=True)
     my_context = {
         "Title": f"Dashboard | {request.user.username}",

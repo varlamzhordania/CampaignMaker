@@ -215,7 +215,7 @@ class StylesCustomUserCreationForm(UserCreationForm):
                 "class": "form-control border-always outline-0 shadow-0 lh-lg",
                 "name": "phone_number",
                 "id": "phone_number",
-                "placeholder": "Phone Number",
+                "placeholder": "+1XXXXXXXXXX",
             }
         )
     )
