@@ -118,7 +118,7 @@ To learn how to use the Stripe CLI effectively, refer to
 the [Stripe CLI Documentation](https://stripe.com/docs/stripe-cli). This resource provides detailed guidance and
 instructions on its usage.
 
-<h5>NOTE: without webhook, campaign status wont change after payment<h5/>
+<h5>NOTE: without webhook, campaign status wont change after payment and set stripe webhook at `localhost:8000/checkout/webhook/`<h5/>
 
 ## Additional Information
 
