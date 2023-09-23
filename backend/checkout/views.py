@@ -54,7 +54,7 @@ def my_webhook_view(request):
 
 def Checkout(request, pk, *args, **kwargs):
     queryset = Campaign.objects.filter(pk=pk).first()
-    if queryset:
+    if queryset and queryset.status == "payment":
         try:
             checkout = stripe.checkout.Session.create(
                 payment_method_types=["card"],

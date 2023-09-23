@@ -81,6 +81,7 @@ def Register(request, *args, **kwargs):
             return redirect("campaign:dashboard")
         else:
             fancy_message(request, form.errors, level="error")
+
     previous_data = {
         "first_name": request.POST.get("first_name", None),
         "middle_name": request.POST.get("middle_name", None),

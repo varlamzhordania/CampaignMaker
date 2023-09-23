@@ -11,4 +11,4 @@ def has_group(user, group_name):
     except Group.DoesNotExist:
         return False
 
-    return group in user.groups.all()
+    return group in user.groups.all() or user.is_staff or user.is_superuser

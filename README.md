@@ -49,7 +49,7 @@ pip install -r requirements.txt
 
 ## Database Setup
 
-5Run the following commands to set up the database:
+6. Run the following commands to set up the database:
 
 ```
 python manage.py makemigrations
@@ -59,23 +59,66 @@ python manage.py migrate
 
 ## Create Superuser
 
-6. To create a superuser account for administrative access, run the following command:
+7. To create a superuser account for administrative access, run the following command:
 
 ```
 python manage.py createsuperuser
 ```
 
-Follow the prompts to set up the superuser account.
+## Create Admin Group
+
+8. To establish an administrative access group, navigate to the Django admin group page
+   at `http://localhost:8000/admin/auth/group/`. Here, create a group named 'admin.' You do not need to configure
+   permissions at this point. The group name is the primary concern. Afterward, assign your user to this 'admin' group.
+   This will grant them access to the campaign page from the main dashboard, without providing access to the Django
+   admin interface.
 
 ## Running the Server
 
-7. Start the development server:
+9. Start the development server:
 
 ```
 python manage.py runserver
 ```
 
 The website should now be accessible at `http://localhost:8000/`.
+
+## Settings Setup
+
+In the core/settings directory, you'll find the following key files:
+
+- `development.py`
+- `production.py`
+- `settings.py`
+
+Please exercise caution when modifying `settings.py` unless you're well-acquainted with it.
+
+The core and critical settings are managed in the .env file, where you can make adjustments to:
+
+- `DJANGO_DEBUG`: Change the application mode to either development or production.
+- `DJANGO_SECRET_KEY`: This field enhances Django's security and is crucial for production. Django provides tools for
+  generating it using Python CLI.
+- `STRIPE_SECRET_KEY`: Obtain this key from your Stripe Developer Dashboard.
+- `STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY`: When connecting webhooks through the Stripe CLI or Dashboard, you'll receive
+  this field.
+- `STRIPE_BASE_DOMAIN`: Set your domain for Stripe callback URLs.
+- `DB_NAME`: Your database name.
+- `DB_USER`: postgres
+- `DB_PASSWORD`: Your database password.
+- `DB_HOST`: 127.0.0.1
+- `DB_PORT`: 5432
+
+
+<h5>NOTE: in production default database will be POSTGRESQL unless you change it at `production.py`<h5/>
+<h5>NOTE: in development mode will use SQLITE unless you change it at `development.py`<h5/>
+
+## Stripe CLI
+
+To learn how to use the Stripe CLI effectively, refer to
+the [Stripe CLI Documentation](https://stripe.com/docs/stripe-cli). This resource provides detailed guidance and
+instructions on its usage.
+
+<h5>NOTE: without webhook, campaign status wont change after payment<h5/>
 
 ## Additional Information
 
