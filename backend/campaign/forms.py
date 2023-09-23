@@ -24,12 +24,12 @@ class CampaignAudioForm(forms.ModelForm):
         fields = ["file"]
 
 
-
 class CampaignEmailForm(forms.ModelForm):
     type = forms.ModelChoiceField(
         required=True,
         label=_("Salutation Type"),
         queryset=CampaignEmailType.objects.filter(is_active=True),
+        empty_label=None,
         widget=forms.Select(
             attrs={
                 "class": "form-select",
@@ -67,6 +67,7 @@ class CampaignSMSForm(forms.ModelForm):
         required=True,
         label=_("Salutation Type"),
         queryset=CampaignSMSType.objects.filter(is_active=True),
+        empty_label=None,
         widget=forms.Select(
             attrs={
                 "class": "form-select",
@@ -95,6 +96,7 @@ class CampaignForm(forms.ModelForm):
         required=True,
         label=_("Campaign Type"),
         queryset=CampaignType.objects.filter(is_active=True),
+        empty_label=None,
         widget=forms.Select(
             attrs={
                 "class": "form-select",
