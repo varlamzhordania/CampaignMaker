@@ -1,10 +1,56 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm, \
+    PasswordResetForm, SetPasswordForm
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget, PhoneNumber
 from phonenumber_field.validators import validate_international_phonenumber
 from .models import User
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
+
+class StylesCustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "new-password",
+                "class": "form-control border-always outline-0 shadow-0 lh-lg",
+                "name": "new_password1",
+                "id": "new_password1",
+                "placeholder": "New password",
+            }
+        ),
+        strip=False,
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "new-password",
+                "class": "form-control border-always outline-0 shadow-0 lh-lg",
+                "name": "new_password2",
+                "id": "new_password2",
+                "placeholder": "Confirm your new password",
+            }
+        ),
+    )
+
+
+class StylesCustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        required=True,
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control border-always outline-0 shadow-0 lh-lg",
+                "name": "email",
+                "id": "email",
+                "placeholder": "Email",
+            }
+        ),
+    )
 
 
 class StylesCustomPasswordChangeForm(PasswordChangeForm):
