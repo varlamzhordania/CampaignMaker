@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm
 from .models import CampaignZip, Campaign
 from core.utils import fancy_message, is_admin
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 @login_required(login_url="/")
-@user_passes_test(is_admin,login_url="/")
+@user_passes_test(is_admin, login_url="/")
 def AdminCampaignActions(request, id, status, *args, **kwargs):
     queryset = Campaign.objects.get(pk=id)
     queryset.status = str(status)
@@ -18,7 +19,7 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
 
 
 @login_required(login_url="/")
-@user_passes_test(is_admin,login_url="/")
+@user_passes_test(is_admin, login_url="/")
 def AdminCampaignList(request, *args, **kwargs):
     queryset = Campaign.objects.all().order_by("-id")
     my_context = {"Title": "Campaign List", "campaigns": queryset}
@@ -28,13 +29,26 @@ def AdminCampaignList(request, *args, **kwargs):
 @login_required(login_url="/")
 def Dashboard(request, *args, **kwargs):
     payment = request.GET.get("payment_success", None)
-    campaign_data = {}
-    campaign_sms_data = {}
-    campaign_email_data = {}
     if payment and payment == "true":
         fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
     elif payment and payment == "false":
         fancy_message(request, "Payment failed", level="error")
+    queryset = Campaign.objects.filter(customer=request.user)
+    pagination = Paginator(queryset, per_page=25)
+    page = request.GET.get('page', 1)
+    items = pagination.get_page(page)
+    my_context = {
+        "Title": f"Dashboard",
+        "campaigns": items,
+    }
+    return render(request, "dashboard/dashboard.html", my_context)
+
+
+@login_required(login_url="/")
+def CampaignCreate(request, *args, **kwargs):
+    campaign_data = {}
+    campaign_sms_data = {}
+    campaign_email_data = {}
     if request.method == "POST":
         campaign_data = {
             "type": request.POST.getlist("type")[0],
@@ -87,11 +101,21 @@ def Dashboard(request, *args, **kwargs):
     form4 = CampaignAudioForm(request.FILES)
     zips = CampaignZip.objects.filter(is_active=True)
     my_context = {
-        "Title": f"Dashboard | {request.user.username}",
+        "Title": f"Campaign | Create",
         "form1": form1,
         "form2": form2,
         "form3": form3,
         "form4": form4,
         "zips": zips
     }
-    return render(request, "dashboard/dashboard.html", my_context)
+    return render(request, "dashboard/create_campaign.html", my_context)
+
+
+@login_required(login_url="/")
+def CampaignRetrieve(request, pk, *args, **kwargs):
+    queryset = get_object_or_404(Campaign, id=pk)
+    my_context = {
+        "Title": f"campaign | {pk}",
+        "campaign": queryset
+    }
+    return render(request, "dashboard/campaign_retrieve.html", my_context)

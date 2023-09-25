@@ -1,247 +1,72 @@
 {% extends "dashboard/index.html" %}
 {% block content %}
-    <div class="text-center mb-5">
-        <h3>
-            Create a campaign
-        </h3>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
-        </p>
-    </div>
-    <form method="post" enctype="multipart/form-data" action=".">
-        {% csrf_token %}
-        <div class="container">
-            <div class="accordion" id="steps-list">
-                <div class="steps">
-                    <progress id="progress" value=0 max=100></progress>
-                    <div class="step-item">
-                        <button id="step-button-1" class="step-button  border border-1 text-center" type="button">
-                            1
-                        </button>
-                        <div class="step-title fw-bold text-uppercase">
-                            Details
-                        </div>
-                    </div>
-                    <div class="step-item">
-                        <button id="step-button-2" class="step-button  border border-1 text-center" type="button">
-                            2
-                        </button>
-                        <div class="step-title fw-bold text-uppercase">
-                            SMS
-                        </div>
-                    </div>
-                    <div class="step-item">
-                        <button id="step-button-3" class="step-button  border border-1 text-center" type="button">
-                            3
-                        </button>
-                        <div class="step-title fw-bold text-uppercase">
-                            Email
-                        </div>
-                    </div>
-                    <div class="step-item">
-                        <button id="step-button-4" class="step-button  border border-1 text-center" type="button">
-                            4
-                        </button>
-                        <div class="step-title fw-bold text-uppercase">
-                            Audio
-                        </div>
-                    </div>
-                </div>
+    <a href="{% url "campaign:campaignCreate" %}" class="btn btn-primary my-3 float-end">
+        Create Campaign
+    </a>
+    <table class="table table-responsive table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date Create</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr>
+                <th scope="row">{{ campaign.id }}</th>
+                <td>{{ campaign.type }}</td>
+                {% if campaign.status == "cancel" %}
+                    <td>Canceled</td>
+                {% elif campaign.status == "payment" %}
+                    <td>Waiting for payment</td>
+                {% elif campaign.status == "wait" %}
+                    <td>Waiting for approval</td>
+                {% elif campaign.status == "processing" %}
+                    <td>Processing</td>
+                {% elif campaign.status == "complete" %}
+                    <td>Complete</td>
+                {% endif %}
+                <td>{{ campaign.create_at }}</td>
+                <td><a href="{% url "campaign:campaignRetrieve" campaign.id %}"><i class="bi bi-eye-fill"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" class="my-4">
+        <ul class="pagination">
+            <li class="page-item {% if campaigns.number == 1 %}active{% endif %}">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    First
+                </a>
+            </li>
+            {% if campaigns.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ campaigns.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
 
-                <div class="card border-0">
-                    <div id="collapseOne" class="collapse one show" aria-labelledby="headingOne"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Details
-                            </h3>
-                            <p class="text-muted">
-                                Provide the basic info
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                <div class="col col-12 col-md-6 col-lg-8">
-                                    <label for="{{ form1.type.name }}" class="form-label">{{ form1.type.label }}</label>
-                                    {{ form1.type }}
-                                </div>
-                                <div class="col col-12 col-md-6 col-lg-4">
-                                    <label for="{{ form1.total.name }}"
-                                           class="form-label">{{ form1.total.label }}</label>
-                                    {{ form1.total }}
-                                </div>
-                                <div class="col col-12 col-md-6 col-lg-4">
-                                    <label for="zip-1" class="form-label">Zip #1</label>
-                                    <select id="zip-1" class="form-select" name="select-1">
-                                        <option disabled>Select an option</option>
-                                        {% for zip in zips %}
-                                            <option value="{{ zip.id }}">{{ zip.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col col-12 col-md-6 col-lg-4">
-                                    <label for="zip-2" class="form-label">Zip #2</label>
-                                    <select id="zip-2" class="form-select" name="select-2">
-                                        <option disabled>Select an option</option>
-                                        {% for zip in zips %}
-                                            <option value="{{ zip.id }}">{{ zip.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col col-12 col-md-6 col-lg-4">
-                                    <label for="zip-3" class="form-label">Zip #3</label>
-                                    <select id="zip-3" class="form-select" name="select-3">
-                                        <option disabled>Select an option</option>
-                                        {% for zip in zips %}
-                                            <option value="{{ zip.id }}">{{ zip.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <button class="step-next one btn btn-primary my-4 float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                                    >
-                                Next <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-0">
-                    <div id="collapseTwo" class="collapse two" aria-labelledby="headingTwo"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                SMS
-                            </h3>
-                            <p class="text-muted">
-                                Create sms content
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                <div class="col col-12">
-                                    <label for="{{ form2.type.name }}"
-                                           class="form-label">{{ form2.type.label }}</label>
-                                    <div class="position-relative d-flex align-items-center w-100 gap-1">
-                                        <div class="col col-12 col-md-6 col-lg-4">
-                                            {{ form2.type }}
-                                        </div>
-                                        <p>name of recipient</p>
-                                    </div>
-                                </div>
-                                <div class="col col-12">
-                                    <label for="{{ form2.body.name }}"
-                                           class="form-label">{{ form2.body.label }}</label>
-                                    {{ form2.body }}
-                                </div>
-                            </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="step-next two btn btn-primary my-4 float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree" disabled>
-                                Next <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-0">
-                    <div id="collapseThree" class="collapse three" aria-labelledby="headingThree"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Email
-                            </h3>
-                            <p class="text-muted">
-                                Create email content
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                <div class="col col-12">
-                                    <label for="{{ form3.type.name }}"
-                                           class="form-label">{{ form3.type.label }}</label>
-                                    <div class="position-relative d-flex align-items-center w-100 gap-1">
-                                        <div class="col col-12 col-md-6 col-lg-4">
-                                            {{ form3.type }}
-                                        </div>
-                                        <p>name of recipient</p>
-                                    </div>
-                                </div>
-                                <div class="col col-12">
-                                    <label for="{{ form3.subject.name }}"
-                                           class="form-label">{{ form3.subject.label }}</label>
-                                    {{ form3.subject }}
-                                </div>
-                                <div class="col col-12">
-                                    <label for="{{ form3.body.name }}"
-                                           class="form-label">{{ form3.body.label }}</label>
-                                    {{ form3.body }}
-                                </div>
-                            </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="step-next three btn btn-primary my-4 float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseForth" aria-expanded="false"
-                                    aria-controls="collapseForth" disabled>
-
-                                Next
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-0">
-                    <div id="collapseForth" class="collapse" aria-labelledby="headingForth"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Audio
-                            </h3>
-                            <p class="text-muted">
-                                Upload your audio file
-                            </p>
-                        </div>
-                        <div class="card-body p-5">
-                            <div class="row g-3">
-                                <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
-                                    {{ form4.file }}
-                                    <label for="{{ form4.file.name }}"
-                                           class="form-label my-2">{{ form4.file.label }}</label>
-                                    <p class="text-danger fs-6 fst-italic my-2">{{ form4.file.help_text }}</p>
-                                </div>
-                            </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="btn  btn-primary my-4 float-end" role="button" type="submit">
-                                Pay Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+            {% for page in campaigns.paginator.page_range %}
+                <li class="page-item {% if page == campaigns.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+            {% if campaigns.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ campaigns.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item {% if campaigns.number == campaigns.paginator.num_pages %}active{% endif %}">
+                <a class="page-link" href="?page={{ campaigns.paginator.num_pages }}" aria-label="Last">
+                    Last
+                </a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}

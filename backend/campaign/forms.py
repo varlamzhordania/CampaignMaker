@@ -106,16 +106,6 @@ class CampaignForm(forms.ModelForm):
         )
     )
 
-    total = forms.IntegerField(
-        min_value=1, label=_("Total Households"), required=True, initial=1, widget=forms.NumberInput(
-            attrs={
-                "class": "form-control",
-                "name": "campaign-total",
-                "id": "campaign-total"
-            }
-        )
-    )
-
     class Meta:
         model = Campaign
-        fields = ["type", "total"]
+        fields = ["type", ]

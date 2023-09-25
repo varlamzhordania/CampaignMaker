@@ -134,14 +134,6 @@ class Campaign(models.Model):
     zips = models.ManyToManyField(
         CampaignZip, verbose_name=_("Zips")
     )
-    total = models.PositiveIntegerField(
-        default=1,
-        verbose_name=_("Total Households"),
-        help_text=_("format: required, cannot be 0 or negative number"),
-        blank=False,
-        null=False,
-        validators=[MinValueValidator(int(1))],
-    )
     status = models.CharField(
         max_length=31,
         choices=CAMPAIGN_STATUS,
@@ -162,6 +154,7 @@ class Campaign(models.Model):
     class Meta:
         verbose_name = _("Campaign")
         verbose_name_plural = _("Campaigns")
+        ordering = ["-id"]
 
     def __str__(self):
         return str(self.id)

@@ -19,8 +19,9 @@ class CampaignAudioInline(admin.StackedInline):
 
 class CampaignAdmin(admin.ModelAdmin):
     inlines = [CampaignSMSInline, CampaignEmailInline, CampaignAudioInline]
-    list_display = ["id", "customer", "admin", "type", "total", "status", "date_start"]
+    list_display = ["id", "customer", "admin", "type", "status", "date_start"]
     list_filter = ["admin", "type", "status", "zips"]
+
 
 admin.site.register(CampaignZip)
 admin.site.register(CampaignType)
