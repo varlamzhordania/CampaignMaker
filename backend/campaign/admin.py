@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import CampaignZip, CampaignAudio, CampaignSMS, CampaignType, CampaignSMSType, Campaign, CampaignEmail, \
-    CampaignEmailType
+    CampaignEmailType, Settings
 
 
 # Register your models here.
@@ -28,3 +28,4 @@ admin.site.register(CampaignType)
 admin.site.register(CampaignSMSType)
 admin.site.register(Campaign, CampaignAdmin)
 admin.site.register(CampaignEmailType)
+admin.site.register(Settings)

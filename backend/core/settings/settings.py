@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'campaign',
     'checkout',
     # External Apps
+    'ckeditor',
+    'ckeditor_uploader',
 
 ]
 
@@ -71,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'campaign.context_processors.Default',
             ],
         },
     },
@@ -127,3 +130,11 @@ AUTHENTICATION_BACKENDS = [
     'account.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Link', 'TextColor', 'BGColor',],
+        ],
+    },
+}

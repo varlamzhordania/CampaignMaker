@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm
-from .models import CampaignZip, Campaign
-from core.utils import fancy_message, is_admin
+from .models import CampaignZip, Campaign, CampaignEmailType
+from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
+from django.conf import settings as django_settings
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -34,7 +36,7 @@ def Dashboard(request, *args, **kwargs):
     elif payment and payment == "false":
         fancy_message(request, "Payment failed", level="error")
     queryset = Campaign.objects.filter(customer=request.user)
-    pagination = Paginator(queryset, per_page=25)
+    pagination = Paginator(queryset, per_page=1)
     page = request.GET.get('page', 1)
     items = pagination.get_page(page)
     my_context = {
@@ -42,6 +44,19 @@ def Dashboard(request, *args, **kwargs):
         "campaigns": items,
     }
     return render(request, "dashboard/dashboard.html", my_context)
+
+
+@csrf_exempt
+def EmailPreview(request, pk, *args, **kwargs):
+    if request.method == "POST":
+        queryset = get_object_or_404(CampaignEmailType, id=pk)
+        content = request.POST.get("content", None)
+        my_context = {
+            "content": queryset.get_rendered_content({"body": content})
+        }
+        return HttpResponse(my_context.get("content"), status=200)
+    else:
+        return HttpResponse("get not allowed", status=400)
 
 
 @login_required(login_url="/")

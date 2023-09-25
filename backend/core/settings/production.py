@@ -6,13 +6,15 @@ ALLOWED_HOSTS = ["<your_domain>"]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY = os.getenv("STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY")
-STRIPE_BASE_DOMAIN = os.getenv("STRIPE_BASE_DOMAIN")
+BASE_DOMAIN = os.getenv("BASE_DOMAIN")
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"

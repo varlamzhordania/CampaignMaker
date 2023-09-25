@@ -6,7 +6,7 @@ const progress = document.querySelector('#progress');
 Array.from(stepBack).forEach((button, index) => {
     button.addEventListener('click', () => {
         let old_value = parseInt(progress.getAttribute("value"))
-        progress.setAttribute('value', old_value - 35);
+        progress.setAttribute('value', old_value - 25);
         const stepButton = document.getElementById(`step-button-${index + 1}`)
         stepButton.classList.remove("done")
     })
@@ -16,7 +16,7 @@ Array.from(stepBack).forEach((button, index) => {
 Array.from(stepNext).forEach((button, index) => {
     button.addEventListener('click', () => {
         let old_value = parseInt(progress.getAttribute("value"))
-        progress.setAttribute('value', old_value + 35);
+        progress.setAttribute('value', old_value + 25);
         const stepButton = document.getElementById(`step-button-${index + 1}`)
         stepButton.classList.add("done")
     })

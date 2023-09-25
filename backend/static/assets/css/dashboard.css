@@ -23,14 +23,14 @@ main {
     min-height: 88vh;
 }
 
-.nav-link {
+.navbar .nav-link {
     position: relative;
     font-size: 1.3rem;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.nav-link::after {
+.navbar .nav-link::after {
     content: " ";
     position: absolute;
     display: block;
@@ -42,11 +42,11 @@ main {
     transition: 0.3s;
 }
 
-.nav-link:hover::after, .nav-link:active::after, .nav-link:focus::after {
+.navbar .nav-link:hover::after,.navbar .nav-link:active::after,.navbar .nav-link:focus::after {
     width: 100%;
 }
 
-.nav-link.active::after {
+ .nav-link.active::after {
     width: 100% !important;
 }
 
@@ -149,4 +149,8 @@ main {
 
 .custom-file-input:lang(en) ~ .custom-file-label::after {
     content: 'Choose audio file';
+}
+
+.django-ckeditor-widget{
+    display: block !important;
 }

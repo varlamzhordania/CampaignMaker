@@ -101,7 +101,7 @@ The core and critical settings are managed in the .env file, where you can make 
 - `STRIPE_SECRET_KEY`: Obtain this key from your Stripe Developer Dashboard.
 - `STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY`: When connecting webhooks through the Stripe CLI or Dashboard, you'll receive
   this field.
-- `STRIPE_BASE_DOMAIN`: Set your domain for Stripe callback URLs.
+- `BASE_DOMAIN`: Set your domain for callback URLs.
 - `DB_NAME`: Your database name.
 - `DB_USER`: postgres
 - `DB_PASSWORD`: Your database password.

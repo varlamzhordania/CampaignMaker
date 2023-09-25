@@ -31,8 +31,7 @@ urlpatterns = [
                       "reset_password/",
                       auth_views.PasswordResetView.as_view(
                           template_name="password_reset.html",
-                          form_class=StylesCustomPasswordResetForm,
-                      ),
+                          form_class=StylesCustomPasswordResetForm, ),
                       name="reset_password"
                   ),
                   path(
@@ -45,7 +44,7 @@ urlpatterns = [
                       auth_views.PasswordResetConfirmView.as_view(
                           template_name="password_reset_form.html",
                           form_class=StylesCustomSetPasswordForm
-                          ),
+                      ),
                       name="password_reset_confirm"
                   ),
                   path(
@@ -53,5 +52,6 @@ urlpatterns = [
                       auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),
                       name="password_reset_complete"
                   ),
+                  path('ckeditor/', include('ckeditor_uploader.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
               + static(settings.STATIC_URL, dodument_root=settings.STATIC_ROOT)

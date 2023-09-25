@@ -3,11 +3,12 @@ from .models import Campaign, CampaignType, CampaignZip, CampaignSMS, CampaignSM
     CampaignAudio
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_file_duration
+from ckeditor.widgets import CKEditorWidget
 
 
 class CampaignAudioForm(forms.ModelForm):
     file = forms.FileField(
-        required=True,
+        required=False,
         label=_("Select & Upload File"),
         help_text=_("File format will be .mp3/.m4a/.wav, max size 20MB, max duration 45 second"),
         widget=forms.ClearableFileInput(
@@ -18,10 +19,19 @@ class CampaignAudioForm(forms.ModelForm):
             }
         )
     )
+    text = forms.CharField(
+        required=False, label=_("Text"), widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "name": "campaignAudio-text",
+                "id": "campaignAudio-text",
+            }
+        )
+    )
 
     class Meta:
         model = CampaignAudio
-        fields = ["file"]
+        fields = ["file", "text"]
 
 
 class CampaignEmailForm(forms.ModelForm):
@@ -48,11 +58,11 @@ class CampaignEmailForm(forms.ModelForm):
         )
     )
     body = forms.CharField(
-        required=True, label=_("Email Body"), widget=forms.Textarea(
+        required=True, label=_("Email Body"), widget=CKEditorWidget(
             attrs={
                 "class": "form-control",
-                "name": "campaignEmail-body",
-                "id": "campaignEmail-body",
+                "name": "campaignEmailBody",
+                "id": "campaignEmailBody",
             }
         )
     )

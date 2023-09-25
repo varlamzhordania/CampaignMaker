@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from campaign.models import Campaign
+from campaign.models import Campaign,Settings
 from .models import CampaignTransaction
 import stripe
 
 # Create your views here.
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = settings.STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY
-domain = settings.STRIPE_BASE_DOMAIN
+domain = settings.BASE_DOMAIN
 
 
 def fulfill_order(id):
@@ -22,6 +22,7 @@ def fulfill_order(id):
         print("Fulfilling order")
     else:
         print(f"failed to find transaction with id : {id}")
+
 
 
 @csrf_exempt
@@ -54,8 +55,11 @@ def my_webhook_view(request):
 
 def Checkout(request, pk, *args, **kwargs):
     queryset = Campaign.objects.filter(pk=pk).first()
-    if queryset and queryset.status == "payment":
+    if queryset and queryset.status == "payment" and queryset.customer == request.user:
         try:
+            price = queryset.type.price
+            if queryset.campaign_audio.text and len(queryset.campaign_audio.text) > 0:
+                price += Settings.objects.first().audio_price
             checkout = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[
@@ -65,7 +69,7 @@ def Checkout(request, pk, *args, **kwargs):
                             "product_data": {
                                 "name": queryset.type.name,
                             },
-                            "unit_amount": int(queryset.type.price * 100),
+                            "unit_amount": int(price * 100),
                         },
                         "quantity": 1,
                     }
