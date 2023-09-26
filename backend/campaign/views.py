@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
-from .models import CampaignZip, Campaign, CampaignEmailType
+from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio
 from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
@@ -22,9 +22,29 @@ def AdminCampaignNote(request, *args, **kwargs):
         form = CampaignDisapproveForm(instance=queryset, data=data)
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.is_resubmit = True
+            obj.is_resubmit = False
             obj.save()
             fancy_message(request, f"Campaign-{obj.id} : status changed to {data.get('status')}", level="success")
+            return redirect("campaign:adminCampaigns")
+        else:
+            fancy_message(request, form.errors, level="error")
+            return redirect("campaign:adminCampaigns")
+    else:
+        fancy_message(request, "invalid method", level="error")
+        return redirect("campaign:adminCampaigns")
+
+
+@login_required(login_url="/")
+@user_passes_test(is_admin, login_url="/")
+def AdminCampaignAudio(request, *args, **kwargs):
+    if request.method == "POST":
+        queryset = get_object_or_404(CampaignAudio, id=request.POST.get("change-audio-campaign-id", 0))
+        form = CampaignAudioForm(instance=queryset, files=request.FILES)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.text = ""
+            obj.save()
+            fancy_message(request, f"Campaign-{obj.id} : audio file updated", level="success")
             return redirect("campaign:adminCampaigns")
         else:
             fancy_message(request, form.errors, level="error")
@@ -50,11 +70,12 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
 @user_passes_test(is_admin, login_url="/")
 def AdminCampaignList(request, *args, **kwargs):
     form = CampaignDisapproveForm()
+    form2 = CampaignAudioForm()
     queryset = Campaign.objects.all()
     pagination = Paginator(queryset, per_page=10)
     page = request.GET.get('page', 1)
     items = pagination.get_page(page)
-    my_context = {"Title": "Campaign List", "campaigns": items, "form": form}
+    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2}
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 
 

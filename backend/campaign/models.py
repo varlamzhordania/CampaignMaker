@@ -333,7 +333,7 @@ class CampaignEmail(models.Model):
         related_name="campaign_email",
         blank=False,
         null=False,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         help_text=_("format: required, belonging campaign")
     )
     type = models.ForeignKey(
@@ -380,7 +380,7 @@ class CampaignAudio(models.Model):
         related_name="campaign_audio",
         blank=False,
         null=False,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         help_text=_("format: required, belonging campaign")
     )
     text = models.TextField(
@@ -428,6 +428,13 @@ class Settings(models.Model):
         help_text=_(
             "format: enter as percentage , it will be use on checkout and use total price for calculation"
         )
+    )
+    audio_text_length = models.PositiveIntegerField(
+        default=400,
+        blank=False,
+        null=False,
+        verbose_name=_("Text to Audio Max Length"),
+        help_text=_("format: default-400")
     )
     audio_price = models.DecimalField(
         max_digits=10,

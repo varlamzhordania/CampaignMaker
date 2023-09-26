@@ -5,10 +5,8 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 
-const disapproveModal = new bootstrap.Modal('#disapprove-modal')
-
-
 const disapproveButtons = document.querySelectorAll(".disapprove-button")
+const changeAudioButtons = document.querySelectorAll(".change-audio-button")
 
 
 disapproveButtons.forEach(button => {
@@ -17,6 +15,15 @@ disapproveButtons.forEach(button => {
         document.getElementById("disapprove-modal-title").innerHTML = `Disapprove campaign-${campaign_id}`
         document.getElementById("disapprove-campaign-id").value = campaign_id
         disapproveModal.show()
+    })
+})
+
+changeAudioButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        const campaign_id = e.currentTarget.getAttribute("data-ca")
+        document.getElementById("change-audio-modal-title").innerHTML = `Change audio campaign-${campaign_id}`
+        document.getElementById("change-audio-campaign-id").value = campaign_id
+        changeAudioModal.show()
     })
 
 })
@@ -43,9 +50,9 @@ Array.from(stepNext).forEach((button, index) => {
 
 
 function checkFormCompletion() {
-    var currentStepForm = document.querySelector('.collapse.show');
-    var requiredFields = currentStepForm.querySelectorAll('[required]');
-    var isFormComplete = true;
+    let currentStepForm = document.querySelector('.collapse.show');
+    let requiredFields = currentStepForm.querySelectorAll('[required]');
+    let isFormComplete = true;
     let counter
 
     requiredFields.forEach(function (field) {
@@ -68,14 +75,17 @@ function checkFormCompletion() {
     if (button_forth)
         counter = "forth"
 
-    var nextButton = document.querySelector(`.step-next.${counter}`);
-    nextButton.disabled = !isFormComplete;
+    if (counter !== null || counter !== "undefined" || counter !== undefined) {
+        let nextButton = document.querySelector(`.step-next.${counter}`);
+        nextButton.disabled = !isFormComplete;
+    }
+
 }
 
-var formFields = document.querySelectorAll('input, select, textarea');
+let formFields = document.querySelectorAll('input, select, textarea');
 formFields.forEach(function (field) {
     field.addEventListener('input', checkFormCompletion);
 });
 
-var secondStep = document.getElementById('collapseTwo');
+let secondStep = document.getElementById('collapseTwo');
 secondStep.addEventListener('shown.bs.collapse', checkFormCompletion);
