@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from campaign.models import Campaign,Settings
+from campaign.models import Campaign, Settings
 from .models import CampaignTransaction
 import stripe
 
@@ -22,7 +22,6 @@ def fulfill_order(id):
         print("Fulfilling order")
     else:
         print(f"failed to find transaction with id : {id}")
-
 
 
 @csrf_exempt
@@ -83,7 +82,7 @@ def Checkout(request, pk, *args, **kwargs):
                 campaign_transaction.update(
                     campaign_id=queryset.id,
                     customer_id=request.user.id,
-                    amount=queryset.type.price,
+                    amount=price,
                     payment_id=checkout.id,
                     currency="usd",
                     gateway="stripe",
@@ -93,7 +92,7 @@ def Checkout(request, pk, *args, **kwargs):
                 CampaignTransaction.objects.create(
                     campaign_id=queryset.id,
                     customer_id=request.user.id,
-                    amount=queryset.type.price,
+                    amount=price,
                     payment_id=checkout.id,
                     currency="usd",
                     gateway="stripe",

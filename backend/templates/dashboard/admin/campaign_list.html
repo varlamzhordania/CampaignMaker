@@ -1,25 +1,27 @@
 {% extends "dashboard/index.html" %}
 {% block content %}
-    <table class="table table-responsive">
+    <table class="table table-responsive table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Total</th>
+            <th scope="col">ID</th>
+            <th scope="col">Package</th>
             <th scope="col">Email sent</th>
             <th scope="col">SMS sent</th>
-            <th scope="col">Voice Broadcasting</th>
+            <th scope="col" class="text-wrap">Voice Broadcasting/Text to Audio</th>
             <th scope="col">Status</th>
+            <th scope="col">Resubmitted</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for campaign in campaigns %}
             <tr>
                 <th scope="row">{{ campaign.id }}</th>
-                <td>{{ campaign.total }}</td>
+                <td>{{ campaign.type }}</td>
                 <td>
                     <div class="col">
                         <p class="text-wrap text-truncate">
-                            {{ campaign.campaign_email.body }}
+                            {{ campaign.campaign_email.body|safe }}
                         </p>
                     </div>
                 </td>
@@ -30,28 +32,114 @@
                         </p>
                     </div>
                 </td>
-                <td>
-                    <audio controls>
-                        <source src="{{ campaign.campaign_audio.file.url }}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </td>
+                {% if campaign.campaign_audio.file %}
+                    <td>
+                        <audio controls>
+                            <source src="{{ campaign.campaign_audio.file.url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </td>
+                {% else %}
+                    <td>
+                        {{ campaign.campaign_audio.text }}
+                    </td>
+                {% endif %}
                 <td>
                     {% if campaign.status == "cancel" %}
-                        <button class="btn btn-danger">Canceled</button>
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Canceled</span>
                     {% elif campaign.status == "payment" %}
-                        <button class="btn btn-secondary text-truncate">Waiting for payment</button>
+                        <span class="badge bg-info-subtle text-info-emphasis">Waiting for payment</span>
+                    {% elif campaign.status == "disapproved" %}
+                        <span class="badge bg-danger-subtle text-danger-emphasis">Disapproved</span>
                     {% elif campaign.status == "wait" %}
-                        <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="processing" %}" class="btn btn-warning text-truncate">Waiting for approval</a>
+                        <span class="badge bg-warning-subtle text-warning-emphasis">Waiting for approval</span>
                     {% elif campaign.status == "processing" %}
-                        <button class="btn btn-info">Processing</button>
+                        <span class="badge bg-primary-subtle text-primary-emphasis">Processing</span>
                     {% elif campaign.status == "complete" %}
-                        <button class="btn btn-success">Complete</button>
+                        <span class="badge bg-success-subtle text-success-emphasis">Complete</span>
                     {% endif %}
-                    {{ s }}
+                </td>
+                <td>
+                    {% if campaign.is_resubmit %}
+                        <i class="bi bi-pen-fill text-primary"></i>
+                    {% else %}
+                        <i class="bi bi-pen text-secondary"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="d-flex gap-3">
+                        {% if campaign.status == "wait" or campaign.status == "disapproved" %}
+                            <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="processing" %}"
+                               data-bs-toggle="tooltip" title="Approve campaign" class="text-success fs-5" disabled>
+                                <i class="bi bi-check-square"></i>
+                            </a>
+                            <span role="button" data-bs-toggle="tooltip" title="Disapprove campaign"
+                                  data-ca="{{ campaign.id }}" class="disapprove-button text-danger fs-5 ">
+                                <i class="bi bi-x-square"></i>
+                            </span>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <nav aria-label="Page navigation" class="my-4">
+        <ul class="pagination">
+            <li class="page-item {% if campaigns.number == 1 %}active{% endif %}">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    First
+                </a>
+            </li>
+            {% if campaigns.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ campaigns.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for page in campaigns.paginator.page_range %}
+                <li class="page-item {% if page == campaigns.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+            {% if campaigns.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ campaigns.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item {% if campaigns.number == campaigns.paginator.num_pages %}active{% endif %}">
+                <a class="page-link" href="?page={{ campaigns.paginator.num_pages }}" aria-label="Last">
+                    Last
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="modal fade" id="disapprove-modal" tabindex="-1" aria-labelledby="disapprove-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{% url "campaign:adminCampaignsNote" %}" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="disapprove-modal-title">Disapprove campaign </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" id="disapprove-campaign-id" name="disapprove-campaign-id">
+                        <label for="{{ form.note.name }}"
+                               class="form-label">{{ form.note.label }}</label>
+                        {{ form.note }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

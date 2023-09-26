@@ -12,12 +12,14 @@ from django.utils import timezone
 from django.template import Template, Context
 from django.template.loader import render_to_string
 from ckeditor.fields import RichTextField
+
 # Create your models here.
 
 
 CAMPAIGN_STATUS = (
     ("cancel", "Canceled"),
     ("payment", "Waiting for payment"),
+    ("disapproved", "Disapproved"),
     ("wait", "Waiting for approval"),
     ("processing", "Processing"),
     ("complete", "Complete"),
@@ -145,11 +147,22 @@ class Campaign(models.Model):
         default="payment",
         verbose_name=_("Status"),
     )
+    note = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_("Admin Note"),
+        help_text=_("format: it will be shown to user when disapproved")
+    )
     date_start = models.DateTimeField(
         verbose_name=_("Date Start"),
         help_text=_("format: not required, daytime that campaign start"),
         blank=True,
         null=True,
+    )
+    is_resubmit = models.BooleanField(
+        default=False,
+        verbose_name=_("Is Resubmitted"),
+        help_text=_("format: default false , if false allow user to resubmit if status is equal to disapprove"),
     )
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
@@ -182,6 +195,13 @@ class Campaign(models.Model):
             return queryset.first()
         else:
             return None
+
+    def get_price(self):
+        price = 0
+        price += self.type.price
+        if self.campaign_audio.text:
+            price += Settings.objects.first().audio_price
+        return price
 
 
 class CampaignSMSType(models.Model):
@@ -302,7 +322,7 @@ class CampaignEmailType(models.Model):
         with self.template.open('r') as file:
             template_content = file.read()
         template = Template(template_content)
-        rendered_content = template.render(Context(context,autoescape=False))
+        rendered_content = template.render(Context(context, autoescape=False))
         return rendered_content
 
 

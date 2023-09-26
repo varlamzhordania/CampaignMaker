@@ -1,6 +1,25 @@
 const stepNext = document.querySelectorAll('.step-next');
 const stepBack = document.querySelectorAll('.step-back');
 const progress = document.querySelector('#progress');
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
+const disapproveModal = new bootstrap.Modal('#disapprove-modal')
+
+
+const disapproveButtons = document.querySelectorAll(".disapprove-button")
+
+
+disapproveButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        const campaign_id = e.currentTarget.getAttribute("data-ca")
+        document.getElementById("disapprove-modal-title").innerHTML = `Disapprove campaign-${campaign_id}`
+        document.getElementById("disapprove-campaign-id").value = campaign_id
+        disapproveModal.show()
+    })
+
+})
 
 
 Array.from(stepBack).forEach((button, index) => {

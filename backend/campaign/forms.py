@@ -6,6 +6,22 @@ from .validators import validate_file_duration
 from ckeditor.widgets import CKEditorWidget
 
 
+class CampaignDisapproveForm(forms.ModelForm):
+    note = forms.CharField(
+        required=True, label=_("Your note"), widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "name": "campaign-note",
+                "id": "campaign-note",
+            }
+        )
+    )
+
+    class Meta:
+        model = Campaign
+        fields = ["status", "admin", "note"]
+
+
 class CampaignAudioForm(forms.ModelForm):
     file = forms.FileField(
         required=False,

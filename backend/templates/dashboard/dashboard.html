@@ -1,13 +1,16 @@
 {% extends "dashboard/index.html" %}
 {% block content %}
+    <h4 class="fw-bold">Hello {{ request.user.username }}</h4>
+    <p class="text-secondary">You can find your campaign history here</p>
     <a href="{% url "campaign:campaignCreate" %}" class="btn btn-primary my-3 float-end">
         Create Campaign
     </a>
-    <table class="table table-responsive table-hover">
+    <table class="table table-responsive table-hover" style="max-height: 400px">
         <thead>
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Package</th>
+            <th scope="col">Amount</th>
             <th scope="col">Status</th>
             <th scope="col">Date Create</th>
             <th scope="col">Actions</th>
@@ -18,19 +21,34 @@
             <tr>
                 <th scope="row">{{ campaign.id }}</th>
                 <td>{{ campaign.type }}</td>
+                {% if campaign.campaign_transaction.amount or campaign.campaign_transaction.amount > 0 %}
+                    <td>${{ campaign.campaign_transaction.amount }}</td>
+                {% else %}
+                    <td>${{ campaign.get_price }}</td>
+                {% endif %}
                 {% if campaign.status == "cancel" %}
-                    <td>Canceled</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary-emphasis">Canceled</span></td>
                 {% elif campaign.status == "payment" %}
-                    <td>Waiting for payment</td>
+                    <td><span class="badge bg-info-subtle text-info-emphasis">Waiting for payment</span></td>
+                {% elif campaign.status == "disapproved" %}
+                    <td><span class="badge bg-danger-subtle text-danger-emphasis">Disapproved</span></td>
                 {% elif campaign.status == "wait" %}
-                    <td>Waiting for approval</td>
+                    <td><span class="badge bg-warning-subtle text-warning-emphasis">Waiting for approval</span></td>
                 {% elif campaign.status == "processing" %}
-                    <td>Processing</td>
+                    <td><span class="badge bg-primary-subtle text-primary-emphasis">Processing</span></td>
                 {% elif campaign.status == "complete" %}
-                    <td>Complete</td>
+                    <td><span class="badge bg-success-subtle text-success-emphasis">Complete</span></td>
                 {% endif %}
                 <td>{{ campaign.create_at }}</td>
-                <td><a href="{% url "campaign:campaignRetrieve" campaign.id %}"><i class="bi bi-eye-fill"></i></a></td>
+                <td>
+                    <div class="d-flex gap-2">
+                        {% if campaign.status == "payment" %}
+                            <a class="btn btn-sm btn-outline-success rounded-circle"
+                               href="{% url "checkout:checkout" campaign.id %}" title="Pay Now"
+                               data-bs-toggle="tooltip"><i class="bi bi-cash-coin"></i></a>
+                        {% endif %}
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

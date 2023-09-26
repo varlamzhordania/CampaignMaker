@@ -19,8 +19,9 @@ class CampaignAudioInline(admin.StackedInline):
 
 class CampaignAdmin(admin.ModelAdmin):
     inlines = [CampaignSMSInline, CampaignEmailInline, CampaignAudioInline]
-    list_display = ["id", "customer", "admin", "type", "status", "date_start"]
-    list_filter = ["admin", "type", "status", "zips"]
+    list_display = ["id", "customer", "admin", "type", "status", "is_resubmit", "date_start"]
+    list_filter = ["admin", "type", "status", "zips", "is_resubmit"]
+    search_fields = ["id", "customer__username", "customer__email"]
 
 
 admin.site.register(CampaignZip)

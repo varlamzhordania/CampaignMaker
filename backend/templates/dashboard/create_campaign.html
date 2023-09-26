@@ -8,7 +8,7 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
         </p>
     </div>
-    <form method="post" enctype="multipart/form-data" action=".">
+    <form method="post" id="form-campaign-create" enctype="multipart/form-data" action=".">
         {% csrf_token %}
         <div class="container">
             <div class="accordion" id="steps-list">
@@ -67,6 +67,7 @@
                                 Provide the basic info
                             </p>
                         </div>
+
                         <div class="card-body p-5">
                             <div class="row g-3">
                                 <div class="col col-12">
@@ -238,7 +239,7 @@
                                 <i class="bi bi-chevron-left"></i>
                                 Back
                             </button>
-                            <button class="step-next three btn btn-primary float-end collapsed" type="button"
+                            <button class="btn btn-primary float-end collapsed" type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapseFifth" aria-expanded="false"
                                     aria-controls="collapseFifth">
@@ -296,7 +297,8 @@
                                             <label for="{{ form4.text.name }}"
                                                    class="form-label my-2">{{ form4.text.label }}</label>
                                             {{ form4.text }}
-                                            <p class="text-danger fs-6 my-2">You will charge for extra ${{ page_setting.audio_price }} if you fill above field</p>
+                                            <p class="text-danger fs-6 my-2">You will charge for extra
+                                                ${{ page_setting.audio_price }} if you fill above field</p>
                                         </div>
                                     </div>
                                 </div>
@@ -310,9 +312,18 @@
                                 <i class="bi bi-chevron-left"></i>
                                 Back
                             </button>
-                            <button class="btn  btn-primary my-4 float-end" role="button" type="submit">
-                                Pay Now
-                            </button>
+                            <input type="hidden" id="method" name="payment_method">
+                            <div class="d-flex gap-2 my-4 float-end">
+                                <button class="btn btn-primary" name="pay-later" role="button" type="submit"
+                                        id="campaign-pay-later">
+                                    Pay Later
+                                </button>
+                                <button class="btn btn-primary step-next forth" name="pay-now" role="button"
+                                        type="submit"
+                                        id="campaign-pay-now">
+                                    Pay Now
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -322,7 +333,9 @@
 {% endblock %}
 {% block script %}
     <script>
+
         CKEDITOR.on("instanceReady", (e) => {
+
             const textArea = CKEDITOR.instances.campaignEmailBody;
             let collapseForth = document.getElementById("collapseForth");
 
@@ -343,6 +356,23 @@
                 })
                 htmlContent.innerHTML = await result.text()
             });
+
+            const formCampaignCreate = document.querySelector("form#form-campaign-create");
+            const methodInput = document.getElementById("method");
+
+            formCampaignCreate.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                if (e.submitter.name === 'pay-now') {
+                    methodInput.value = "pay";
+                } else if (e.submitter.name === 'pay-later') {
+                    methodInput.value = "pass";
+                }
+
+                formCampaignCreate.submit();
+
+
+            })
         })
 
     </script>

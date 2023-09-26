@@ -1,11 +1,37 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm
+from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
 from .models import CampaignZip, Campaign, CampaignEmailType
 from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
+
+
+# Create your views here.
+@login_required(login_url="/")
+@user_passes_test(is_admin, login_url="/")
+def AdminCampaignNote(request, *args, **kwargs):
+    if request.method == "POST":
+        queryset = get_object_or_404(Campaign, id=request.POST.get("disapprove-campaign-id", 0))
+        data = {
+            "admin": request.user,
+            "note": request.POST.get("note", ""),
+            "status": "disapproved",
+        }
+        form = CampaignDisapproveForm(instance=queryset, data=data)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.is_resubmit = True
+            obj.save()
+            fancy_message(request, f"Campaign-{obj.id} : status changed to {data.get('status')}", level="success")
+            return redirect("campaign:adminCampaigns")
+        else:
+            fancy_message(request, form.errors, level="error")
+            return redirect("campaign:adminCampaigns")
+    else:
+        fancy_message(request, "invalid method", level="error")
+        return redirect("campaign:adminCampaigns")
 
 
 # Create your views here.
@@ -23,8 +49,12 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
 @login_required(login_url="/")
 @user_passes_test(is_admin, login_url="/")
 def AdminCampaignList(request, *args, **kwargs):
-    queryset = Campaign.objects.all().order_by("-id")
-    my_context = {"Title": "Campaign List", "campaigns": queryset}
+    form = CampaignDisapproveForm()
+    queryset = Campaign.objects.all()
+    pagination = Paginator(queryset, per_page=10)
+    page = request.GET.get('page', 1)
+    items = pagination.get_page(page)
+    my_context = {"Title": "Campaign List", "campaigns": items, "form": form}
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 
 
@@ -36,7 +66,7 @@ def Dashboard(request, *args, **kwargs):
     elif payment and payment == "false":
         fancy_message(request, "Payment failed", level="error")
     queryset = Campaign.objects.filter(customer=request.user)
-    pagination = Paginator(queryset, per_page=1)
+    pagination = Paginator(queryset, per_page=10)
     page = request.GET.get('page', 1)
     items = pagination.get_page(page)
     my_context = {
@@ -101,7 +131,10 @@ def CampaignCreate(request, *args, **kwargs):
                         audio_obj.campaign = campaign_obj
                         audio_obj.save()
                         fancy_message(request, "New campaign successfully created", level="success")
-                        return redirect(f"/checkout/payment/{campaign_obj.id}/")
+                        if request.POST["payment_method"] == "pay":
+                            return redirect(f"/checkout/payment/{campaign_obj.id}/")
+                        else:
+                            return redirect(f"campaign:dashboard")
                     else:
                         fancy_message(request, form4.errors, level="error")
                 else:

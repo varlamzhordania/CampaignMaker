@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import Dashboard, AdminCampaignList, AdminCampaignActions, CampaignCreate, CampaignRetrieve,EmailPreview
+from .views import Dashboard, AdminCampaignList, AdminCampaignActions, CampaignCreate, CampaignRetrieve, EmailPreview, \
+    AdminCampaignNote
 
 app_name = 'campaign'
 
@@ -12,4 +13,5 @@ urlpatterns = [
     path("dashboard/campaign/<int:pk>/", CampaignRetrieve, name="campaignRetrieve"),
     path("dashboard/admin/campaigns/", AdminCampaignList, name="adminCampaigns"),
     path("dashboard/admin/campaigns/<int:id>/<str:status>/", AdminCampaignActions, name="adminCampaignsAction"),
+    path("dashboard/admin/campaigns_note/", AdminCampaignNote, name="adminCampaignsNote"),
 ]
