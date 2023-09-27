@@ -15,17 +15,99 @@
     </div>
     <form method="post" enctype="multipart/form-data" action=".">
         {% csrf_token %}
-        {{ form2.as_p }}
         {{ form3.media }}
-        {{ form3.as_p }}
-        {{ form4.as_p }}
+        <div class="row gap-5">
+            <div class="card ">
+                <div class="card-header bg-white">
+                    <h3>SMS section</h3>
+                </div>
+                <div class="card-body">
+                    <div class="col col-12 col-md-6 col-lg-4">
+                        <label for="{{ form2.type.name }}" class="form-label">{{ form2.type.label }}</label>
+                        {{ form2.type }}
+                    </div>
+                    <div class="col col-12">
+                        <label for="{{ form2.body.name }}" class="form-label">{{ form2.body.label }}</label>
+                        {{ form2.body }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h3>Email section</h3>
+                </div>
+                <div class="card-body">
+                    <div class="col col-12 col-md-6 col-lg-4">
+                        <label for="{{ form3.type.name }}" class="form-label">{{ form3.type.label }}</label>
+                        {{ form3.type }}
+                    </div>
+                    <div class="col col-12 ">
+                        <label for="{{ form3.subject.name }}" class="form-label">{{ form3.subject.label }}</label>
+                        {{ form3.subject }}
+                    </div>
+                    <div class="col col-12">
+                        <label for="{{ form3.body.name }}" class="form-label">{{ form3.body.label }}</label>
+                        {{ form3.body }}
+                    </div>
+                </div>
+            </div>
+            <nav >
+                <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="upload-file-tab" data-bs-toggle="tab"
+                            data-bs-target="#upload-file" type="button" role="tab"
+                            aria-controls="nav-file"
+                            aria-selected="true">
+                        Upload File
+                    </button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                            data-bs-target="#text-to-audio" type="button" role="tab"
+                            aria-controls="text-to-audio" aria-selected="false">
+                        Text to Audio
+                    </button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="upload-file" role="tabpanel"
+                     aria-labelledby="upload-file-tab" tabindex="0">
+                    <div class="row g-3 my-3 ">
+                        <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
+                            {{ form4.file }}
+                            <label for="{{ form4.file.name }}"
+                                   class="form-label my-2">{{ form4.file.label }}</label>
+                            <p class="text-danger fs-6 fst-italic my-2">{{ form4.file.help_text }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="text-to-audio" role="tabpanel"
+                     aria-labelledby="nav-profile-tab" tabindex="0">
+                    <div class="row g-3 my-3">
+                        <div class="col col-12 col-md-6 col-lg-4 w-100">
+                            <label for="{{ form4.text.name }}"
+                                   class="form-label my-2">{{ form4.text.label }}</label>
+                            {{ form4.text }}
+                            <small class="text-muted text-secondary" id="text-counter"></small>
+                            {#                        <p class="text-danger fs-6 my-2">You will charge for extra#}
+                            {#                            ${{ page_setting.audio_price }} if you fill above field</p>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary fw-bold" role="button" type="submit">
+               <i class="bi bi-send-fill px-2"></i> Resubmit
+            </button>
+        </div>
 
-        <button class="btn btn-primary float-end" role="button" type="submit">
-            Resubmit
-        </button>
+
     </form>
-
 {% endblock %}
 {% block script %}
+    <script>
+        const fileInput = document.getElementById("campaignAudio-file")
+        const textInput = document.getElementById("campaignAudio-text")
 
+        textInput.addEventListener("input", (e) => {
+                document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length}/{{ page_setting.audio_text_length }}`
+            }
+        )
+    </script>
 {% endblock %}
