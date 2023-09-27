@@ -13,18 +13,23 @@
             Resubmit Your Campaign
         </h3>
     </div>
-    <form method="post" enctype="multipart/form-data" action=".">
+    <form method="post" id="form-campaign-resubmit" enctype="multipart/form-data" action=".">
         {% csrf_token %}
         {{ form3.media }}
         <div class="row gap-5">
-            <div class="card ">
+            <div class="card border-0">
                 <div class="card-header bg-white">
                     <h3>SMS section</h3>
                 </div>
                 <div class="card-body">
                     <div class="col col-12 col-md-6 col-lg-4">
                         <label for="{{ form2.type.name }}" class="form-label">{{ form2.type.label }}</label>
-                        {{ form2.type }}
+                        <div class="position-relative d-flex align-items-center w-100 gap-1">
+                            <div class="col col-12 col-md-6 col-lg-8">
+                                {{ form2.type }}
+                            </div>
+                            <p>name of recipient</p>
+                        </div>
                     </div>
                     <div class="col col-12">
                         <label for="{{ form2.body.name }}" class="form-label">{{ form2.body.label }}</label>
@@ -32,11 +37,11 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card border-0">
                 <div class="card-header bg-white">
                     <h3>Email section</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-grid gap-2">
                     <div class="col col-12 col-md-6 col-lg-4">
                         <label for="{{ form3.type.name }}" class="form-label">{{ form3.type.label }}</label>
                         {{ form3.type }}
@@ -49,9 +54,17 @@
                         <label for="{{ form3.body.name }}" class="form-label">{{ form3.body.label }}</label>
                         {{ form3.body }}
                     </div>
+                    <button class="btn btn-warning w-auto" style="justify-self: end" role="button" type="button"
+                            id="show-preview">
+                        Show Preview
+                    </button>
+                    <div class="html_content shadow overflow-auto my-3 align-self-center" id="html_content"
+                         style="max-height: 400px;min-width: 320px;max-width: 600px;justify-self: center">
+
+                    </div>
                 </div>
             </div>
-            <nav >
+            <nav>
                 <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="upload-file-tab" data-bs-toggle="tab"
                             data-bs-target="#upload-file" type="button" role="tab"
@@ -93,7 +106,7 @@
                 </div>
             </div>
             <button class="btn btn-primary fw-bold" role="button" type="submit">
-               <i class="bi bi-send-fill px-2"></i> Resubmit
+                <i class="bi bi-send-fill px-2"></i> Resubmit
             </button>
         </div>
 
@@ -102,12 +115,55 @@
 {% endblock %}
 {% block script %}
     <script>
-        const fileInput = document.getElementById("campaignAudio-file")
-        const textInput = document.getElementById("campaignAudio-text")
+        CKEDITOR.on("instanceReady", (e) => {
+            const textArea = CKEDITOR.instances.campaignEmailBody;
 
-        textInput.addEventListener("input", (e) => {
-                document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length}/{{ page_setting.audio_text_length }}`
-            }
-        )
+            let htmlContent = document.getElementById("html_content");
+
+            document.getElementById("show-preview").addEventListener("click", async function () {
+                this.innerHTML = "Reload preview"
+                const selectInput = document.getElementById("campaignEmail-type")
+                const value = parseInt(selectInput.value)
+                let url = "{% url "campaign:emailPreview" 0  %}"
+                let new_url = url.replace("0", value.toString())
+                const data = textArea.getData()
+                const result = await fetch(new_url, {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "content=" + encodeURIComponent(data),
+                })
+                htmlContent.innerHTML = await result.text()
+            });
+
+            const formCampaignCreate = document.querySelector("form#form-campaign-resubmit");
+            const methodInput = document.getElementById("method");
+            const fileInput = document.getElementById("campaignAudio-file")
+            const textInput = document.getElementById("campaignAudio-text")
+
+            textInput.addEventListener("input", (e) => {
+                    document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length}/{{ page_setting.audio_text_length }}`
+                }
+            )
+
+            formCampaignCreate.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                if (e.submitter.name === 'pay-now') {
+                    methodInput.value = "pay";
+                } else if (e.submitter.name === 'pay-later') {
+                    methodInput.value = "pass";
+                }
+
+                if (fileInput.value === "" && textInput.value.trim() === "") {
+                    alert("Audio file or an alternate text for converting is required")
+                } else if (textInput.value.length > parseInt('{{ page_setting.audio_text_length }}')) {
+                    alert("your text length cant be more then {{ page_setting.audio_text_length }}")
+                } else {
+                    formCampaignCreate.submit();
+                }
+            })
+        })
     </script>
 {% endblock %}
