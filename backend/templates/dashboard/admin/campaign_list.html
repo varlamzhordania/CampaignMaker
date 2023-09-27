@@ -7,7 +7,8 @@
             <th scope="col">Package</th>
             <th scope="col">Email sent</th>
             <th scope="col">SMS sent</th>
-            <th scope="col" class="text-wrap">Voice Broadcasting/Text to Audio</th>
+            <th scope="col" class="text-wrap">Voice Broadcasting</th>
+            <th scope="col">Text to Audio</th>
             <th scope="col">Status</th>
             <th scope="col">Resubmitted</th>
             <th scope="col">Actions</th>
@@ -41,9 +42,16 @@
                     </td>
                 {% else %}
                     <td>
-                        {{ campaign.campaign_audio.text }}
+                        No audio file found
                     </td>
                 {% endif %}
+                <td>
+                    {% if campaign.campaign_audio.text %}
+                        {{ campaign.campaign_audio.text }}
+                    {% else %}
+                        No text found
+                    {% endif %}
+                </td>
                 <td>
                     {% if campaign.status == "cancel" %}
                         <span class="badge bg-secondary-subtle text-secondary-emphasis">Canceled</span>
@@ -61,12 +69,12 @@
                 </td>
                 <td>
                     {% if campaign.is_resubmit %}
-                        <i class="bi bi-pen-fill text-primary"></i>
+                        <i class="bi bi-check-circle-fill text-primary"></i>
                     {% else %}
-                        <i class="bi bi-pen text-secondary"></i>
+                        <i class="bi bi-check-circle text-secondary"></i>
                     {% endif %}
                 </td>
-                <td>
+                <td align="center">
                     <div class="d-flex gap-3">
                         {% if campaign.status == "wait" or campaign.is_resubmit %}
                             <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="processing" %}"

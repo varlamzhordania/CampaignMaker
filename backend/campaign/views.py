@@ -1,11 +1,61 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
-from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio
+from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, CampaignEmail
 from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
+
+
+@login_required(login_url="/")
+def CampaignResubmit(request, pk, *args, **kwargs):
+    campaign = get_object_or_404(Campaign, id=pk, status="disapproved", customer=request.user)
+    campaign_sms = CampaignSMS.objects.get(campaign_id=campaign.id)
+    campaign_email = CampaignEmail.objects.get(campaign_id=campaign.id)
+    campaign_audio = CampaignAudio.objects.get(campaign_id=campaign.id)
+    campaign_sms_data = {}
+    campaign_email_data = {}
+    if request.method == "POST":
+        campaign_sms_data = {
+            "type": request.POST.getlist("type")[0],
+            "body": request.POST.getlist("body")[0]
+        }
+        campaign_email_data = {
+            "type": request.POST.getlist("type")[1],
+            "subject": request.POST.get("subject"),
+            "body": request.POST.getlist("body")[1]
+        }
+        form2 = CampaignSMSForm(instance=campaign_sms, data=campaign_sms_data)
+        if form2.is_valid():
+            form3 = CampaignEmailForm(instance=campaign_email, data=campaign_email_data)
+            if form3.is_valid():
+                form4 = CampaignAudioForm(instance=campaign_audio, data=request.POST, files=request.FILES)
+                if form4.is_valid():
+                    form2.save()
+                    form3.save()
+                    form4.save()
+                    campaign.is_resubmit = True
+                    campaign.save()
+                    fancy_message(request, "Campaign information resubmitted", level="success")
+                    return redirect(f"campaign:dashboard")
+                else:
+                    fancy_message(request, form4.errors, level="error")
+            else:
+                fancy_message(request, form3.errors, level="error")
+        else:
+            fancy_message(request, form2.errors, level="error")
+    form2 = CampaignSMSForm(instance=campaign_sms, initial=campaign_sms_data)
+    form3 = CampaignEmailForm(instance=campaign_email, initial=campaign_email_data)
+    form4 = CampaignAudioForm(instance=campaign_audio, initial=request.FILES)
+    my_context = {
+        "Title": f"campaign | {pk}",
+        "form2": form2,
+        "form3": form3,
+        "form4": form4,
+        "campaign": campaign
+    }
+    return render(request, "dashboard/campaign_resubmit.html", my_context)
 
 
 # Create your views here.
@@ -118,7 +168,6 @@ def CampaignCreate(request, *args, **kwargs):
     if request.method == "POST":
         campaign_data = {
             "type": request.POST.getlist("type")[0],
-            "total": request.POST.get("total")
         }
         campaign_sms_data = {
             "type": request.POST.getlist("type")[1],
@@ -178,13 +227,3 @@ def CampaignCreate(request, *args, **kwargs):
         "zips": zips
     }
     return render(request, "dashboard/create_campaign.html", my_context)
-
-
-@login_required(login_url="/")
-def CampaignRetrieve(request, pk, *args, **kwargs):
-    queryset = get_object_or_404(Campaign, id=pk)
-    my_context = {
-        "Title": f"campaign | {pk}",
-        "campaign": queryset
-    }
-    return render(request, "dashboard/campaign_retrieve.html", my_context)

@@ -1,0 +1,31 @@
+{% extends "dashboard/index.html" %}
+{% block content %}
+    {% if campaign.note %}
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill mx-2"></i>
+            <div>
+                {{ campaign.note }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="text-center mb-5">
+        <h3>
+            Resubmit Your Campaign
+        </h3>
+    </div>
+    <form method="post" enctype="multipart/form-data" action=".">
+        {% csrf_token %}
+        {{ form2.as_p }}
+        {{ form3.media }}
+        {{ form3.as_p }}
+        {{ form4.as_p }}
+
+        <button class="btn btn-primary float-end" role="button" type="submit">
+            Resubmit
+        </button>
+    </form>
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}

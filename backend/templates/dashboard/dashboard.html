@@ -41,11 +41,18 @@
                 {% endif %}
                 <td>{{ campaign.create_at }}</td>
                 <td>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex justify-content-start gap-2">
                         {% if campaign.status == "payment" %}
-                            <a class="btn btn-sm btn-outline-success rounded-circle"
-                               href="{% url "checkout:checkout" campaign.id %}" title="Pay Now"
+                            <a class="fs-4 rounded-circle text-success"
+                               href="{% url "checkout:checkout" campaign.id %}" title="Continue payment"
                                data-bs-toggle="tooltip"><i class="bi bi-cash-coin"></i></a>
+                        {% endif %}
+                        {% if campaign.status == "disapproved" %}
+                            <a href="{% url "campaign:campaignResubmit" campaign.id %}" role="button"
+                               data-bs-toggle="tooltip" title="Resubmit campaign"
+                               class="resubmit-button text-info fs-4">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
                         {% endif %}
                     </div>
                 </td>
