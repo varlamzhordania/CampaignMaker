@@ -7,6 +7,7 @@
     <title>{{ Title }}</title>
     <link href={% static 'assets/bootstrap/css/bootstrap.min.css' %} rel="stylesheet" type="text/css"/>
     <link href={% static 'assets/bootstrap-icons/bootstrap-icons.css' %} rel="stylesheet" type="text/css"/>
+    <link href={% static 'assets/css/datatables_bootstrap_min.css' %} rel="stylesheet" type="text/css"/>
     <link href={% static 'assets/css/dashboard.css' %} rel="stylesheet" type="text/css"/>
     <link href={% static 'assets/css/dashboard.scss' %} rel="stylesheet" type="text/css"/>
 </head>
@@ -32,7 +33,11 @@
     {% endblock %}
 </main>
 {% include "dashboard/footer.html" %}
+<script src={% static 'assets/js/jquery.js' %}></script>
 <script src={% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}></script>
+<script src={% static 'assets/js/jquery_datatables_min.js' %}></script>
+<script src={% static 'assets/js/datatables_bootstrap_min.js' %}></script>
+<script src={% static 'assets/js/jquery.js' %}></script>
 <script src={% static 'assets/js/index.js' %}></script>
 <script src={% static 'assets/js/dashboard.js' %}></script>
 

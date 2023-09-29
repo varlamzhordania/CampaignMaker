@@ -203,6 +203,11 @@ class Campaign(models.Model):
             price += Settings.objects.first().audio_price
         return price
 
+    def get_days_difference(self):
+        today = timezone.now()
+        difference = today.date() - self.create_at.date()
+        return difference.days
+
 
 class CampaignSMSType(models.Model):
     name = models.CharField(
@@ -428,6 +433,13 @@ class Settings(models.Model):
         help_text=_(
             "format: enter as percentage , it will be use on checkout and use total price for calculation"
         )
+    )
+    show_result = models.PositiveIntegerField(
+        default=3,
+        blank=False,
+        null=False,
+        verbose_name=_("Show Result"),
+        help_text=_("format: default-3, days difference between campaign create date and the day they can see result")
     )
     audio_text_length = models.PositiveIntegerField(
         default=400,

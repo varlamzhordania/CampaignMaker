@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
@@ -6,6 +7,7 @@ from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 
 @login_required(login_url="/")
@@ -121,11 +123,24 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
 def AdminCampaignList(request, *args, **kwargs):
     form = CampaignDisapproveForm()
     form2 = CampaignAudioForm()
-    queryset = Campaign.objects.all()
-    pagination = Paginator(queryset, per_page=10)
+    status = request.GET.get("status", None)
+    search = request.GET.get("search", None)
     page = request.GET.get('page', 1)
+    queryset = Campaign.objects.all()
+
+    if status:
+        queryset = queryset.filter(status=status)
+
+    if search:
+        queryset = queryset.filter(
+            Q(id__icontains=search) |
+            Q(customer__username=search) |
+            Q(customer__email__icontains=search)
+        )
+
+    pagination = Paginator(queryset, per_page=10)
     items = pagination.get_page(page)
-    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2}
+    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2, "status": status}
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 
 
@@ -143,6 +158,8 @@ def Dashboard(request, *args, **kwargs):
     my_context = {
         "Title": f"Dashboard",
         "campaigns": items,
+        "today": datetime.datetime.now(),
+        "base_url": django_settings.EXTERNAL_API_BASE_URL,
     }
     return render(request, "dashboard/dashboard.html", my_context)
 

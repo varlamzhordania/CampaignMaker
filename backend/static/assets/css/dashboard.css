@@ -17,7 +17,7 @@ body {
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
     color: var(--bs-body-color);
-    background-color: var(--bs-body-bg);
+    background-color: whitesmoke;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -156,4 +156,31 @@ main {
 
 .django-ckeditor-widget {
     display: block !important;
+}
+
+.table tbody td, .table tbody th {
+    border: none;
+}
+
+.table tbody tr:nth-child(even) td, .table tbody tr:nth-child(even) th {
+    background-color: var(--bs-tertiary-bg);
+}
+
+.table tbody tr td:first-child,
+.table tbody tr th:first-child {
+    border-radius: 10px 0 0 10px
+}
+
+.table tbody tr td:last-child,
+.table tbody tr th:last-child {
+    border-radius: 0 10px 10px 0
+}
+.table tr{
+    vertical-align: middle;
+}
+
+
+.table {
+    border-spacing: 0 10px !important;
+    border-collapse: separate !important;
 }

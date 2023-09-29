@@ -134,7 +134,9 @@ AUTHENTICATION_BACKENDS = [
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': [
-            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Link', 'TextColor', 'BGColor',],
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Link', 'TextColor', 'BGColor', ],
         ],
     },
 }
+
+EXTERNAL_API_BASE_URL = os.getenv("EXTERNAL_API_BASE_URL")

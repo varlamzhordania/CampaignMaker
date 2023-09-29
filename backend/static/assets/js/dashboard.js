@@ -8,6 +8,85 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 const disapproveButtons = document.querySelectorAll(".disapprove-button")
 const changeAudioButtons = document.querySelectorAll(".change-audio-button")
 
+const showResultButtons = document.querySelectorAll(".show-result-button")
+let dataTable;
+
+showResultButtons.forEach(button => {
+    button.addEventListener("click", async (e) => {
+            const campaign_id = e.currentTarget.getAttribute("data-ca")
+            const base_url = document.getElementById("base-url").value
+            const table = document.getElementById("show-result-table-body")
+            const user = table.getAttribute("data-ca")
+            document.getElementById("show-result-label").innerHTML = `Show Result Campaign-${campaign_id}`
+            showResultModal.show()
+            try {
+                const result = await fetch(`${base_url}/campaigns/${campaign_id}/masked_calls`, {
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    }
+                })
+                const data = await result.json()
+                table.innerHTML = ""
+                if (!dataTable) {
+                    dataTable = new DataTable('#show-result-table', {
+                        data,
+                        columns: [
+                            {"data": "operation_id"},
+                            {"data": "called_name"},
+                            {"data": "called_address"},
+                            {"data": "operation_phone_number"},
+                            {"data": "called_email"},
+                            {"data": "called_zip"},
+                            {"data": "called_state"},
+                        ],
+                    });
+                } else {
+                    dataTable.clear().rows.add(data).draw()
+                }
+
+                dataTable.on("click", "tr", async function () {
+                    const rowData = dataTable.row(this).data()
+                    if (rowData) {
+                        const operationId = rowData.operation_id;
+                        try {
+                            const newResult = await fetch(`${base_url}/campaigns/unmasked?call_id=${operationId}&user_id=${user}&campaign_id=${campaign_id}`, {
+                                method: "get",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json",
+                                }
+
+                            })
+                            const newData = await newResult.json()
+                            const rowIndex = dataTable.row(this).index()
+                            if (newData.remaining_views && newData.remaining_views == 0) {
+                                alert("you cant see anymore of unmasked data from this campaign")
+                            } else {
+                                dataTable.row(rowIndex).data(newData[0]).draw();
+                            }
+                        } catch (err) {
+                            console.error(err)
+                        }
+                    }
+                })
+            } catch
+                (e) {
+                table.innerHTML = `
+             <tr>
+                 <td colspan="7" align="center">
+                    <p class="text-danger fw-bold">
+                        loading data failed <br/> please try later      
+                    </p>
+                 </td>
+             </tr>
+            `
+            }
+        }
+    )
+})
+
 
 disapproveButtons.forEach(button => {
     button.addEventListener("click", (e) => {
