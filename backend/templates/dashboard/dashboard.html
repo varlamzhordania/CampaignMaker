@@ -133,7 +133,7 @@
                                 <th>State</th>
                             </tr>
                             </thead>
-                            <tbody id="show-result-table-body" data-ca="{{ request.user.id }}" >
+                            <tbody id="show-result-table-body" data-ca="{{ request.user.id }}">
                             <tr>
                                 <td colspan="7" align="center">
                                     <div class="spinner-border" role="status">
@@ -143,6 +143,11 @@
                             </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation" class="my-4">
+                            <ul class="pagination" id="result-pagination-body">
+
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <div class="modal-footer">

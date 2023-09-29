@@ -7,9 +7,26 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 const disapproveButtons = document.querySelectorAll(".disapprove-button")
 const changeAudioButtons = document.querySelectorAll(".change-audio-button")
-
 const showResultButtons = document.querySelectorAll(".show-result-button")
 let dataTable;
+
+let pageLength = 100
+const itemsPerPage = 100;
+let currentPage = 1;
+
+
+const fetchResult = async (base_url, campaign_id) => {
+    const result = await fetch(`${base_url}/campaigns/${campaign_id}/paged_masked_calls?page=${currentPage}&per_page=${itemsPerPage}`, {
+        method: "get",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+    })
+    return await result.json()
+
+}
+
 
 showResultButtons.forEach(button => {
     button.addEventListener("click", async (e) => {
@@ -17,21 +34,27 @@ showResultButtons.forEach(button => {
             const base_url = document.getElementById("base-url").value
             const table = document.getElementById("show-result-table-body")
             const user = table.getAttribute("data-ca")
+            const showResultPaginationBody = document.getElementById("result-pagination-body")
             document.getElementById("show-result-label").innerHTML = `Show Result Campaign-${campaign_id}`
             showResultModal.show()
             try {
-                const result = await fetch(`${base_url}/campaigns/${campaign_id}/masked_calls`, {
-                    method: "get",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                    }
-                })
-                const data = await result.json()
-                table.innerHTML = ""
+                const data = await fetchResult(base_url, campaign_id)
+
+                const paginationOptions = data["pagination"]
+                showResultPaginationBody.innerHTML = ""
+                for (let i = 1; i <= paginationOptions.total_pages; i++) {
+
+                    showResultPaginationBody.innerHTML += `
+                       <li class="page-item ">
+                           <button class="page-link show-result-pagination-button page" id="page-${i}" data-page="${i}">${i}</button>
+                       </li>
+                    `
+                }
+                document.querySelector("#page-1").classList.add("active")
+
                 if (!dataTable) {
                     dataTable = new DataTable('#show-result-table', {
-                        data,
+                        data: data["calls"],
                         columns: [
                             {"data": "operation_id"},
                             {"data": "called_name"},
@@ -41,10 +64,25 @@ showResultButtons.forEach(button => {
                             {"data": "called_zip"},
                             {"data": "called_state"},
                         ],
+                        paging: false,
+                        lengthChange: false,
+                        pageLength: pageLength,
                     });
                 } else {
-                    dataTable.clear().rows.add(data).draw()
+                    dataTable.clear().rows.add(data["calls"]).draw()
                 }
+
+                const paginationButtons = document.querySelectorAll(".show-result-pagination-button")
+
+                paginationButtons.forEach(item => {
+                    item.addEventListener("click", async (e) => {
+                        currentPage = e.currentTarget.getAttribute("data-page")
+                        const result = await fetchResult(base_url, campaign_id)
+                        dataTable.clear().rows.add(result["calls"]).draw()
+                        document.querySelector(`.page.active`).classList.remove("active")
+                        item.classList.add("active")
+                    })
+                })
 
                 dataTable.on("click", "tr", async function () {
                     const rowData = dataTable.row(this).data()
