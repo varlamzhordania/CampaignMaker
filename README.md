@@ -107,7 +107,12 @@ The core and critical settings are managed in the .env file, where you can make 
 - `DB_PASSWORD`: Your database password.
 - `DB_HOST`: 127.0.0.1
 - `DB_PORT`: 5432
-
+- `EXTERNAL_API_BASE_URL`: Flask Server Base Url
+- `EMAIL_HOST`: your email service host.
+- `EMAIL_PORT`: port
+- `EMAIL_USE_TLS`: (False/True).
+- `EMAIL_HOST_USER`: user
+- `EMAIL_HOST_password`: password
 
 <h5>NOTE: in production default database will be POSTGRESQL unless you change it at `production.py`<h5/>
 <h5>NOTE: in development mode will use SQLITE unless you change it at `development.py`<h5/>
@@ -118,7 +123,8 @@ To learn how to use the Stripe CLI effectively, refer to
 the [Stripe CLI Documentation](https://stripe.com/docs/stripe-cli). This resource provides detailed guidance and
 instructions on its usage.
 
-<h5>NOTE: without webhook, campaign status wont change after payment and set stripe webhook at `localhost:8000/checkout/webhook/`<h5/>
+<h5>NOTE: without webhook, campaign status wont change after payment and set stripe webhook
+at `localhost:8000/checkout/webhook/`<h5/>
 
 ## Additional Information
 
