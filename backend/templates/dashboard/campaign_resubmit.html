@@ -107,6 +107,7 @@
                              aria-labelledby="upload-file-tab" tabindex="0">
                             <div class="row g-3 my-3 ">
                                 <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
+                                    <input type="hidden" id="audio-instance" name="audio-instance" value="{{ audio_instance }}">
                                     {{ form4.file }}
                                     <label for="{{ form4.file.name }}"
                                            class="form-label my-2">{{ form4.file.label }}</label>
@@ -161,10 +162,9 @@
             });
 
             const formCampaignCreate = document.querySelector("form#form-campaign-resubmit");
-            const methodInput = document.getElementById("method");
             const fileInput = document.getElementById("campaignAudio-file")
             const textInput = document.getElementById("campaignAudio-text")
-
+            const fileInstance = document.getElementById("audio-instance")
             textInput.addEventListener("input", (e) => {
                     document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length}/{{ page_setting.audio_text_length }}`
                 }
@@ -173,13 +173,8 @@
             formCampaignCreate.addEventListener("submit", (e) => {
                 e.preventDefault();
 
-                if (e.submitter.name === 'pay-now') {
-                    methodInput.value = "pay";
-                } else if (e.submitter.name === 'pay-later') {
-                    methodInput.value = "pass";
-                }
-
-                if (fileInput.value === "" && textInput.value.trim() === "") {
+                if (!fileInstance.value && fileInput.files.length === 0 && textInput.value.trim() === "") {
+                    console.log(fileInput)
                     alert("Audio file or an alternate text for converting is required")
                 } else if (textInput.value.length > parseInt('{{ page_setting.audio_text_length }}')) {
                     alert("your text length cant be more then {{ page_setting.audio_text_length }}")

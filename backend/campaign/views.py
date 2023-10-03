@@ -42,8 +42,11 @@ def CampaignResubmit(request, pk, *args, **kwargs):
                         campaign.save()
                         form2.save()
                         form3.save()
-                        form4.save()
-                        campaign.is_resubmit = True
+
+                        form4_obj = form4.save()
+                        if form4_obj.file and form4_obj.text:
+                            form4_obj.text = ""
+                        form4_obj.save()
                         campaign.save()
                         fancy_message(request, "Campaign information resubmitted", level="success")
                         return redirect(f"campaign:dashboard")
@@ -66,6 +69,7 @@ def CampaignResubmit(request, pk, *args, **kwargs):
         "form4": form4,
         "campaign": campaign,
         "templates": email_templates,
+        "audio_instance": campaign_audio.file,
     }
     return render(request, "dashboard/campaign_resubmit.html", my_context)
 
