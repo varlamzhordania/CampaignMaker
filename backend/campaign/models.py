@@ -80,6 +80,17 @@ class CampaignEmailTemplate(models.Model):
         null=True,
         verbose_name=_("Template Extra"),
     )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        unique=False,
+        null=True,
+        default=0,
+        blank=True,
+        verbose_name=_("Template Price"),
+        help_text=_("format: default-0,  considered for future improvements"),
+        validators=[MinValueValidator(Decimal("0.00"))],
+    )
     slug = AutoSlugField(
         allow_unicode=True,
         populate_from="name",
