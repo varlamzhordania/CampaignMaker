@@ -45,7 +45,7 @@
                         <td>{{ campaign.create_at }}</td>
                         <td>
                             <div class="d-flex justify-content-start align-items-center gap-3">
-                                {% if campaign.campaign_transaction.status == "PENDING" %}
+                                {% if campaign.campaign_transaction.status == "PENDING" or not campaign.campaign_transaction and campaign.status != "cancel" %}
                                     <a class="fs-4 rounded-circle text-success"
                                        href="{% url "checkout:checkout" campaign.id %}" title="Continue payment"
                                        data-bs-toggle="tooltip">
