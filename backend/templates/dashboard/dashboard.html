@@ -66,7 +66,7 @@
                                     </span>
                                 {% endif %}
                                 {% if campaign.status == "payment" or campaign.status == "disapproved" or campaign.status == "wait" %}
-                                    <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="cancel" %}"
+                                    <a href="{% url "campaign:campaignsAction" id=campaign.id status="cancel" %}"
                                        data-bs-toggle="tooltip" title="Cancel campaign"
                                        class="text-danger fs-4 rounded-circle">
                                         <i class="bi bi-x"></i>

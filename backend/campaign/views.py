@@ -135,6 +135,18 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
 
 
 @login_required(login_url="/")
+def CampaignActions(request, id, status, *args, **kwargs):
+    queryset = get_object_or_404(Campaign, pk=id, customer_id=request.user.id)
+    queryset.status = str(status)
+    queryset.admin = request.user
+    if status == "processing":
+        queryset.is_resubmit = False
+    queryset.save()
+    fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
+    return redirect("campaign:dashboard")
+
+
+@login_required(login_url="/")
 @user_passes_test(is_admin, login_url="/")
 def AdminCampaignList(request, *args, **kwargs):
     form = CampaignDisapproveForm()
