@@ -59,7 +59,7 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 {% endif %}
-                                {% if campaign.get_days_difference >= page_setting.show_result %}
+                                {% if campaign.get_days_difference >= page_setting.show_result and campaign.status == "processing" or campaign.status == "complete" %}
                                     <span role="button" data-bs-toggle="tooltip" title="Show result"
                                           data-ca="{{ campaign.id }}" class="show-result-button text-secondary fs-5 ">
                                         <i class="bi bi-eye-fill"></i>
@@ -114,9 +114,6 @@
             </nav>
         </div>
     </div>
-
-
-
     <!-- Modal -->
     <div class="modal fade" id="show-result" tabindex="-1" aria-labelledby="show-result" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -164,9 +161,6 @@
         </div>
     </div>
 {% endblock %}
-
-
-
 {% block script %}
     <script>
         const showResultModal = new bootstrap.Modal('#show-result')

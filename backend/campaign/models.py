@@ -26,6 +26,87 @@ CAMPAIGN_STATUS = (
 )
 
 
+def template_image(instance, filename):
+    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+    extension = filename.split('.')[-1]
+    return f'email_templates/images/{timestamp}.{extension}'
+
+
+def template_extra(instance, filename):
+    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+    extension = filename.split('.')[-1]
+    return f'email_templates/extra/{timestamp}.{extension}'
+
+
+def get_template_upload_path(instance, filename):
+    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+    return f'email_templates/{timestamp}.html'
+
+
+def validate_template_format(value):
+    valid_extensions = ['.html', '.htm', 'html', 'htm']
+    ext = value.name.lower().split('.')[-1]
+    if ext not in valid_extensions:
+        raise ValidationError(f'Invalid file format. Only {", ".join(valid_extensions)} files are allowed.')
+
+
+class CampaignEmailTemplate(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name"),
+        blank=False,
+        null=False,
+        unique=False,
+        help_text=_("format: required, max-255 character, name of your Email Template")
+    )
+    template = models.FileField(
+        upload_to=get_template_upload_path,
+        blank=False,
+        null=False,
+        validators=[validate_template_format],
+        verbose_name=_("Template"),
+        help_text=_("format: only .html .htm are allowed"),
+    )
+    thumbnail = models.ImageField(
+        upload_to=template_image,
+        blank=False,
+        null=False,
+        verbose_name=_("Template Thumbnail"),
+        help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
+    )
+    extra = models.FileField(
+        upload_to=template_extra,
+        blank=True,
+        null=True,
+        verbose_name=_("Template Extra"),
+    )
+    slug = AutoSlugField(
+        allow_unicode=True,
+        populate_from="name",
+        editable=True,
+        unique=True,
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
+    )
+
+    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    class Meta:
+        verbose_name = _("Email Template")
+        verbose_name_plural = _("Email templates")
+
+    def get_rendered_content(self, context):
+        template_content = ''
+        with self.template.open('r') as file:
+            template_content = file.read()
+        template = Template(template_content)
+        rendered_content = template.render(Context(context, autoescape=False))
+        return rendered_content
+
+
 class CampaignType(models.Model):
     name = models.CharField(
         max_length=255,
@@ -135,6 +216,14 @@ class Campaign(models.Model):
         blank=False,
         null=False,
         help_text=_("format: required")
+    )
+    email_template = models.ForeignKey(
+        CampaignEmailTemplate,
+        verbose_name=_("Email Template"),
+        related_name="campaign_email_template",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
     )
     zips = models.ManyToManyField(
         CampaignZip, verbose_name=_("Zips")
@@ -273,18 +362,6 @@ class CampaignSMS(models.Model):
         return self.campaign.__str__()
 
 
-def get_template_upload_path(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    return f'email_templates/{timestamp}.html'
-
-
-def validate_template_format(value):
-    valid_extensions = ['.html', '.htm', 'html', 'htm']
-    ext = value.name.lower().split('.')[-1]
-    if ext not in valid_extensions:
-        raise ValidationError(f'Invalid file format. Only {", ".join(valid_extensions)} files are allowed.')
-
-
 class CampaignEmailType(models.Model):
     name = models.CharField(
         max_length=255,
@@ -303,14 +380,6 @@ class CampaignEmailType(models.Model):
         blank=True,
         null=False
     )
-    template = models.FileField(
-        upload_to=get_template_upload_path,
-        blank=True,
-        null=True,
-        validators=[validate_template_format],
-        verbose_name=_("Template"),
-        help_text=_("format: only .html .htm are allowed"),
-    )
     is_active = models.BooleanField(verbose_name=_("Published"), default=False)
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
@@ -321,14 +390,6 @@ class CampaignEmailType(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_rendered_content(self, context):
-        template_content = ''
-        with self.template.open('r') as file:
-            template_content = file.read()
-        template = Template(template_content)
-        rendered_content = template.render(Context(context, autoescape=False))
-        return rendered_content
 
 
 class CampaignEmail(models.Model):

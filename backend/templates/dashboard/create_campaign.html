@@ -169,7 +169,20 @@
                             </p>
                         </div>
                         <div class="card-body p-5">
-                            <div class="row g-3">
+                            <input type="hidden" name="selected-template" id="selected-template" value="">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 justify-content-center g-3"
+                                 id="template-container">
+                                {% for template in templates %}
+                                    <div class="col">
+                                        <div class="card border-2 email-template" data-template="{{ template.id }}">
+                                            <img src="{{ template.thumbnail.url }}" alt="{{ template.name }}"
+                                                 class="card-img" loading="lazy"/>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <hr/>
+                            <div id="email-form-container" class="row g-3 visually-hidden">
                                 <div class="col col-12">
                                     <label for="{{ form3.type.name }}"
                                            class="form-label">{{ form3.type.label }}</label>
@@ -264,22 +277,26 @@
                         </div>
                         <div class="card-body p-5">
                             <nav>
-                                <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="upload-file-tab" data-bs-toggle="tab"
-                                            data-bs-target="#upload-file" type="button" role="tab"
-                                            aria-controls="nav-file"
-                                            aria-selected="true">
-                                        Upload File
-                                    </button>
-                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                            data-bs-target="#text-to-audio" type="button" role="tab"
-                                            aria-controls="text-to-audio" aria-selected="false">
-                                        Text to Audio
-                                    </button>
+                                <div class="nav custom-nav-tabs nav-tabs justify-content-center" id="nav-tab"
+                                     role="tablist">
+                                    <div class="d-flex justify-content-center align-items-center gap-2 w-100 p-1"
+                                         style="border-radius: var(--bs-nav-tabs-border-radius);background-color: #F5F5F5">
+                                        <button class="nav-link active" id="upload-file-tab" data-bs-toggle="tab"
+                                                data-bs-target="#upload-file" type="button" role="tab"
+                                                aria-controls="nav-file"
+                                                aria-selected="true">
+                                            Upload File
+                                        </button>
+                                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                                data-bs-target="#text-to-audio" type="button" role="tab"
+                                                aria-controls="text-to-audio" aria-selected="false">
+                                            Text to Audio
+                                        </button>
+                                    </div>
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="upload-file" role="tabpanel"
+                                <div class="tab-pane fade active show" id="upload-file" role="tabpanel"
                                      aria-labelledby="upload-file-tab" tabindex="0">
                                     <div class="row g-3 my-3 ">
                                         <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
@@ -335,6 +352,7 @@
 {% block script %}
     <script>
 
+
         CKEDITOR.on("instanceReady", (e) => {
 
             const textArea = CKEDITOR.instances.campaignEmailBody;
@@ -343,7 +361,7 @@
             let htmlContent = document.getElementById("html_content");
 
             collapseForth.addEventListener("show.bs.collapse", async function () {
-                const selectInput = document.getElementById("campaignEmail-type")
+                const selectInput = document.getElementById("selected-template")
                 const value = parseInt(selectInput.value)
                 let url = "{% url "campaign:emailPreview" 0  %}"
                 let new_url = url.replace("0", value.toString())

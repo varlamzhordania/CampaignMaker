@@ -4,10 +4,16 @@ const progress = document.querySelector('#progress');
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+const emailTemplateContainer = document.getElementById("template-container")
+const emailTemplates = document.querySelectorAll(".email-template")
+
+const emailFormContainer = document.getElementById("email-form-container")
+
 
 const disapproveButtons = document.querySelectorAll(".disapprove-button")
 const changeAudioButtons = document.querySelectorAll(".change-audio-button")
 const showResultButtons = document.querySelectorAll(".show-result-button")
+
 let dataTable;
 
 let pageLength = 100
@@ -205,4 +211,21 @@ formFields.forEach(function (field) {
 });
 
 let secondStep = document.getElementById('collapseTwo');
-secondStep.addEventListener('shown.bs.collapse', checkFormCompletion);
+if (secondStep)
+    secondStep.addEventListener('shown.bs.collapse', checkFormCompletion);
+
+
+emailTemplates.forEach(item => {
+    item.addEventListener("click", (e) => {
+        const id = e.currentTarget.getAttribute("data-template")
+        const previousActive = document.querySelector(".email-template.active")
+        if (previousActive)
+            previousActive.classList.remove("active")
+        item.classList.add("active")
+        document.getElementById("selected-template").value = id
+        if (emailFormContainer.classList.contains("visually-hidden"))
+            emailFormContainer.classList.remove("visually-hidden")
+    })
+})
+
+

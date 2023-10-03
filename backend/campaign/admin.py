@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import CampaignZip, CampaignAudio, CampaignSMS, CampaignType, CampaignSMSType, Campaign, CampaignEmail, \
-    CampaignEmailType, Settings
+    CampaignEmailType, Settings, CampaignEmailTemplate
 
 
 # Register your models here.
+
 
 class CampaignSMSInline(admin.StackedInline):
     model = CampaignSMS
@@ -29,4 +30,5 @@ admin.site.register(CampaignType)
 admin.site.register(CampaignSMSType)
 admin.site.register(Campaign, CampaignAdmin)
 admin.site.register(CampaignEmailType)
+admin.site.register(CampaignEmailTemplate)
 admin.site.register(Settings)

@@ -175,7 +175,8 @@ main {
 .table tbody tr th:last-child {
     border-radius: 0 10px 10px 0
 }
-.table tr{
+
+.table tr {
     vertical-align: middle;
 }
 
@@ -183,4 +184,29 @@ main {
 .table {
     border-spacing: 0 10px !important;
     border-collapse: separate !important;
+}
+
+.email-template {
+    border-color: lightgrey;
+    cursor: pointer;
+}
+
+.email-template.active {
+    border-color: var(--bs-primary);
+}
+
+.custom-nav-tabs {
+    border-bottom: none !important;
+    gap: 15px;
+}
+
+.custom-nav-tabs .nav-link {
+    border: none !important;
+    margin-bottom: unset !important;
+    width: 50%;
+}
+
+.custom-nav-tabs .nav-link.active {
+    border: none !important;
+    border-radius: var(--bs-nav-tabs-border-radius);
 }
