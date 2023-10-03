@@ -113,6 +113,8 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
     queryset = Campaign.objects.get(pk=id)
     queryset.status = str(status)
     queryset.admin = request.user
+    if status == "processing":
+        queryset.is_resubmit = False
     queryset.save()
     fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
     return redirect("campaign:adminCampaigns")
@@ -125,6 +127,7 @@ def AdminCampaignList(request, *args, **kwargs):
     form2 = CampaignAudioForm()
     status = request.GET.get("status", None)
     search = request.GET.get("search", None)
+    resubmit = request.GET.get("resubmit", None)
     page = request.GET.get('page', 1)
     queryset = Campaign.objects.all()
 
@@ -138,9 +141,12 @@ def AdminCampaignList(request, *args, **kwargs):
             Q(customer__email__icontains=search)
         )
 
+    if resubmit:
+        queryset = queryset.filter(is_resubmit=resubmit)
     pagination = Paginator(queryset, per_page=10)
     items = pagination.get_page(page)
-    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2, "status": status}
+    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2, "status": status,
+                  "is_resubmit": resubmit}
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 
 

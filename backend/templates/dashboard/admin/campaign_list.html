@@ -32,6 +32,10 @@
                        href=".?status=payment">
                         PAYMENT
                     </a>
+                    <a class="btn btn-outline-secondary {% if is_resubmit == "True" %}active{% endif %}"
+                       href=".?resubmit=True">
+                        Resubmitted
+                    </a>
                     <a class="btn btn-outline-secondary {% if status == "cancel" %}active{% endif %}"
                        href=".?status=cancel">
                         CANCELED
@@ -66,7 +70,7 @@
                             <td><b>{{ campaign.id }}</b></td>
                             <td>{{ campaign.type }}</td>
                             <td>
-                                {{ campaign.campaign_email.body }}
+                                {{ campaign.campaign_email.body|safe }}
                             </td>
                             <td>
                                 {{ campaign.campaign_sms.body }}
@@ -114,7 +118,7 @@
                             </td>
                             <td align="center">
                                 <div class="d-flex gap-3">
-                                    {% if campaign.status == "wait" or campaign.is_resubmit %}
+                                    {% if campaign.status == "wait" or campaign.status == "payment" or campaign.status == "disapproved" or campaign.is_resubmit %}
                                         <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="processing" %}"
                                            data-bs-toggle="tooltip" title="Approve campaign" class="text-success fs-5"
                                            disabled>
@@ -129,8 +133,8 @@
                                         <span role="button" data-bs-toggle="tooltip" title="Change audio file"
                                               data-ca="{{ campaign.id }}"
                                               class="change-audio-button text-secondary fs-5 ">
-                                <i class="bi bi-file-music"></i>
-                            </span>
+                                            <i class="bi bi-file-music"></i>
+                                        </span>
                                     {% endif %}
                                 </div>
                             </td>

@@ -44,8 +44,8 @@
                         {% endif %}
                         <td>{{ campaign.create_at }}</td>
                         <td>
-                            <div class="d-flex justify-content-start gap-2">
-                                {% if campaign.status == "payment" %}
+                            <div class="d-flex justify-content-start align-items-center gap-3">
+                                {% if campaign.campaign_transaction.status == "PENDING" %}
                                     <a class="fs-4 rounded-circle text-success"
                                        href="{% url "checkout:checkout" campaign.id %}" title="Continue payment"
                                        data-bs-toggle="tooltip">
@@ -62,8 +62,15 @@
                                 {% if campaign.get_days_difference >= page_setting.show_result %}
                                     <span role="button" data-bs-toggle="tooltip" title="Show result"
                                           data-ca="{{ campaign.id }}" class="show-result-button text-secondary fs-5 ">
-                                <i class="bi bi-eye-fill"></i>
-                            </span>
+                                        <i class="bi bi-eye-fill"></i>
+                                    </span>
+                                {% endif %}
+                                {% if campaign.status == "payment" or campaign.status == "disapproved" or campaign.status == "wait" %}
+                                    <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="cancel" %}"
+                                       data-bs-toggle="tooltip" title="Cancel campaign"
+                                       class="text-danger fs-4 rounded-circle">
+                                        <i class="bi bi-x"></i>
+                                    </a>
                                 {% endif %}
                             </div>
                         </td>

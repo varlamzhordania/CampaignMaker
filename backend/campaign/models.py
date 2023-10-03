@@ -453,10 +453,10 @@ class Settings(models.Model):
         decimal_places=2,
         unique=False,
         null=False,
-        default=0,
+        default=10.00,
         blank=False,
         verbose_name=_("Audio Price"),
-        help_text=_("format: maximum price 99999999.99, used for text to audio extra price"),
+        help_text=_("format: default-10.00,  maximum price 99999999.99, used for text to audio extra price"),
         validators=[MinValueValidator(Decimal("0.00"))]
     )
     logo = models.ImageField(
