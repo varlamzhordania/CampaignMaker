@@ -43,7 +43,7 @@
                             4
                         </button>
                         <div class="step-title fw-bold text-uppercase">
-                            Preview
+                            Audio
                         </div>
                     </div>
                     <div class="step-item">
@@ -51,7 +51,7 @@
                             5
                         </button>
                         <div class="step-title fw-bold text-uppercase">
-                            Audio
+                            Preview
                         </div>
                     </div>
                 </div>
@@ -226,46 +226,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-0 bg-transparent">
-                    <div id="collapseForth" class="collapse three" aria-labelledby="headingForth"
-                         data-bs-parent="#steps-list">
-                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
-                            <h3 class="fw-bold">
-                                Preview
-                            </h3>
-                            <p class="text-muted">
-                                Your selected email design preview
-                            </p>
-                        </div>
-                        <div class="card-body p-5 d-grid justify-content-center ">
-                            <div class="html_content overflow-auto" id="html_content"
-                                 style="max-height: 400px;min-width: 320px;max-width: 600px">
-
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-0">
-                            <button class="step-back btn btn-primary float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
-                            <button class="btn btn-primary step-next float-end collapsed" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFifth" aria-expanded="false"
-                                    aria-controls="collapseFifth">
-
-                                Next
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="card border-1">
-                    <div id="collapseFifth" class="collapse" aria-labelledby="headingFifth"
+                <div class="card border-0">
+                    <div id="collapseForth" class="collapse forth" aria-labelledby="headingForth"
                          data-bs-parent="#steps-list">
                         <div class="card-header p-5 pb-0 bg-transparent border-0 ">
                             <h3 class="fw-bold">
@@ -321,26 +283,90 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseForth" aria-expanded="false"
-                                    aria-controls="collapseForth"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
+                            <div class="card-footer bg-transparent border-0">
+                                <button class="step-back btn btn-primary float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <button class="btn btn-primary step-next forth float-end collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFifth" aria-expanded="false"
+                                        aria-controls="collapseFifth" disabled>
+
+                                    Next
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 ">
+                    <div id="collapseFifth" class="collapse fifth" aria-labelledby="headingFifth"
+                         data-bs-parent="#steps-list">
+                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
+                            <h3 class="fw-bold">
+                                Preview
+                            </h3>
+                            <p class="text-muted">
+                                your order preview and put order
+                            </p>
+                        </div>
+                        <div class="card-body p-5 d-flex flex-column justify-content-center align-items-center gap-3">
+                            <div class="table-responsive w-100 mb-5">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 75%">Package</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td style="width: 75%">Package 1</td>
+                                        <td>$99.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 75%">text to audio</td>
+                                        <td>$10</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 75%"></td>
+                                        <td class="fs-4 fw-bold">$109.99</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="html_content overflow-auto" id="html_content"
+                                 style="max-height: 400px;min-width: 320px;max-width: 600px">
+
+                            </div>
                             <input type="hidden" id="method" name="payment_method">
-                            <div class="d-flex gap-2 my-4 float-end">
-                                <button class="btn btn-primary" name="pay-later" role="button" type="submit"
-                                        id="campaign-pay-later">
-                                    Pay Later
+                            <div class="d-flex mt-3 justify-content-between align-items-center w-100">
+                                <button class="step-back btn btn-primary float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseForth" aria-expanded="false"
+                                        aria-controls="collapseForth"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
                                 </button>
-                                <button class="btn btn-primary  " name="pay-now" role="button"
-                                        type="submit"
-                                        id="campaign-pay-now">
-                                    Pay Now
-                                </button>
+                                <div class="d-flex gap-2 my-4 float-end">
+                                    <button class="btn btn-primary" name="pay-later" role="button" type="submit"
+                                            id="campaign-pay-later">
+                                        Pay Later
+                                    </button>
+                                    <button class="btn btn-primary  " name="pay-now" role="button"
+                                            type="submit"
+                                            id="campaign-pay-now">
+                                        Pay Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
