@@ -102,6 +102,11 @@
                                     </select>
                                 </div>
                             </div>
+                            <a class="btn btn-secondary my-4 float-start"
+                               href="{% url "campaign:dashboard" %}"
+                            >
+                                Cancel
+                            </a>
                             <button class="step-next one btn btn-primary my-4 float-end collapsed" type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
@@ -140,14 +145,21 @@
                                     {{ form2.body }}
                                 </div>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
+                            <div class="d-inline-flex justify-content-start align-items-center gap-2">
+                                <button class="step-back btn btn-primary my-4 float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <a class="btn btn-secondary my-4 float-start"
+                                   href="{% url "campaign:dashboard" %}"
+                                >
+                                    Cancel
+                                </a>
+                            </div>
                             <button class="step-next two btn btn-primary my-4 float-end collapsed" type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapseThree" aria-expanded="false"
@@ -205,14 +217,21 @@
                                     {{ form3.body }}
                                 </div>
                             </div>
-                            <button class="step-back btn btn-primary my-4 float-start collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                            >
-                                <i class="bi bi-chevron-left"></i>
-                                Back
-                            </button>
+                            <div class="d-inline-flex justify-content-start align-items-center gap-2">
+                                <button class="step-back btn btn-primary my-4 float-start collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                    Back
+                                </button>
+                                <a class="btn btn-secondary my-4 float-start"
+                                   href="{% url "campaign:dashboard" %}"
+                                >
+                                    Cancel
+                                </a>
+                            </div>
                             <div class="d-flex gap-2 my-4 float-end">
                                 <button class="step-next three btn btn-primary collapsed" type="button"
                                         data-bs-toggle="collapse"
@@ -284,15 +303,22 @@
                                 </div>
                             </div>
                             <div class="card-footer bg-transparent border-0">
-                                <button class="step-back btn btn-primary float-start collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree"
-                                >
-                                    <i class="bi bi-chevron-left"></i>
-                                    Back
-                                </button>
+                                <div class="d-inline-flex justify-content-start align-items-center gap-2">
+                                    <button class="step-back btn btn-primary float-start collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree"
+                                    >
+                                        <i class="bi bi-chevron-left"></i>
+                                        Back
+                                    </button>
+                                    <a class="btn btn-secondary my-4 float-start"
+                                       href="{% url "campaign:dashboard" %}"
+                                    >
+                                        Cancel
+                                    </a>
+                                </div>
                                 <button class="btn btn-primary step-next forth float-end collapsed" type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapseFifth" aria-expanded="false"
@@ -336,15 +362,22 @@
                             </div>
                             <input type="hidden" id="method" name="payment_method">
                             <div class="d-flex mt-3 justify-content-between align-items-center w-100">
-                                <button class="step-back btn btn-primary float-start collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseForth" aria-expanded="false"
-                                        aria-controls="collapseForth"
-                                >
-                                    <i class="bi bi-chevron-left"></i>
-                                    Back
-                                </button>
+                                <div class="d-inline-flex justify-content-start align-items-center gap-2">
+                                    <button class="step-back btn btn-primary float-start collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseForth" aria-expanded="false"
+                                            aria-controls="collapseForth"
+                                    >
+                                        <i class="bi bi-chevron-left"></i>
+                                        Back
+                                    </button>
+                                    <a class="btn btn-secondary my-4 float-start"
+                                       href="{% url "campaign:dashboard" %}"
+                                    >
+                                        Cancel
+                                    </a>
+                                </div>
                                 <div class="d-flex gap-2 my-4 float-end">
                                     <button class="btn btn-primary" name="pay-later" role="button" type="submit"
                                             id="campaign-pay-later">
