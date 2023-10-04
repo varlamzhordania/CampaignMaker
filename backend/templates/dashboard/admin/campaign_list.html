@@ -54,6 +54,7 @@
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">Customer</th>
                         <th scope="col">Package</th>
                         <th scope="col" style="white-space: nowrap">Details</th>
                         <th scope="col" class="text-wrap">Voice Broadcasting</th>
@@ -67,6 +68,7 @@
                     {% for campaign in campaigns %}
                         <tr>
                             <td><b>{{ campaign.id }}</b></td>
+                            <td>{{ campaign.customer.username }}</td>
                             <td>{{ campaign.type }}</td>
                             <td>
                                   <span role="button" data-bs-toggle="tooltip" title="Campaign details"
