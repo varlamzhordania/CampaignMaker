@@ -57,10 +57,10 @@
                         <th scope="col">Customer</th>
                         <th scope="col">Package</th>
                         <th scope="col" style="white-space: nowrap">Details</th>
+                        <th scope="col">Resubmitted</th>
                         <th scope="col" class="text-wrap">Voice Broadcasting</th>
                         <th scope="col" style="white-space: nowrap">Text to Audio</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Resubmitted</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -77,6 +77,13 @@
                                          bg-primary-subtle text-black">
                                             Details
                                   </span>
+                            </td>
+                            <td>
+                                {% if campaign.is_resubmit %}
+                                    <i class="bi bi-check-circle-fill text-primary"></i>
+                                {% else %}
+                                    <i class="bi bi-check-circle text-secondary"></i>
+                                {% endif %}
                             </td>
                             {% if campaign.campaign_audio.file %}
                                 <td>
@@ -110,13 +117,6 @@
                                     <span class="badge bg-primary-subtle text-primary-emphasis">Processing</span>
                                 {% elif campaign.status == "complete" %}
                                     <span class="badge bg-success-subtle text-success-emphasis">Complete</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if campaign.is_resubmit %}
-                                    <i class="bi bi-check-circle-fill text-primary"></i>
-                                {% else %}
-                                    <i class="bi bi-check-circle text-secondary"></i>
                                 {% endif %}
                             </td>
                             <td align="center">

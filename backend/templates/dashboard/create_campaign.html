@@ -132,7 +132,7 @@
                                 <div class="col col-12">
                                     <label for="{{ form2.type.name }}"
                                            class="form-label">{{ form2.type.label }}</label>
-                                    <div class="position-relative d-flex align-items-center w-100 gap-1">
+                                    <div class="position-relative d-flex flex-column flex-md-row align-items-center w-100 gap-1">
                                         <div class="col col-12 col-md-6 col-lg-4">
                                             {{ form2.type }}
                                         </div>
@@ -407,6 +407,7 @@
             let collapseFifth = document.getElementById("collapseFifth");
             let htmlContent = document.getElementById("html_content");
             const campaignSelect = document.getElementById("campaign-type")
+            const emailTypeSelect = document.getElementById("campaignEmail-type")
             const formCampaignCreate = document.querySelector("form#form-campaign-create");
             const methodInput = document.getElementById("method");
             const fileInput = document.getElementById("campaignAudio-file")
@@ -426,7 +427,7 @@
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    body: "content=" + encodeURIComponent(data),
+                    body: "content=" + encodeURIComponent(data) + "&type=" + emailTypeSelect.value,
                 })
                 htmlContent.innerHTML = await result.text()
                 const result2 = await fetch(`${campaignTypesUrl}?id=${selectedValue}`, {
@@ -448,7 +449,7 @@
                     document.querySelector(".table-preview-body").innerHTML += `
                         <tr>
                             <td style="width: 75%">text to audio</td>
-                            <td>{{ page_setting.audio_price }}</td>
+                            <td>${{ page_setting.audio_price }}</td>
                         </tr>
                         `
                     price += parseFloat("{{ page_setting.audio_price }}")

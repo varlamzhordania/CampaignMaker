@@ -10,7 +10,7 @@ from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.http import JsonResponse
-
+from .callback import call_api
 
 @login_required(login_url="/")
 def CampaignRetrieve(request, pk, *args, **kwargs):
@@ -141,6 +141,7 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
     queryset.admin = request.user
     if status == "processing":
         queryset.is_resubmit = False
+        call_api(queryset)
     queryset.save()
     fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
     return redirect("campaign:adminCampaigns")
@@ -285,9 +286,20 @@ def EmailPreview(request, pk, *args, **kwargs):
     if request.method == "POST":
         queryset = get_object_or_404(CampaignEmailTemplate, id=pk)
         content = request.POST.get("content", None)
-        my_context = {
-            "content": queryset.get_rendered_content({"body": content})
-        }
+        type = request.POST.get("type", None)
+
+        if type:
+            type_obj = get_object_or_404(CampaignEmailType, id=type)
+            my_context = {
+                "content": queryset.get_rendered_content(
+                    {"body": content, "greeting": type_obj.name, "first_name": "john", "last_name": "doe"}
+                    ),
+                "type": type_obj.name
+            }
+        else:
+            my_context = {
+                "content": queryset.get_rendered_content({"body": content})
+            }
         return HttpResponse(my_context.get("content"), status=200)
     else:
         return HttpResponse("get not allowed", status=400)

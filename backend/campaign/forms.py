@@ -27,7 +27,7 @@ class CampaignAudioForm(forms.ModelForm):
         required=False,
         label=_("Select & Upload File"),
         help_text=_("File format will be .mp3/.m4a/.wav, max size 20MB, max duration 45 second"),
-        widget=forms.ClearableFileInput(
+        widget=forms.FileInput(
             attrs={
                 "class": "custom-file-input mx-auto",
                 "name": "campaignAudio-file",

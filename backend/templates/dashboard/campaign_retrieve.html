@@ -40,9 +40,9 @@
                 <h3 class="card-title">Selected Zips</h3>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-start align-items-center gap-2 w-100">
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-1 w-100">
                     {% for item in campaign.zips.all %}
-                        <span class="bg-light w-25 text-center fs-5 py-1 fw-bold rounded">
+                        <span class="bg-light text-center fs-5 py-1 fw-bold rounded" style="min-width: 150px">
                             {{ item.name }}
                         </span>
                     {% endfor %}

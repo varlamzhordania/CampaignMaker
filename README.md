@@ -113,7 +113,7 @@ The core and critical settings are managed in the .env file, where you can make 
 - `EMAIL_USE_TLS`: (False/True).
 - `EMAIL_HOST_USER`: user
 - `EMAIL_HOST_password`: password
-- 
+- `CALLBACK_API_URL`: full url of campaign approval call
 <h5>NOTE: for development you dont have to fill email service fields<h5/>
 <h5>NOTE: in production default database will be POSTGRESQL unless you change it at `production.py`<h5/>
 <h5>NOTE: in development mode will use SQLITE unless you change it at `development.py`<h5/>

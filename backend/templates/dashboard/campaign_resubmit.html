@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="col col-12 col-md-6 col-lg-4">
                         <label for="{{ form2.type.name }}" class="form-label">{{ form2.type.label }}</label>
-                        <div class="position-relative d-flex align-items-center w-100 gap-1">
+                        <div class="position-relative d-flex flex-column flex-md-row align-items-center w-100 gap-1">
                             <div class="col col-12 col-md-6 col-lg-8">
                                 {{ form2.type }}
                             </div>
@@ -107,7 +107,8 @@
                              aria-labelledby="upload-file-tab" tabindex="0">
                             <div class="row g-3 my-3 ">
                                 <div class="col col-12 col-md-6 col-lg-4 justify-content-center d-grid align-items-center w-100 text-center">
-                                    <input type="hidden" id="audio-instance" name="audio-instance" value="{{ audio_instance }}">
+                                    <input type="hidden" id="audio-instance" name="audio-instance"
+                                           value="{{ audio_instance }}">
                                     {{ form4.file }}
                                     <label for="{{ form4.file.name }}"
                                            class="form-label my-2">{{ form4.file.label }}</label>
@@ -141,7 +142,7 @@
     <script>
         CKEDITOR.on("instanceReady", (e) => {
             const textArea = CKEDITOR.instances.campaignEmailBody;
-
+            const emailTypeSelect = document.getElementById("campaignEmail-type")
             let htmlContent = document.getElementById("html_content");
 
             document.getElementById("show-preview").addEventListener("click", async function () {
@@ -156,7 +157,7 @@
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    body: "content=" + encodeURIComponent(data),
+                    body: "content=" + encodeURIComponent(data) + "&type=" + emailTypeSelect.value,
                 })
                 htmlContent.innerHTML = await result.text()
             });
