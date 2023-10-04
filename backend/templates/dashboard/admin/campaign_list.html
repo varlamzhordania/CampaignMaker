@@ -139,6 +139,13 @@
                                             <i class="bi bi-file-music"></i>
                                         </span>
                                     {% endif %}
+                                    {% if campaign.status == "processing" %}
+                                        <a href="{% url "campaign:adminCampaignsAction" id=campaign.id status="complete" %}"
+                                           data-bs-toggle="tooltip" title="Complete campaign" class="text-primary fs-5"
+                                           disabled>
+                                            <i class="bi bi-check2-all"></i>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </td>
                         </tr>

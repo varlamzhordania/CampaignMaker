@@ -108,7 +108,7 @@ def AdminCampaignAudio(request, *args, **kwargs):
         form = CampaignAudioForm(instance=queryset, files=request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.text = ""
+            # obj.text = ""
             obj.save()
             fancy_message(request, f"Campaign-{obj.id} : audio file updated", level="success")
             return redirect("campaign:adminCampaigns")
