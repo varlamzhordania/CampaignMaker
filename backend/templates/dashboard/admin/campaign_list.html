@@ -56,8 +56,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Customer</th>
                         <th scope="col">Package</th>
-                        <th scope="col" style="white-space: nowrap">Details</th>
                         <th scope="col">Resubmitted</th>
+                        <th scope="col" style="white-space: nowrap">Details</th>
                         <th scope="col" class="text-wrap">Voice Broadcasting</th>
                         <th scope="col" style="white-space: nowrap">Text to Audio</th>
                         <th scope="col">Status</th>
@@ -71,19 +71,19 @@
                             <td>{{ campaign.customer.username }}</td>
                             <td>{{ campaign.type }}</td>
                             <td>
+                                {% if campaign.is_resubmit %}
+                                    <i class="bi bi-check-circle-fill text-primary"></i>
+                                {% else %}
+                                    <i class="bi bi-check-circle text-secondary"></i>
+                                {% endif %}
+                            </td>
+                            <td>
                                   <span role="button" data-bs-toggle="tooltip" title="Campaign details"
                                         data-ca="{{ campaign.id }}"
                                         class="details-button btn btn-primary border-1
                                          bg-primary-subtle text-black">
                                             Details
                                   </span>
-                            </td>
-                            <td>
-                                {% if campaign.is_resubmit %}
-                                    <i class="bi bi-check-circle-fill text-primary"></i>
-                                {% else %}
-                                    <i class="bi bi-check-circle text-secondary"></i>
-                                {% endif %}
                             </td>
                             {% if campaign.campaign_audio.file %}
                                 <td>
