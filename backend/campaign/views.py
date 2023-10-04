@@ -39,10 +39,10 @@ def CampaignResubmit(request, pk, *args, **kwargs):
                     form4 = CampaignAudioForm(instance=campaign_audio, data=request.POST, files=request.FILES)
                     if form4.is_valid():
                         campaign.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
+                        campaign.is_resubmit = True
                         campaign.save()
                         form2.save()
                         form3.save()
-
                         form4_obj = form4.save()
                         if form4_obj.file and form4_obj.text:
                             form4_obj.text = ""
