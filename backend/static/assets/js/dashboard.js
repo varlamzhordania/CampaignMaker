@@ -14,7 +14,7 @@ const disapproveButtons = document.querySelectorAll(".disapprove-button")
 const changeAudioButtons = document.querySelectorAll(".change-audio-button")
 const showResultButtons = document.querySelectorAll(".show-result-button")
 const detailsButtons = document.querySelectorAll(".details-button")
-
+const campaignRows = document.querySelectorAll(".campaign-row")
 
 let dataTable;
 
@@ -301,5 +301,3 @@ emailTemplates.forEach(item => {
             emailFormContainer.classList.remove("visually-hidden")
     })
 })
-
-

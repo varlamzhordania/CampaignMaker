@@ -62,7 +62,7 @@
                                 {% if campaign.get_days_difference >= page_setting.show_result and campaign.status == "processing" or campaign.status == "complete" %}
                                     <span role="button" data-bs-toggle="tooltip" title="Show result"
                                           data-ca="{{ campaign.id }}" class="show-result-button text-secondary fs-5 ">
-                                        <i class="bi bi-eye-fill"></i>
+                                        <i class="bi bi-clipboard-data-fill"></i>
                                     </span>
                                 {% endif %}
                                 {% if campaign.status == "payment" or campaign.status == "disapproved" or campaign.status == "wait" %}
@@ -72,6 +72,10 @@
                                         <i class="bi bi-x"></i>
                                     </a>
                                 {% endif %}
+                                <a href="{% url "campaign:campaignRetrieve" campaign.id %}" data-bs-toggle="tooltip"
+                                   title="More" class="text-secondary">
+                                    <i class="bi bi-three-dots-vertical "></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

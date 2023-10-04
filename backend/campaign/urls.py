@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import Dashboard, AdminCampaignList, AdminCampaignActions, CampaignCreate, CampaignResubmit, EmailPreview, \
-    AdminCampaignNote, AdminCampaignAudio, ListOfEmailTemplates, CampaignActions, ListOfCampaignsType, ListOfCampaigns
+    AdminCampaignNote, AdminCampaignAudio, ListOfEmailTemplates, CampaignActions, ListOfCampaignsType, ListOfCampaigns, \
+    CampaignRetrieve
 
 app_name = 'campaign'
 
@@ -8,6 +9,7 @@ urlpatterns = [
 
     # user urls
     path("dashboard/", Dashboard, name="dashboard"),
+    path("dashboard/campaign/<int:pk>/", CampaignRetrieve, name="campaignRetrieve"),
     path("dashboard/preview/email/<int:pk>/", EmailPreview, name="emailPreview"),
     path("dashboard/campaign/create/", CampaignCreate, name="campaignCreate"),
     path("dashboard/campaign/resubmit/<int:pk>/", CampaignResubmit, name="campaignResubmit"),

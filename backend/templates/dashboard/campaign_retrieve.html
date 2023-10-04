@@ -1,0 +1,97 @@
+{% extends "dashboard/index.html" %}
+{% block content %}
+    <div class="d-flex flex-column gap-4 justify-content-center align-items-center w-100">
+        <div class="card border-0 w-100">
+            <div class="card-body">
+                <div class="table-responsive w-100 mb-5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 75%">Package</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="width: 75%">{{ campaign.type.name }}</td>
+                            <td>${{ campaign.type.price }}</td>
+                        </tr>
+                        {% if campaign.campaign_audio.text %}
+                            <tr>
+                                <td style="width: 75%">text to audio</td>
+                                {% if campaign.campaign_transaction %}
+                                    <td>{{ campaign.campaign_transaction.get_audio_price }}</td>
+                                {% else %}
+                                    <td>${{ page_setting.audio_price }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td style="width: 75%"></td>
+                            <td class="fs-4 fw-bold">${{ campaign.get_price }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0 w-100">
+            <div class="card-header bg-transparent">
+                <h3 class="card-title">Selected Zips</h3>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-start align-items-center gap-2 w-100">
+                    {% for item in campaign.zips.all %}
+                        <span class="bg-light w-25 text-center fs-5 py-1 fw-bold rounded">
+                            {{ item.name }}
+                        </span>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card border-0 w-100">
+            <div class="card-header bg-transparent">
+                <h3 class="card-title">SMS</h3>
+            </div>
+            <div class="card-body">
+                <span class="text-secondary">
+                    Salutation Type:
+                </span>
+                <p class="bg-light fs-5 p-2 mx-2 my-2 rounded">
+                    {{ campaign.campaign_sms.type.name }}
+                </p>
+                <span class="text-secondary">
+                    Body:
+                </span>
+                <p class="bg-light fs-5 p-2 mx-2 my-2 rounded">
+                    {{ campaign.campaign_sms.body }}
+                </p>
+            </div>
+        </div>
+        <div class="card border-0 w-100">
+            <div class="card-header bg-transparent">
+                <h3 class="card-title">Email</h3>
+            </div>
+            <div class="card-body d-grid">
+                <div style="justify-self: center" >
+                    <img src="{{ campaign.email_template.thumbnail.url }}" alt="{{ campaign.email_template.name }}"
+                         width="200" height="200" class="border border-2 border-primary rounded"/>
+                </div>
+                <span class="text-secondary">
+                    Salutation Type:
+                </span>
+                <p class="bg-light fs-5 p-2 mx-2 my-2 rounded">
+                    {{ campaign.campaign_email.type.name }}
+                </p>
+                <span class="text-secondary">
+                    Body:
+                </span>
+                <p class="mx-1">
+                    {{ campaign.campaign_email.body|safe }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

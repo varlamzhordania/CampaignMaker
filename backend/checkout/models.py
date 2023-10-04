@@ -67,3 +67,8 @@ class CampaignTransaction(models.Model):
 
     def __str__(self):
         return f"{self.customer} : {self.payment_id}"
+
+    def get_audio_price(self):
+        amount = self.amount
+        amount -= self.campaign.type.price
+        return amount

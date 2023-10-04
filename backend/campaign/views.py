@@ -13,6 +13,17 @@ from django.http import JsonResponse
 
 
 @login_required(login_url="/")
+def CampaignRetrieve(request, pk, *args, **kwargs):
+    query = get_object_or_404(Campaign, id=pk, customer=request.user)
+
+    my_context = {
+        "Title": f"Campaign-{pk}",
+        "campaign": query
+    }
+    return render(request, "dashboard/campaign_retrieve.html", my_context)
+
+
+@login_required(login_url="/")
 def CampaignResubmit(request, pk, *args, **kwargs):
     campaign = get_object_or_404(Campaign, id=pk, status="disapproved", customer=request.user)
     campaign_sms = CampaignSMS.objects.get(campaign_id=campaign.id)

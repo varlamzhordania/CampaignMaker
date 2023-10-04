@@ -303,6 +303,7 @@ class Campaign(models.Model):
             price += Settings.objects.first().audio_price
         return price
 
+
     def get_days_difference(self):
         today = timezone.now()
         difference = today.date() - self.create_at.date()
