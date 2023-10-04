@@ -13,6 +13,8 @@ const emailFormContainer = document.getElementById("email-form-container")
 const disapproveButtons = document.querySelectorAll(".disapprove-button")
 const changeAudioButtons = document.querySelectorAll(".change-audio-button")
 const showResultButtons = document.querySelectorAll(".show-result-button")
+const detailsButtons = document.querySelectorAll(".details-button")
+
 
 let dataTable;
 
@@ -155,6 +157,43 @@ showResultButtons.forEach(button => {
     )
 })
 
+
+detailsButtons.forEach(button => {
+    button.addEventListener("click", async (e) => {
+        const campaign_id = e.currentTarget.getAttribute("data-ca")
+        document.getElementById("details-modal-title").innerHTML = `Campaign-${campaign_id}`
+        const result = await fetch(`/dashboard/admin/campaigns/list/?id=${campaign_id}`, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            }
+        })
+        const data = await result.json()
+        document.getElementById("details-modal-body").innerHTML =
+            `
+            <div class="card border-1 my-3">
+                <div class="card-header">
+                    SMS
+                </div>
+                <div class="card-body">
+                    ${data[0]?.sms?.body}
+                </div>
+            </div>
+            
+            <div class="card border-1 my-3">
+                <div class="card-header">
+                    Email
+                </div>
+                <div class="card-body">
+                <p>Subject: ${data[0]?.email?.subject}</p>
+                    ${data[0]?.email?.body}
+                </div>
+            </div>
+            `
+        detailsModal.show()
+    })
+})
 
 disapproveButtons.forEach(button => {
     button.addEventListener("click", (e) => {

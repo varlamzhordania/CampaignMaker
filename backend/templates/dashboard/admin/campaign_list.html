@@ -55,8 +55,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Package</th>
-                        <th scope="col" style="white-space: nowrap">Email sent</th>
-                        <th scope="col" style="white-space: nowrap">SMS sent</th>
+                        <th scope="col" style="white-space: nowrap">Details</th>
                         <th scope="col" class="text-wrap">Voice Broadcasting</th>
                         <th scope="col" style="white-space: nowrap">Text to Audio</th>
                         <th scope="col">Status</th>
@@ -70,10 +69,12 @@
                             <td><b>{{ campaign.id }}</b></td>
                             <td>{{ campaign.type }}</td>
                             <td>
-                                {{ campaign.campaign_email.body|safe }}
-                            </td>
-                            <td>
-                                {{ campaign.campaign_sms.body }}
+                                  <span role="button" data-bs-toggle="tooltip" title="Campaign details"
+                                        data-ca="{{ campaign.id }}"
+                                        class="details-button btn btn-primary border-1
+                                         bg-primary-subtle text-black">
+                                            Details
+                                  </span>
                             </td>
                             {% if campaign.campaign_audio.file %}
                                 <td>
@@ -126,8 +127,8 @@
                                         </a>
                                         <span role="button" data-bs-toggle="tooltip" title="Disapprove campaign"
                                               data-ca="{{ campaign.id }}" class="disapprove-button text-danger fs-5 ">
-                                <i class="bi bi-x-square"></i>
-                            </span>
+                                            <i class="bi bi-x-square"></i>
+                                        </span>
                                     {% endif %}
                                     {% if campaign.campaign_audio.text and campaign.status != "cancel" %}
                                         <span role="button" data-bs-toggle="tooltip" title="Change audio file"
@@ -178,6 +179,26 @@
                     </li>
                 </ul>
             </nav>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="details-modal" tabindex="-1" aria-labelledby="details-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="details-modal-title">Campaign</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="details-modal-body">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -237,5 +258,6 @@
     <script>
         const disapproveModal = new bootstrap.Modal('#disapprove-modal')
         const changeAudioModal = new bootstrap.Modal('#change-audio-modal')
+        const detailsModal = new bootstrap.Modal('#details-modal')
     </script>
 {% endblock %}

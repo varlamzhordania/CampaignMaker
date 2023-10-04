@@ -196,6 +196,7 @@ def Dashboard(request, *args, **kwargs):
     return render(request, "dashboard/dashboard.html", my_context)
 
 
+@login_required(login_url="/")
 def ListOfEmailTemplates(request, *args, **kwargs):
     queryset = CampaignEmailTemplate.objects.filter(is_active=True)
     serializer = [
@@ -210,6 +211,41 @@ def ListOfEmailTemplates(request, *args, **kwargs):
     return JsonResponse(serializer, safe=False)
 
 
+@login_required(login_url="/")
+@user_passes_test(is_admin, login_url="/")
+def ListOfCampaigns(request, *args, **kwargs):
+    queryset = Campaign.objects.all()
+    params = request.GET.get("id", None)
+    if params:
+        queryset = queryset.filter(id=params)
+    serializer = [
+        {
+            "id": item.id,
+            "customer": item.customer.username,
+            "type": {
+                "id": item.type.id,
+                "name": item.type.name,
+                "slug": item.type.slug,
+                "price": item.type.price,
+            },
+            "email": {
+                "id":item.campaign_email.id,
+                "subject": item.campaign_email.subject,
+                "body": item.campaign_email.body,
+
+            },
+            "sms": {
+                "id": item.campaign_sms.id,
+                "body": item.campaign_sms.body,
+            },
+        }
+        for item in queryset
+    ]
+
+    return JsonResponse(serializer, safe=False)
+
+
+@login_required(login_url="/")
 def ListOfCampaignsType(request, *args, **kwargs):
     queryset = CampaignType.objects.filter(is_active=True)
     params = request.GET.get("id", None)
