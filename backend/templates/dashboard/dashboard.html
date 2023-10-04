@@ -123,6 +123,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body ">
+                    <label for="result-search" class="form-label">Search :</label>
+                    <input type="text" name="result-search" id="result-search" class="form-control"
+                           placeholder="Search state, zip code ...">
                     <input type="hidden" value="{{ base_url }}" name="base-url" id="base-url"/>
                     <div class="table-responsive">
                         <table id="show-result-table" class="table table-hover" style="width:100%">

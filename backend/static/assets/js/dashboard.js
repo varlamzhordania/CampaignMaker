@@ -21,8 +21,8 @@ const itemsPerPage = 100;
 let currentPage = 1;
 
 
-const fetchResult = async (base_url, campaign_id) => {
-    const result = await fetch(`${base_url}/campaigns/${campaign_id}/paged_masked_calls?page=${currentPage}&per_page=${itemsPerPage}`, {
+const fetchResult = async (base_url, campaign_id, query) => {
+    const result = await fetch(`${base_url}/campaigns/${campaign_id}/paged_masked_calls?page=${currentPage}&per_page=${itemsPerPage}&search=${query}`, {
         method: "get",
         headers: {
             "Content-Type": "application/json",
@@ -37,14 +37,16 @@ const fetchResult = async (base_url, campaign_id) => {
 showResultButtons.forEach(button => {
     button.addEventListener("click", async (e) => {
             const campaign_id = e.currentTarget.getAttribute("data-ca")
+            let searchValue = ""
             const base_url = document.getElementById("base-url").value
             const table = document.getElementById("show-result-table-body")
             const user = table.getAttribute("data-ca")
             const showResultPaginationBody = document.getElementById("result-pagination-body")
+            const searchInput = document.getElementById("result-search")
             document.getElementById("show-result-label").innerHTML = `Show Result Campaign-${campaign_id}`
             showResultModal.show()
             try {
-                const data = await fetchResult(base_url, campaign_id)
+                const data = await fetchResult(base_url, campaign_id, searchValue)
 
                 const paginationOptions = data["pagination"]
                 showResultPaginationBody.innerHTML = ""
@@ -73,21 +75,43 @@ showResultButtons.forEach(button => {
                         paging: false,
                         lengthChange: false,
                         pageLength: pageLength,
+                        searching: false,
                     });
                 } else {
                     dataTable.clear().rows.add(data["calls"]).draw()
                 }
 
-                const paginationButtons = document.querySelectorAll(".show-result-pagination-button")
 
-                paginationButtons.forEach(item => {
-                    item.addEventListener("click", async (e) => {
-                        currentPage = e.currentTarget.getAttribute("data-page")
-                        const result = await fetchResult(base_url, campaign_id)
-                        dataTable.clear().rows.add(result["calls"]).draw()
-                        document.querySelector(`.page.active`).classList.remove("active")
-                        item.classList.add("active")
+                const paginationBehavior = () => {
+                    const paginationButtons = document.querySelectorAll(".show-result-pagination-button")
+                    paginationButtons.forEach(item => {
+                        item.addEventListener("click", async (e) => {
+                            currentPage = e.currentTarget.getAttribute("data-page")
+                            const result = await fetchResult(base_url, campaign_id, searchValue)
+                            dataTable.clear().rows.add(result["calls"]).draw()
+                            document.querySelector(`.page.active`).classList.remove("active")
+                            item.classList.add("active")
+                        })
                     })
+
+                }
+                paginationBehavior()
+
+                searchInput.addEventListener("input", async (e) => {
+                    searchValue = e.target.value
+                    const result = await fetchResult(base_url, campaign_id, searchValue)
+                    dataTable.clear().rows.add(result["calls"]).draw()
+                    const paginationOptions = result["pagination"]
+                    showResultPaginationBody.innerHTML = ""
+                    for (let i = 1; i <= paginationOptions.total_pages; i++) {
+                        showResultPaginationBody.innerHTML += `
+                       <li class="page-item ">
+                           <button class="page-link show-result-pagination-button page" id="page-${i}" data-page="${i}">${i}</button>
+                       </li>
+                    `
+                    }
+                    document.querySelector("#page-1").classList.add("active")
+                    paginationBehavior()
                 })
 
                 dataTable.on("click", "tr", async function () {
@@ -174,33 +198,35 @@ Array.from(stepNext).forEach((button, index) => {
 
 function checkFormCompletion() {
     let currentStepForm = document.querySelector('.collapse.show');
-    let requiredFields = currentStepForm.querySelectorAll('[required]');
-    let isFormComplete = true;
-    let counter
+    if (currentStepForm) {
+        let requiredFields = currentStepForm.querySelectorAll('[required]');
+        let isFormComplete = true;
+        let counter
+        if (requiredFields)
+            requiredFields.forEach(function (field) {
+                if (!field.value) {
+                    isFormComplete = false;
+                }
+            });
+        let button_one = currentStepForm.classList.contains("one")
+        let button_two = currentStepForm.classList.contains("two")
+        let button_three = currentStepForm.classList.contains("three")
+        let button_forth = currentStepForm.classList.contains("forth")
 
-    requiredFields.forEach(function (field) {
-        if (!field.value) {
-            isFormComplete = false;
+
+        if (button_one)
+            counter = "one"
+        if (button_two)
+            counter = "two"
+        if (button_three)
+            counter = "three"
+        if (button_forth)
+            counter = "forth"
+
+        if (counter !== null || counter !== "undefined" || counter !== undefined) {
+            let nextButton = document.querySelector(`.step-next.${counter}`);
+            nextButton.disabled = !isFormComplete;
         }
-    });
-    let button_one = currentStepForm.classList.contains("one")
-    let button_two = currentStepForm.classList.contains("two")
-    let button_three = currentStepForm.classList.contains("three")
-    let button_forth = currentStepForm.classList.contains("forth")
-
-
-    if (button_one)
-        counter = "one"
-    if (button_two)
-        counter = "two"
-    if (button_three)
-        counter = "three"
-    if (button_forth)
-        counter = "forth"
-
-    if (counter !== null || counter !== "undefined" || counter !== undefined) {
-        let nextButton = document.querySelector(`.step-next.${counter}`);
-        nextButton.disabled = !isFormComplete;
     }
 
 }
