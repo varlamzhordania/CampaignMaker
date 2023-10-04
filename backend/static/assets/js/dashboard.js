@@ -190,6 +190,15 @@ detailsButtons.forEach(button => {
                     ${data[0]?.email?.body}
                 </div>
             </div>
+            
+            <div class="card border-1 my-3">
+                <div class="card-header">
+                    Audio
+                </div>
+                <div class="card-body">
+                    ${data[0]?.audio?.text}
+                </div>
+            </div>
             `
         detailsModal.show()
     })

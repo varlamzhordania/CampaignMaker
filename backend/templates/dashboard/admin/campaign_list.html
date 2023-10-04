@@ -90,9 +90,9 @@
                             {% endif %}
                             <td>
                                 {% if campaign.campaign_audio.text %}
-                                    {{ campaign.campaign_audio.text }}
+                                    <i class="bi bi-check-circle-fill text-success"></i>
                                 {% else %}
-                                    No text found
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
                                 {% endif %}
                             </td>
                             <td>

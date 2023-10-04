@@ -229,7 +229,7 @@ def ListOfCampaigns(request, *args, **kwargs):
                 "price": item.type.price,
             },
             "email": {
-                "id":item.campaign_email.id,
+                "id": item.campaign_email.id,
                 "subject": item.campaign_email.subject,
                 "body": item.campaign_email.body,
 
@@ -238,6 +238,10 @@ def ListOfCampaigns(request, *args, **kwargs):
                 "id": item.campaign_sms.id,
                 "body": item.campaign_sms.body,
             },
+            "audio": {
+                "id": item.campaign_audio.id,
+                "text": item.campaign_audio.text,
+            }
         }
         for item in queryset
     ]
