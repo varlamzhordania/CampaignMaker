@@ -325,19 +325,8 @@
                                         <th scope="col">Price</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td style="width: 75%">Package 1</td>
-                                        <td>$99.99</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 75%">text to audio</td>
-                                        <td>$10</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 75%"></td>
-                                        <td class="fs-4 fw-bold">$109.99</td>
-                                    </tr>
+                                    <tbody class="table-preview-body">
+
                                     </tbody>
                                 </table>
                             </div>
@@ -382,13 +371,20 @@
         CKEDITOR.on("instanceReady", (e) => {
 
             const textArea = CKEDITOR.instances.campaignEmailBody;
-            let collapseForth = document.getElementById("collapseForth");
-
+            let collapseFifth = document.getElementById("collapseFifth");
             let htmlContent = document.getElementById("html_content");
+            const campaignSelect = document.getElementById("campaign-type")
+            const formCampaignCreate = document.querySelector("form#form-campaign-create");
+            const methodInput = document.getElementById("method");
+            const fileInput = document.getElementById("campaignAudio-file")
+            const textInput = document.getElementById("campaignAudio-text")
 
-            collapseForth.addEventListener("show.bs.collapse", async function () {
+            collapseFifth.addEventListener("show.bs.collapse", async function () {
+                let selectedValue = campaignSelect.value
                 const selectInput = document.getElementById("selected-template")
                 const value = parseInt(selectInput.value)
+                let price = 0
+                let campaignTypesUrl = "{% url "campaign:campaignTypeList" %}"
                 let url = "{% url "campaign:emailPreview" 0  %}"
                 let new_url = url.replace("0", value.toString())
                 const data = textArea.getData()
@@ -400,15 +396,41 @@
                     body: "content=" + encodeURIComponent(data),
                 })
                 htmlContent.innerHTML = await result.text()
+                const result2 = await fetch(`${campaignTypesUrl}?id=${selectedValue}`, {
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                })
+                const data2 = await result2.json()
+                price = parseFloat(data2[0].price)
+                document.querySelector(".table-preview-body").innerHTML = `
+                    <tr>
+                        <td style="width: 75%">${data2[0].name}</td>
+                        <td>$${data2[0].price}</td>
+                    </tr>
+                `
+                if (textInput.value.trim() !== "" && textInput.value.length > 0) {
+                    document.querySelector(".table-preview-body").innerHTML += `
+                        <tr>
+                            <td style="width: 75%">text to audio</td>
+                            <td>{{ page_setting.audio_price }}</td>
+                        </tr>
+                        `
+                    price += parseFloat("{{ page_setting.audio_price }}")
+                }
+                document.querySelector(".table-preview-body").innerHTML += `
+                <tr>
+                    <td style="width: 75%"></td>
+                    <td class="fs-4 fw-bold">$${price}</td>
+                </tr>
+                    `
             });
 
-            const formCampaignCreate = document.querySelector("form#form-campaign-create");
-            const methodInput = document.getElementById("method");
-            const fileInput = document.getElementById("campaignAudio-file")
-            const textInput = document.getElementById("campaignAudio-text")
 
             textInput.addEventListener("input", (e) => {
-                    document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length}/{{ page_setting.audio_text_length }}`
+                    document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length} / {{ page_setting.audio_text_length }}`
                 }
             )
 

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
 from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, CampaignEmail, \
-    CampaignEmailTemplate
+    CampaignEmailTemplate, CampaignType
 from core.utils import fancy_message, is_admin, string_to_context
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
@@ -203,6 +203,24 @@ def ListOfEmailTemplates(request, *args, **kwargs):
             "id": item.id,
             "template": item.template.url,
             "image": item.thumbnail.url,
+        }
+        for item in queryset
+    ]
+
+    return JsonResponse(serializer, safe=False)
+
+
+def ListOfCampaignsType(request, *args, **kwargs):
+    queryset = CampaignType.objects.filter(is_active=True)
+    params = request.GET.get("id", None)
+    if params:
+        queryset = queryset.filter(id=params)
+    serializer = [
+        {
+            "id": item.id,
+            "name": item.name,
+            "slug": item.slug,
+            "price": item.price,
         }
         for item in queryset
     ]
