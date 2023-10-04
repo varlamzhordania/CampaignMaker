@@ -104,12 +104,13 @@ def AdminCampaignNote(request, *args, **kwargs):
 @user_passes_test(is_admin, login_url="/")
 def AdminCampaignAudio(request, *args, **kwargs):
     if request.method == "POST":
-        queryset = get_object_or_404(CampaignAudio, id=request.POST.get("change-audio-campaign-id", 0))
-        form = CampaignAudioForm(instance=queryset, files=request.FILES)
+        queryset = get_object_or_404(CampaignAudio, campaign_id=request.POST.get("change-audio-campaign-id", 0))
+        data = {
+            "text": queryset.text
+        }
+        form = CampaignAudioForm(instance=queryset, data=data, files=request.FILES)
         if form.is_valid():
-            obj = form.save(commit=False)
-            # obj.text = ""
-            obj.save()
+            obj = form.save()
             fancy_message(request, f"Campaign-{obj.id} : audio file updated", level="success")
             return redirect("campaign:adminCampaigns")
         else:
