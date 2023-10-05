@@ -331,7 +331,7 @@ def CampaignCreate(request, *args, **kwargs):
             zip_code = request.POST.get(f"select-{i}", None)
             if zip_code and zip_code != "empty":
                 zip_selects.append(int(zip_code))
-        if len(zip_selects) > 1:
+        if len(zip_selects) > 0:
             form1 = CampaignForm(campaign_data)
             if selected_template:
                 if form1.is_valid():
@@ -375,7 +375,7 @@ def CampaignCreate(request, *args, **kwargs):
     form1 = CampaignForm(initial=campaign_data)
     form2 = CampaignSMSForm(initial=campaign_sms_data)
     form3 = CampaignEmailForm(initial=campaign_email_data)
-    form4 = CampaignAudioForm(initial=request.POST,files=request.FILES)
+    form4 = CampaignAudioForm(initial=request.POST, files=request.FILES)
     zips = CampaignZip.objects.filter(is_active=True)
     email_templates = CampaignEmailTemplate.objects.filter(is_active=True)
     my_context = {
