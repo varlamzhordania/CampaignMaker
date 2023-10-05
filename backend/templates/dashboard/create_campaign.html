@@ -76,8 +76,8 @@
                                 </div>
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-1" class="form-label">Zip #1</label>
-                                    <select id="zip-1" class="form-select" name="select-1">
-                                        <option disabled>Select an option</option>
+                                    <select id="zip-1" class="form-select" name="select-1" required>
+                                        <option value="empty">Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -86,7 +86,7 @@
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-2" class="form-label">Zip #2</label>
                                     <select id="zip-2" class="form-select" name="select-2">
-                                        <option disabled>Select an option</option>
+                                        <option value="empty">Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -95,7 +95,7 @@
                                 <div class="col col-12 col-md-6 col-lg-4">
                                     <label for="zip-3" class="form-label">Zip #3</label>
                                     <select id="zip-3" class="form-select" name="select-3">
-                                        <option disabled>Select an option</option>
+                                        <option value="empty">Select an option</option>
                                         {% for zip in zips %}
                                             <option value="{{ zip.id }}">{{ zip.name }}</option>
                                         {% endfor %}
@@ -110,6 +110,7 @@
                             <button class="step-next one btn btn-primary my-4 float-end collapsed" type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                                    disabled
                             >
                                 Next <i class="bi bi-chevron-right"></i>
                             </button>

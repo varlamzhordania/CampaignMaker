@@ -325,49 +325,57 @@ def CampaignCreate(request, *args, **kwargs):
             "subject": request.POST.get("subject"),
             "body": request.POST.getlist("body")[1]
         }
-        zip_selects = [request.POST.get("select-1"), request.POST.get("select-2"), request.POST.get("select-3")]
-        form1 = CampaignForm(campaign_data)
-        if selected_template:
-            if form1.is_valid():
-                form2 = CampaignSMSForm(campaign_sms_data)
-                if form2.is_valid():
-                    form3 = CampaignEmailForm(campaign_email_data)
-                    if form3.is_valid():
-                        form4 = CampaignAudioForm(request.POST, files=request.FILES)
-                        if form4.is_valid():
-                            campaign_obj = form1.save(commit=False)
-                            campaign_obj.customer = request.user
-                            campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
-                            campaign_obj.save()
-                            campaign_obj.zips.set(zip_selects)
-                            sms_obj = form2.save(commit=False)
-                            sms_obj.campaign = campaign_obj
-                            sms_obj.save()
-                            email_obj = form3.save(commit=False)
-                            email_obj.campaign = campaign_obj
-                            email_obj.save()
-                            audio_obj = form4.save(commit=False)
-                            audio_obj.campaign = campaign_obj
-                            audio_obj.save()
-                            fancy_message(request, "New campaign successfully created", level="success")
-                            if request.POST["payment_method"] == "pay":
-                                return redirect(f"/checkout/payment/{campaign_obj.id}/")
+        zip_selects = []
+
+        for i in range(1, 4):
+            zip_code = request.POST.get(f"select-{i}", None)
+            if zip_code and zip_code != "empty":
+                zip_selects.append(int(zip_code))
+        if len(zip_selects) > 1:
+            form1 = CampaignForm(campaign_data)
+            if selected_template:
+                if form1.is_valid():
+                    form2 = CampaignSMSForm(campaign_sms_data)
+                    if form2.is_valid():
+                        form3 = CampaignEmailForm(campaign_email_data)
+                        if form3.is_valid():
+                            form4 = CampaignAudioForm(request.POST, files=request.FILES)
+                            if form4.is_valid():
+                                campaign_obj = form1.save(commit=False)
+                                campaign_obj.customer = request.user
+                                campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
+                                campaign_obj.save()
+                                campaign_obj.zips.set(zip_selects)
+                                sms_obj = form2.save(commit=False)
+                                sms_obj.campaign = campaign_obj
+                                sms_obj.save()
+                                email_obj = form3.save(commit=False)
+                                email_obj.campaign = campaign_obj
+                                email_obj.save()
+                                audio_obj = form4.save(commit=False)
+                                audio_obj.campaign = campaign_obj
+                                audio_obj.save()
+                                fancy_message(request, "New campaign successfully created", level="success")
+                                if request.POST["payment_method"] == "pay":
+                                    return redirect(f"/checkout/payment/{campaign_obj.id}/")
+                                else:
+                                    return redirect(f"campaign:dashboard")
                             else:
-                                return redirect(f"campaign:dashboard")
+                                fancy_message(request, form4.errors, level="error")
                         else:
-                            fancy_message(request, form4.errors, level="error")
+                            fancy_message(request, form3.errors, level="error")
                     else:
-                        fancy_message(request, form3.errors, level="error")
+                        fancy_message(request, form2.errors, level="error")
                 else:
-                    fancy_message(request, form2.errors, level="error")
+                    fancy_message(request, form1.errors, level="error")
             else:
-                fancy_message(request, form1.errors, level="error")
+                fancy_message(request, "please select an email template", level="error")
         else:
-            fancy_message(request, "please select an email template", level="error")
+            fancy_message(request, "please select zip codes", level="error")
     form1 = CampaignForm(initial=campaign_data)
     form2 = CampaignSMSForm(initial=campaign_sms_data)
     form3 = CampaignEmailForm(initial=campaign_email_data)
-    form4 = CampaignAudioForm(request.FILES)
+    form4 = CampaignAudioForm(initial=request.POST,files=request.FILES)
     zips = CampaignZip.objects.filter(is_active=True)
     email_templates = CampaignEmailTemplate.objects.filter(is_active=True)
     my_context = {
