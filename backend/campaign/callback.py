@@ -1,14 +1,13 @@
-import os
 from bs4 import BeautifulSoup
 import requests
 from .models import Settings
 
 from bs4 import BeautifulSoup
-
+from django.conf import settings as django_settings
 
 def call_api(model):
     setting = Settings.objects.first()
-    url = os.getenv("CALLBACK_API_URL")
+    url = django_settings.CALLBACK_API_ENDPOINT
     try:
         zips = [item.code for item in model.zips.all()]
 
