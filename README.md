@@ -113,10 +113,10 @@ The core and critical settings are managed in the .env file, where you can make 
 - `EMAIL_USE_TLS`: (False/True).
 - `EMAIL_HOST_USER`: user
 - `EMAIL_HOST_password`: password
-- `CALLBACK_API_URL`: full url of campaign approval call
-<h5>NOTE: for development you dont have to fill email service fields<h5/>
-<h5>NOTE: in production default database will be POSTGRESQL unless you change it at `production.py`<h5/>
-<h5>NOTE: in development mode will use SQLITE unless you change it at `development.py`<h5/>
+- `CALLBACK_API_URL`: full url of campaign status approval call
+  <h5>NOTE: for development you dont have to fill email service fields<h5/>
+  <h5>NOTE: in production default database will be POSTGRESQL unless you change it at `production.py`<h5/>
+  <h5>NOTE: in development mode will use SQLITE unless you change it at `development.py`<h5/>
 
 ## Stripe CLI
 
@@ -127,6 +127,19 @@ instructions on its usage.
 <h5>NOTE: without webhook, campaign status wont change after payment and set stripe webhook
 at `localhost:8000/checkout/webhook/`<h5/>
 
+## Webhook
+
+To change the status of a campaign from your backend server, you can initiate a POST request to the following URL:
+
+- URL: `<your_domain>/dashboard/campaign/webhook/`
+- Method: `POST`
+- Parameters:
+  - `campaign_id`: The campaign ID you wish to update the status for.
+  - `status`: The desired status to set for the campaign.
+
+Note: Please select the desired status from the following list: [cancel, payment, disapproved, wait, processing, complete]
+
+This webhook enables seamless integration for managing campaign statuses within your application.
 ## Additional Information
 
 You can find more information and documentation for Django at [Django Documentation](https://docs.djangoproject.com/).

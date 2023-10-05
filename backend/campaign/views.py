@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from .callback import call_api
 
+
 @login_required(login_url="/")
 def CampaignRetrieve(request, pk, *args, **kwargs):
     query = get_object_or_404(Campaign, id=pk, customer=request.user)
@@ -293,7 +294,7 @@ def EmailPreview(request, pk, *args, **kwargs):
             my_context = {
                 "content": queryset.get_rendered_content(
                     {"body": content, "greeting": type_obj.name, "first_name": "john", "last_name": "doe"}
-                    ),
+                ),
                 "type": type_obj.name
             }
         else:
@@ -379,3 +380,27 @@ def CampaignCreate(request, *args, **kwargs):
         "templates": email_templates,
     }
     return render(request, "dashboard/create_campaign.html", my_context)
+
+
+def webhook(request, *args, **kwargs):
+    if request.method == "POST":
+        campaign_id = request.POST.get("campaign_id", None)
+        status = request.POST.get("status", None)
+        if not campaign_id:
+            return HttpResponse("campaign_id is required", status=400)
+
+        if not status:
+            return HttpResponse("status is required", status=400)
+
+        try:
+            campaign = get_object_or_404(Campaign, id=campaign_id)
+            campaign.status = status
+            campaign.save()
+
+            return HttpResponse("Done", status=200)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return HttpResponse("something went wrong when trying change campaign status", status=500)
+    else:
+        return HttpResponse("method get is not allowed", status=400)

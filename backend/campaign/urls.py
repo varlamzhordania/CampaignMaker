@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import Dashboard, AdminCampaignList, AdminCampaignActions, CampaignCreate, CampaignResubmit, EmailPreview, \
     AdminCampaignNote, AdminCampaignAudio, ListOfEmailTemplates, CampaignActions, ListOfCampaignsType, ListOfCampaigns, \
-    CampaignRetrieve
+    CampaignRetrieve, webhook
 
 app_name = 'campaign'
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path("dashboard/admin/campaigns/list/", ListOfCampaigns, name="adminCampaignsList"),
     path("dashboard/email/templates/", ListOfEmailTemplates, name="emailTemplatesList"),
     path("dashboard/campaign/types/", ListOfCampaignsType, name="campaignTypeList"),
+    path("dashboard/campaign/webhook/", webhook, name="webhook"),
 ]
