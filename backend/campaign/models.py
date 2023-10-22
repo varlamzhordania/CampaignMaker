@@ -6,13 +6,13 @@ from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 import os
-from .validators import validate_file_size, validate_file_extension, validate_file_duration
+from .validators import validate_file_size, validate_file_extension, validate_file_duration, validate_template_format
 from datetime import datetime
 from django.utils import timezone
 from django.template import Template, Context
 from django.template.loader import render_to_string
-from ckeditor.fields import RichTextField
-
+from django_ckeditor_5.fields import CKEditor5Field
+from main.models import Settings
 # Create your models here.
 
 
@@ -41,13 +41,6 @@ def template_extra(instance, filename):
 def get_template_upload_path(instance, filename):
     timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
     return f'email_templates/{timestamp}.html'
-
-
-def validate_template_format(value):
-    valid_extensions = ['.html', '.htm', 'html', 'htm']
-    ext = value.name.lower().split('.')[-1]
-    if ext not in valid_extensions:
-        raise ValidationError(f'Invalid file format. Only {", ".join(valid_extensions)} files are allowed.')
 
 
 class CampaignEmailTemplate(models.Model):
@@ -429,9 +422,9 @@ class CampaignEmail(models.Model):
         null=False,
         help_text=_("format: required, max-255 character")
     )
-    body = RichTextField(
+    body = CKEditor5Field(
         blank=False, null=False, verbose_name=_("Email Body")
-    )
+        )
     # is_active = models.BooleanField(verbose_name=_("Published"), default=False)
     create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
     update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
@@ -487,66 +480,3 @@ class CampaignAudio(models.Model):
 
     def __str__(self):
         return self.campaign.__str__()
-
-
-def logo_image(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'images/website/{timestamp}.{extension}'
-
-
-class Settings(models.Model):
-    site_name = models.CharField(
-        max_length=255, null=False, blank=False, verbose_name=_("Site Name"),
-        help_text=_("format:max-255, the name of website")
-    )
-    tax = models.IntegerField(
-        default=0, verbose_name=_("Tax"),
-        help_text=_(
-            "format: enter as percentage , it will be use on checkout and use total price for calculation"
-        )
-    )
-    show_result = models.PositiveIntegerField(
-        default=3,
-        blank=False,
-        null=False,
-        verbose_name=_("Show Result"),
-        help_text=_("format: default-3, days difference between campaign create date and the day they can see result")
-    )
-    audio_text_length = models.PositiveIntegerField(
-        default=400,
-        blank=False,
-        null=False,
-        verbose_name=_("Text to Audio Max Length"),
-        help_text=_("format: default-400")
-    )
-    audio_price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        unique=False,
-        null=False,
-        default=10.00,
-        blank=False,
-        verbose_name=_("Audio Price"),
-        help_text=_("format: default-10.00,  maximum price 99999999.99, used for text to audio extra price"),
-        validators=[MinValueValidator(Decimal("0.00"))]
-    )
-    logo = models.ImageField(
-        upload_to=logo_image,
-        blank=True,
-        null=True,
-        verbose_name=_("Main Logo"),
-        help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
-    )
-    dashboard_logo = models.ImageField(
-        upload_to=logo_image,
-        blank=True,
-        null=True,
-        verbose_name=_("Dashboard Logo"),
-        help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
-    )
-    api_token = models.TextField(
-        verbose_name=_("Api Token"),
-        help_text=_("format: used in post request to create campaign"),
-        blank=True,
-        null=True, )

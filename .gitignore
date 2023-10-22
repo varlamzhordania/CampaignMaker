@@ -2,6 +2,7 @@
 .idea/
 migrations/
 media/
+debug.log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

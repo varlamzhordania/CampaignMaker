@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from .callback import call_api
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def CampaignRetrieve(request, pk, *args, **kwargs):
     query = get_object_or_404(Campaign, id=pk, customer=request.user)
 
@@ -24,7 +24,7 @@ def CampaignRetrieve(request, pk, *args, **kwargs):
     return render(request, "dashboard/campaign_retrieve.html", my_context)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def CampaignResubmit(request, pk, *args, **kwargs):
     campaign = get_object_or_404(Campaign, id=pk, status="disapproved", customer=request.user)
     campaign_sms = CampaignSMS.objects.get(campaign_id=campaign.id)
@@ -87,8 +87,8 @@ def CampaignResubmit(request, pk, *args, **kwargs):
 
 
 # Create your views here.
-@login_required(login_url="/")
-@user_passes_test(is_admin, login_url="/")
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def AdminCampaignNote(request, *args, **kwargs):
     if request.method == "POST":
         queryset = get_object_or_404(Campaign, id=request.POST.get("disapprove-campaign-id", 0))
@@ -112,8 +112,8 @@ def AdminCampaignNote(request, *args, **kwargs):
         return redirect("campaign:adminCampaigns")
 
 
-@login_required(login_url="/")
-@user_passes_test(is_admin, login_url="/")
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def AdminCampaignAudio(request, *args, **kwargs):
     if request.method == "POST":
         queryset = get_object_or_404(CampaignAudio, campaign_id=request.POST.get("change-audio-campaign-id", 0))
@@ -134,8 +134,8 @@ def AdminCampaignAudio(request, *args, **kwargs):
 
 
 # Create your views here.
-@login_required(login_url="/")
-@user_passes_test(is_admin, login_url="/")
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def AdminCampaignActions(request, id, status, *args, **kwargs):
     queryset = Campaign.objects.get(pk=id)
     queryset.status = str(status)
@@ -148,7 +148,7 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
     return redirect("campaign:adminCampaigns")
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def CampaignActions(request, id, status, *args, **kwargs):
     queryset = get_object_or_404(Campaign, pk=id, customer_id=request.user.id)
     queryset.status = str(status)
@@ -160,8 +160,8 @@ def CampaignActions(request, id, status, *args, **kwargs):
     return redirect("campaign:dashboard")
 
 
-@login_required(login_url="/")
-@user_passes_test(is_admin, login_url="/")
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def AdminCampaignList(request, *args, **kwargs):
     form = CampaignDisapproveForm()
     form2 = CampaignAudioForm()
@@ -190,7 +190,7 @@ def AdminCampaignList(request, *args, **kwargs):
     return render(request, "dashboard/admin/campaign_list.html", my_context)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def Dashboard(request, *args, **kwargs):
     payment = request.GET.get("payment_success", None)
     if payment and payment == "true":
@@ -210,7 +210,7 @@ def Dashboard(request, *args, **kwargs):
     return render(request, "dashboard/dashboard.html", my_context)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def ListOfEmailTemplates(request, *args, **kwargs):
     queryset = CampaignEmailTemplate.objects.filter(is_active=True)
     serializer = [
@@ -225,8 +225,8 @@ def ListOfEmailTemplates(request, *args, **kwargs):
     return JsonResponse(serializer, safe=False)
 
 
-@login_required(login_url="/")
-@user_passes_test(is_admin, login_url="/")
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
 def ListOfCampaigns(request, *args, **kwargs):
     queryset = Campaign.objects.all()
     params = request.GET.get("id", None)
@@ -263,7 +263,7 @@ def ListOfCampaigns(request, *args, **kwargs):
     return JsonResponse(serializer, safe=False)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def ListOfCampaignsType(request, *args, **kwargs):
     queryset = CampaignType.objects.filter(is_active=True)
     params = request.GET.get("id", None)
@@ -306,7 +306,7 @@ def EmailPreview(request, pk, *args, **kwargs):
         return HttpResponse("get not allowed", status=400)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def CampaignCreate(request, *args, **kwargs):
     campaign_data = {}
     campaign_sms_data = {}
@@ -412,3 +412,6 @@ def webhook(request, *args, **kwargs):
             return HttpResponse("something went wrong when trying change campaign status", status=500)
     else:
         return HttpResponse("method get is not allowed", status=400)
+
+
+

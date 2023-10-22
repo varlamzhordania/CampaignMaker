@@ -13,7 +13,9 @@
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="w-50 mb-5 mb-auto d-flex justify-content-center align-items-center">
-                    <img src="{{ page_setting.logo.url }}" alt="logo" class="w-100 h-auto"/>
+                    <a href="{% url "main:home" %}">
+                        <img src="{{ page_setting.logo.url }}" alt="logo" class="w-100 h-auto"/>
+                    </a>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 w-100 g-2">
                     <div class="col position-relative ">

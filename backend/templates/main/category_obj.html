@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% load custom_tags %}
+{% block content %}
+    {% include "main/header.html" %}
+    {% with background_text=category.category_page.background_text|safe %}
+        {% with  background_image=category.category_page.background.url %}
+            {% include "main/hero.html" with text=background_text image_url=background_image %}
+        {% endwith %}
+    {% endwith %}
+    {% for item in category.category_page.componentsonpage_set.all %}
+        {% load_content_from_url item.component.template.url|default:""|safe %}
+    {% endfor %}
+    {% include "main/footer.html" %}
+{% endblock %}

@@ -24,6 +24,7 @@ from account.forms import StylesCustomPasswordResetForm, StylesCustomSetPassword
 urlpatterns = [
 
                   path('admin/', admin.site.urls),
+                  path('', include('main.urls', namespace='main')),
                   path('', include('account.urls', namespace='account')),
                   path('', include('campaign.urls', namespace='campaign')),
                   path('checkout/', include('checkout.urls', namespace='checkout')),
@@ -52,6 +53,6 @@ urlpatterns = [
                       auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),
                       name="password_reset_complete"
                   ),
-                  path('ckeditor/', include('ckeditor_uploader.urls')),
+                  path("ckeditor5/", include('django_ckeditor_5.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
-              + static(settings.STATIC_URL, dodument_root=settings.STATIC_ROOT)
+              + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

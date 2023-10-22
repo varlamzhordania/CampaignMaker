@@ -1,0 +1,97 @@
+<footer class="footer">
+    <div class="container pt-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+            <div class="col">
+                <div class="mb-5 mb-auto d-flex justify-content-center align-items-center">
+                    <a href="{% url "main:home" %}">
+                        <img src="{{ page_setting.logo.url }}" alt="logo" class="w-100 h-auto"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <h3 class="fw-bold ">
+                    Quick Access
+                </h3>
+                <ul class="list-unstyled">
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="{% url "main:home" %}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Account
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Create Campaign
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h3 class="fw-bold ">
+                    Legal
+                </h3>
+                <ul class="list-unstyled">
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Privacy Policy
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Terms
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Refund
+                        </a>
+                    </li>
+                    <li class="my-1 text-white-50">
+                        <a class="nav-link" href="#">
+                            Feedback
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h3 class="fw-bold ">
+                    Social Media
+                </h3>
+                <hr/>
+                <div class="d-flex justify-content-start flex-wrap gap-4">
+                    {% if page_setting.facebook %}
+                        <a class="text-decoration-underline" href="{{ page_setting.facebook }}">
+                            <i class="bi bi-facebook fs-4 text-white"></i>
+                        </a>
+                    {% endif %}
+                    {% if page_setting.instagram %}
+                        <a class="text-decoration-underline" href="{{ page_setting.instagram }}">
+                            <i class="bi bi-instagram fs-4 text-white"></i>
+                        </a>
+                    {% endif %}
+                    {% if page_setting.x_twitter %}
+                        <a class="text-decoration-underline" href="{{ page_setting.x_twitter }}">
+                            <i class="bi bi-twitter-x fs-4 text-white"></i>
+                        </a>
+                    {% endif %}
+                    {% if page_setting.youtube %}
+                        <a class="text-decoration-underline" href="{{ page_setting.youtube }}">
+                            <i class="bi bi-youtube fs-4 text-white"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr class="bg-white"/>
+        <p class="text-center py-3 mb-0">© 2023 - All right reserved!</p>
+    </div>
+</footer>

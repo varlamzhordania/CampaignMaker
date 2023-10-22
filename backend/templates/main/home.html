@@ -1,0 +1,391 @@
+{% extends "index.html" %}
+{% load static %}
+{% url "main:home" as home %}
+{% block content %}
+    {% include "main/header.html" %}
+    <main class="bg-light-subtle">
+        <section class="position-relative d-block mx-0 mx-md-5 pt-2">
+            <div class="hero">
+                <div class="card border-0 bg-transparent z-2">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+{#                                                <h1 class="card-title display-3 text-white" style="font-weight: 800">#}
+{#                                                    Welcome to Your <span class="text-primary">Digital Marketing</span> Hub#}
+{#                                                </h1>#}
+{#                                                <p class="text-white fs-5">#}
+{#                                                    Boost your online presence and connect with your local community with our tailored digital#}
+{#                                                    marketing#}
+{#                                                    solutions.#}
+{#                                                </p>#}
+                        {{ page.background_text|safe }}
+{#                        <a class="btn btn-primary" href="{% url "campaign:dashboard" %}">#}
+{#                            Get Started#}
+{#                        </a>#}
+                    </div>
+                </div>
+                <div class="card position-absolute border-0 shadow-lg w-75 bg-light z-2 attributes">
+                    <div class="card-body">
+                        <div class="position-relative row row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-between p-1 p-lg-4 g-1 g-lg-4 gap-0 w-100 ">
+                            <div class="col">
+                                <h5 class="text-primary-emphasis fw-bold">
+                                    contacts
+                                </h5>
+                                <p class="text-primary fw-bold display-6">
+                                    2,435,000
+                                </p>
+                            </div>
+                            <div class="col">
+                                <h5 class="text-primary-emphasis fw-bold">
+                                    Email sent
+                                </h5>
+                                <p class="text-primary fw-bold display-6">
+                                    4,750,000
+                                </p>
+
+                            </div>
+                            <div class="col">
+                                <h5 class="text-primary-emphasis fw-bold">
+                                    SMS
+                                </h5>
+                                <p class="text-primary fw-bold display-6">
+                                    5,150,000
+                                </p>
+                            </div>
+                            <div class="col">
+                                <h5 class="text-primary-emphasis fw-bold">
+                                    Voice messages
+                                </h5>
+                                <p class="text-primary fw-bold display-6">
+                                    5,150,000
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative d-block mx-0 mx-md-5 community-section">
+            <div class="row align-items-start w-100 mx-auto">
+                <div class="col col-12 col-md-12 col-xl-5">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h3 class="card-title fw-bolder fs-1 text-primary-emphasis">
+                                Unlock the Power of Community Engagement
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text text-muted fw-bold">
+                                Engage your total community effectively with our all-inclusive services, now available
+                                at an
+                                unbeatable rate of $0.02 per resident.
+                            </p>
+                            <p class="text-muted fw-bold">
+                                Discover the future of community engagement. Get started today and make a lasting impact
+                                in your local neighborhood.
+                            </p>
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4 gap-0">
+                                <div class="col">
+                                    <div class="card card-community h-100 border-0">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column gap-2 justify-content-start align-items-start">
+                                                <h4 class="card-title fw-bold">
+                                                    Gathering Contact Information
+                                                </h4>
+                                                <p class="text-muted fw-bold">
+                                                    Effortlessly gather crucial resident details within your chosen zip
+                                                    code. We
+                                                    make connecting with your community a breeze.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-community h-100 border-0">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column gap-2 justify-content-start align-items-start">
+                                                <h4 class="card-title fw-bold">
+                                                    Customizing Email Campaigns
+                                                </h4>
+                                                <p class="text-muted fw-bold">
+                                                    Stay in touch with residents in your selected zip code like never
+                                                    before.
+                                                    Craft tailored email campaigns that resonate with your audience.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-community h-100 border-0">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column gap-2 justify-content-start align-items-start">
+                                                <h4 class="card-title fw-bold">
+                                                    Tailoring SMS Campaigns
+                                                </h4>
+                                                <p class="text-muted fw-bold">
+                                                    Forge genuine connections with residents in the area of your choice.
+                                                    Our SMS
+                                                    campaigns are designed to be personal and effective.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-community h-100 border-0">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column gap-2 justify-content-start align-items-start">
+                                                <h4 class="card-title fw-bold">
+                                                    Personalized Voice Message Campaigns
+                                                </h4>
+                                                <p class="text-muted fw-bold">
+                                                    Add a personal touch to your community outreach within your targeted
+                                                    zip
+                                                    code. Make your messages truly resonate.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-12 col-md-12 col-xl-7">
+                    <div class="card bg-transparent border-0 mx-auto w-75">
+                        <img src="{% static "assets/img/community-5.png" %}" alt="community image" class="card-img"
+                             loading="lazy"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative bg-body-secondary rounded-2 d-block mx-0 mx-md-5" style="margin-top: 6rem">
+            <div class="row row-cols-1 row-cols-xl-2 p-5">
+                <div class="col">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body">
+                            <video controls poster="{{ page_setting.intro_thumbnail.url }}" class="rounded-2 card-img"
+                                   preload="none" loop="false">
+                                <source src="{{ page_setting.intro_video.url }}"
+                                        type="video/{{ page_setting.get_video_ext }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex align-items-center">
+                    <div class="card border-0 bg-transparent">
+                        <div class="card-header bg-transparent border-0">
+                            <h4 class="card-title fw-bold text-primary-emphasis fw-bolder fs-1">
+                                Welcome to Your Digital Marketing Hub
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text fw-bold text-secondary">
+                                Are you a small business owner in the USA seeking tailored digital marketing solutions
+                                for your community? Look no further! At [Your Company Name], we understand that your
+                                business is unique, just like your community. Our mission is to provide you with the
+                                tools and strategies you need to thrive in the digital landscape.
+                                <br/><br/>
+                                With years of experience in digital marketing, we've honed our skills to understand what
+                                works best for businesses like yours. Our team is dedicated to helping you stand out in
+                                the digital crowd, connect with your local community, and achieve your business goals.
+                                Whether you're looking to boost your online presence, connect with your neighbors, or
+                                make a lasting impact in your local neighborhood, we've got you covered.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative d-block mx-0 mx-md-5" style="margin-top: 6rem">
+            <h3 class="fs-1 card-title text-primary-emphasis fw-bolder text-center mb-3">
+                What our customers say about us
+            </h3>
+            <div class="swiper w-75" style="width: 100%;height: 170px;">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    {% for customer_video in customer_videos %}
+                        <div class="swiper-slide">
+                            <div class="card">
+                                <video controls poster="{{ customer_video.thumbnail.url }}"
+                                       class="rounded-2 card-img" preload="none" loop="false">
+                                    <source src="{{ customer_video.video.url }}"
+                                            type="video/{{ customer_video.get_video_ext }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- If we need scrollbar -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+        <section class="position-relative p-3 p-md-5 rounded-2 d-block mx-0 mx-md-5"
+                 style="margin-top: 6rem">
+            <div class="step-wrapper">
+                <h3 class="fs-1 card-title text-primary-emphasis fw-bolder text-center mb-5">
+                    Reach out all your community In Less the 5 Minutes
+                </h3>
+                <div class="step-item" data-count="1">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 1
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Register Your Business
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Begin your journey by registering your business. It's a quick and simple process,
+                                setting you up for effective community engagement.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" data-count="2">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 2
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Select and Zoom In on Your Community
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Use our intuitive tools to select and zoom in on your specific community. Whether you're
+                                targeting a neighborhood, zip code, or any other region, we've got you covered.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" data-count="3">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 3
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Submit Content for Your SMS Broadcasting Campaign
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Forge genuine connections with your residents through SMS outreach. Customize your
+                                messages and deliver them to the right audience in no time.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" data-count="4">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 4
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Submit Content for Your Email Marketing Campaign
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Craft personalized email campaigns that resonate with your audience. Our user-friendly
+                                platform allows you to create and send compelling emails that engage your community.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" data-count="5">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 5
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Submit Content for Your Voice Broadcasting Campaign
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Add a personal touch to your outreach with voice messages. Speak directly to your
+                                community, delivering important messages that make an impact.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" data-count="6">
+                    <div class="card bg-white shadow-lg">
+                        <div class="card-header">
+                            <small class="fw-bolder text-primary">
+                                Step 6
+                            </small>
+                        </div>
+                        <div class="card-body pt-0">
+                            <h4 class="card-title fs-4 fw-bolder">
+                                Monitor Your Campaign
+                            </h4>
+                            <p class="card-text fw-bold text-secondary">
+                                Keep a close eye on the performance of your campaigns through our monitoring tools.
+                                Track the success of your outreach and make data-driven decisions.
+                                <br/><br/>
+                                With our efficient platform, you can effectively engage your community and promote your
+                                business in no time. Don't miss this opportunity to strengthen your local presence and
+                                make a lasting impact. Sign up today and discover the power of community engagement.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative p-3 p-md-5 rounded-2 d-block mx-0 mx-md-5"
+                 style="margin-top: 6rem">
+            <div class="row row-cols-1 row-cols-lg-2">
+                <div class="col">
+                    <div class="card border-0 bg-transparent">
+                        <div class="card-body">
+                            <h3 class="fs-1 card-title text-primary-emphasis fw-bolder">
+                                Frequently Asked Questions
+                            </h3>
+                            <p class="card-text text-secondary fw-bold">
+                                Discover answers to common queries about our community digital marketing services. We've
+                                compiled this list of frequently asked questions to help you understand how our platform
+                                works, the benefits it offers, and how you can effectively engage your local community.
+                                If you have more questions, don't hesitate to reach out to our dedicated support team
+                                for personalized assistance
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="accordion accordion-flush" id="FAQ">
+                        {% for item in FAQ %}
+                            <div class="accordion-item ">
+                                <h2 class="accordion-header ">
+                                    <button class="accordion-button bg-white bg-opacity-50 collapsed fw-bolder"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#faq-{{ item.id }}" aria-expanded="false"
+                                            aria-controls="faq-{{ item.id }}">
+                                        {{ item.question }}
+                                    </button>
+                                </h2>
+                                <div id="faq-{{ item.id }}" class="accordion-collapse collapse"
+                                     data-bs-parent="#FAQ">
+                                    <div class="accordion-body fw-bold text-secondary bg-light-subtle">
+                                        {{ item.answer }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include "main/footer.html" %}
+{% endblock %}

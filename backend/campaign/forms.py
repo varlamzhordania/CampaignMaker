@@ -3,8 +3,7 @@ from .models import Campaign, CampaignType, CampaignZip, CampaignSMS, CampaignSM
     CampaignAudio
 from django.utils.translation import gettext_lazy as _
 from .validators import validate_file_duration
-from ckeditor.widgets import CKEditorWidget
-
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 class CampaignDisapproveForm(forms.ModelForm):
     note = forms.CharField(
@@ -74,11 +73,10 @@ class CampaignEmailForm(forms.ModelForm):
         )
     )
     body = forms.CharField(
-        required=True, label=_("Email Body"), widget=CKEditorWidget(
+        required=False, label=_("Email Body"), widget=CKEditor5Widget(
             attrs={
                 "class": "form-control",
                 "name": "campaignEmailBody",
-                "id": "campaignEmailBody",
             }
         )
     )

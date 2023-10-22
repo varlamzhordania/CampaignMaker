@@ -8,6 +8,7 @@ app_name = 'campaign'
 urlpatterns = [
 
     # user urls
+
     path("dashboard/", Dashboard, name="dashboard"),
     path("dashboard/campaign/<int:pk>/", CampaignRetrieve, name="campaignRetrieve"),
     path("dashboard/preview/email/<int:pk>/", EmailPreview, name="emailPreview"),

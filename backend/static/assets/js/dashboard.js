@@ -243,46 +243,51 @@ Array.from(stepNext).forEach((button, index) => {
     })
 })
 
-
 function checkFormCompletion() {
     let currentStepForm = document.querySelector('.collapse.show');
     if (currentStepForm) {
         let requiredFields = currentStepForm.querySelectorAll('[required]');
         let isFormComplete = true;
-        let counter
-        if (requiredFields)
+
+        if (requiredFields) {
             requiredFields.forEach(function (field) {
                 if (!field.value) {
                     isFormComplete = false;
                 }
             });
-        let button_one = currentStepForm.classList.contains("one")
-        let button_two = currentStepForm.classList.contains("two")
-        let button_three = currentStepForm.classList.contains("three")
-        let button_forth = currentStepForm.classList.contains("forth")
+        }
 
+        let counter = null;
 
-        if (button_one)
-            counter = "one"
-        if (button_two)
-            counter = "two"
-        if (button_three)
-            counter = "three"
-        if (button_forth)
-            counter = "forth"
+        if (currentStepForm.classList.contains("one")) {
+            counter = "one";
+        } else if (currentStepForm.classList.contains("two")) {
+            counter = "two";
+        } else if (currentStepForm.classList.contains("three")) {
+            counter = "three";
+        } else if (currentStepForm.classList.contains("forth")) {
+            counter = "forth";
+        }
 
-        if (counter !== null || counter !== "undefined" || counter !== undefined) {
+        if (counter !== null && counter !== "undefined" && counter !== undefined) {
             let nextButton = document.querySelector(`.step-next.${counter}`);
             nextButton.disabled = !isFormComplete;
         }
     }
-
 }
 
 let formFields = document.querySelectorAll('input, select, textarea');
 formFields.forEach(function (field) {
     field.addEventListener('input', checkFormCompletion);
 });
+
+// Exclude a specific textarea (e.g., with id "exclude-textarea") from form validation
+let excludedTextarea = document.querySelector('#id_body');
+if (excludedTextarea) {
+    excludedTextarea.removeEventListener('input', checkFormCompletion);
+}
+
+
 
 let secondStep = document.getElementById('collapseTwo');
 if (secondStep)

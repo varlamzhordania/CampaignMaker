@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from campaign.models import Campaign, Settings
+from campaign.models import Campaign
+from main.models import Settings
 from .models import CampaignTransaction
 import stripe
 

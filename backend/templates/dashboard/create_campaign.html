@@ -401,92 +401,122 @@
 {% block script %}
     <script>
 
-
-        CKEDITOR.on("instanceReady", (e) => {
-
-            const textArea = CKEDITOR.instances.campaignEmailBody;
-            let collapseFifth = document.getElementById("collapseFifth");
-            let htmlContent = document.getElementById("html_content");
-            const campaignSelect = document.getElementById("campaign-type")
-            const emailTypeSelect = document.getElementById("campaignEmail-type")
-            const formCampaignCreate = document.querySelector("form#form-campaign-create");
-            const methodInput = document.getElementById("method");
-            const fileInput = document.getElementById("campaignAudio-file")
-            const textInput = document.getElementById("campaignAudio-text")
-
-            collapseFifth.addEventListener("show.bs.collapse", async function () {
-                let selectedValue = campaignSelect.value
-                const selectInput = document.getElementById("selected-template")
-                const value = parseInt(selectInput.value)
-                let price = 0
-                let campaignTypesUrl = "{% url "campaign:campaignTypeList" %}"
-                let url = "{% url "campaign:emailPreview" 0  %}"
-                let new_url = url.replace("0", value.toString())
-                const data = textArea.getData()
-                const result = await fetch(new_url, {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "content=" + encodeURIComponent(data) + "&type=" + emailTypeSelect.value,
+        // Wait for the document to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize CKEditor for the textarea
+            ClassicEditor
+                .create(document.querySelector('#id_body'), {
+                    toolbar: [
+                        "styles",
+                        "heading",
+                        "|",
+                        "bold",
+                        "italic",
+                        "Underline",
+                        "link",
+                        "|",
+                        "bulletedList",
+                        "numberedList",
+                        "blockQuote",
+                        "|",
+                        "fontSize",
+                        "fontFamily",
+                        "fontColor",
+                        "fontBackgroundColor",],
                 })
-                htmlContent.innerHTML = await result.text()
-                const result2 = await fetch(`${campaignTypesUrl}?id=${selectedValue}`, {
-                    method: "get",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                    },
+                .then(editor => {
+                    let collapseFifth = document.getElementById("collapseFifth");
+                    let htmlContent = document.getElementById("html_content");
+                    const campaignSelect = document.getElementById("campaign-type")
+                    const emailTypeSelect = document.getElementById("campaignEmail-type")
+                    const formCampaignCreate = document.querySelector("form#form-campaign-create");
+                    const methodInput = document.getElementById("method");
+                    const fileInput = document.getElementById("campaignAudio-file")
+                    const textInput = document.getElementById("campaignAudio-text")
+
+                    collapseFifth.addEventListener("show.bs.collapse", async function () {
+                        let selectedValue = campaignSelect.value
+                        const selectInput = document.getElementById("selected-template")
+                        const value = parseInt(selectInput.value)
+                        let price = 0
+                        let campaignTypesUrl = "{% url 'campaign:campaignTypeList' %}"
+                        let url = "{% url 'campaign:emailPreview' 0 %}"
+                        let new_url = url.replace("0", value.toString())
+                        const data = editor.getData()
+                        const result = await fetch(new_url, {
+                            method: "post",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "content=" + encodeURIComponent(data) + "&type=" + emailTypeSelect.value,
+                        })
+                        htmlContent.innerHTML = await result.text()
+                        const result2 = await fetch(`${campaignTypesUrl}?id=${selectedValue}`, {
+                            method: "get",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                            },
+                        })
+                        const data2 = await result2.json()
+                        price = parseFloat(data2[0].price)
+                        document.querySelector(".table-preview-body").innerHTML =
+                            `
+                            <tr>
+                                <td style="width: 75%">${data2[0].name}</td>
+                                <td>$${data2[0].price}</td>
+                            </tr>
+                            `
+
+                        if (textInput.value.trim() !== "" && textInput.value.length > 0) {
+                            document.querySelector(".table-preview-body").innerHTML +=
+                                `
+                                <tr>
+                                    <td style="width: 75%">text to audio</td>
+                                    <td>${{ page_setting.audio_price }}</td>
+                                </tr>
+                                `
+
+                            price += parseFloat("{{ page_setting.audio_price }}")
+                        }
+                        document.querySelector(".table-preview-body").innerHTML +=
+                            `
+                            <tr>
+                                <td style="width: 75%"></td>
+                                <td class="fs-4 fw-bold">$${price}</td>
+                            </tr>
+                            `
+
+                    });
+
+                    textInput.addEventListener("input", (e) => {
+                            document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length} / {{ page_setting.audio_text_length }}`
+                        }
+                    )
+
+                    formCampaignCreate.addEventListener("submit", (e) => {
+                        e.preventDefault();
+
+                        if (e.submitter.name === 'pay-now') {
+                            methodInput.value = "pay";
+                        } else if (e.submitter.name === 'pay-later') {
+                            methodInput.value = "pass";
+                        }
+
+                        if (fileInput.value === "" && textInput.value.trim() === "") {
+                            alert("Audio file or an alternate text for converting is required")
+                        } else if (textInput.value.length > parseInt('{{ page_setting.audio_text_length }}')) {
+                            alert("your text length cant be more then {{ page_setting.audio_text_length }}")
+                        } else {
+                            formCampaignCreate.submit();
+                        }
+                    })
                 })
-                const data2 = await result2.json()
-                price = parseFloat(data2[0].price)
-                document.querySelector(".table-preview-body").innerHTML = `
-                    <tr>
-                        <td style="width: 75%">${data2[0].name}</td>
-                        <td>$${data2[0].price}</td>
-                    </tr>
-                `
-                if (textInput.value.trim() !== "" && textInput.value.length > 0) {
-                    document.querySelector(".table-preview-body").innerHTML += `
-                        <tr>
-                            <td style="width: 75%">text to audio</td>
-                            <td>${{ page_setting.audio_price }}</td>
-                        </tr>
-                        `
-                    price += parseFloat("{{ page_setting.audio_price }}")
-                }
-                document.querySelector(".table-preview-body").innerHTML += `
-                <tr>
-                    <td style="width: 75%"></td>
-                    <td class="fs-4 fw-bold">$${price}</td>
-                </tr>
-                    `
-            });
-
-
-            textInput.addEventListener("input", (e) => {
-                    document.querySelector("#text-counter").innerHTML = `${e.currentTarget.value.length} / {{ page_setting.audio_text_length }}`
-                }
-            )
-
-            formCampaignCreate.addEventListener("submit", (e) => {
-                e.preventDefault();
-
-                if (e.submitter.name === 'pay-now') {
-                    methodInput.value = "pay";
-                } else if (e.submitter.name === 'pay-later') {
-                    methodInput.value = "pass";
-                }
-
-                if (fileInput.value === "" && textInput.value.trim() === "") {
-                    alert("Audio file or an alternate text for converting is required")
-                } else if (textInput.value.length > parseInt('{{ page_setting.audio_text_length }}')) {
-                    alert("your text length cant be more then {{ page_setting.audio_text_length }}")
-                } else {
-                    formCampaignCreate.submit();
-                }
-            })
+                .catch(error => {
+                    console.error(error);
+                });
         })
+
 
     </script>
 {% endblock %}

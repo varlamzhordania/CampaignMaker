@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
-from .models import Settings
+from main.models import Settings
 import os
-from bs4 import BeautifulSoup
 from django.conf import settings as django_settings
 
 

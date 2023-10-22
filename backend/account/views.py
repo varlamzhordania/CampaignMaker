@@ -6,10 +6,11 @@ from core.utils import fancy_message
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
+from main.models import Page
 
 
 # Create your views here.
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def Profile(request, *args, **kwargs):
     user = request.user
     if request.method == "POST":
@@ -27,7 +28,7 @@ def Profile(request, *args, **kwargs):
     return render(request, "dashboard/profile.html", my_context)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def ChangePassword(request, *args, **kwargs):
     if request.method == "POST":
         form = StylesCustomPasswordChangeForm(request.user, request.POST)
@@ -59,11 +60,15 @@ def Login(request, *args, **kwargs):
         else:
             fancy_message(request, "Email and Password is required", level="error")
             return redirect(request.META["HTTP_REFERER"])
-    my_context = {"Title": "Login"}
+    page = Page.objects.filter(type="signIn").first()
+    my_context = {
+        "Title": "Login",
+        "page": page,
+    }
     return render(request, "login.html", my_context)
 
 
-@login_required(login_url="/")
+@login_required(login_url="/login")
 def Logout(request, *args, **kwargs):
     logout(request)
     fancy_message(request, "Logout successful")

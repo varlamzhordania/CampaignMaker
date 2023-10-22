@@ -25,3 +25,17 @@ def validate_file_duration(value):
             raise ValidationError('File duration cannot exceed 45 seconds.')
     except Exception as e:
         raise ValidationError(e)
+
+
+def video_validator(value):
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = [".webm", " .mov", ".ogg", ".mp4", ".mkv"]
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Only .webm , .mov , .ogg , .mp4 , .mkv files are allowed.')
+
+
+def validate_template_format(value):
+    valid_extensions = ['.html', '.htm', 'html', 'htm']
+    ext = value.name.lower().split('.')[-1]
+    if ext not in valid_extensions:
+        raise ValidationError(f'Invalid file format. Only {", ".join(valid_extensions)} files are allowed.')
