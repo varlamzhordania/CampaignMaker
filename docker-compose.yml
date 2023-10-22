@@ -7,8 +7,9 @@ services:
       context: ./backend
     volumes:
       - ./backend/:/home/campaign/backend
+      - ./cert/:/home/campaign
     command: >
-      bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+      bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn -c conf/gunicorn_conf.py core.wsgi:application"
     expose:
       - '8000'
     depends_on:
@@ -24,6 +25,7 @@ services:
       - '80:80'
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./cert/:/home/campaign
       - ./backend/static/:/home/campaign/backend/static
       - ./backend/media/:/home/campaign/backend/media
       - ./backend/staticfiles/:/home/campaign/backend/staticfiles
@@ -41,6 +43,8 @@ services:
       - POSTGRES_DB=${DB_NAME:-postgres}
       - POSTGRES_USER=${DB_USER:-postgres}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    volumes:
+      - ./pg/:/var/lib/postgresql/data
   redis:
     container_name: redis
     restart: always

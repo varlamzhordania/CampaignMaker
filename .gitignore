@@ -4,6 +4,7 @@ migrations/*
 !migrations/__init__.py
 media/
 debug.log
+pg/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
