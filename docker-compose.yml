@@ -1,4 +1,4 @@
-version: '4'
+version: '2.4'
 services:
   django:
     restart: always
@@ -10,7 +10,7 @@ services:
     command: >
       bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000"
     expose:
-      - '8000:8000'
+      - '8000'
     depends_on:
       - postgres
       - redis
