@@ -7,15 +7,13 @@ from core.settings.settings import DEBUG
 
 def main():
     """Run administrative tasks."""
-    if DEBUG == "True":
+    if DEBUG:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.development')
-        print("Django loaded up in setting mode : Development")
-    elif DEBUG == "False":
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.production')
-        print("Django loaded up in setting mode : Production")
+        print("Manage: Django loaded up in setting mode : Development")
     else:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.development')
-        print("Django loaded up in setting mode : Development")
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.production')
+        print("Manage: Django loaded up in setting mode : Production")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

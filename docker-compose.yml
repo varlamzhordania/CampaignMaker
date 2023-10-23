@@ -41,9 +41,9 @@ services:
     env_file:
       - ./backend/.env
     environment:
-      - POSTGRES_DB=${DB_NAME:-postgres}
-      - POSTGRES_USER=${DB_USER:-postgres}
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_DB=${DB_NAME:-campaignMakerDB}
+      - POSTGRES_USER=${DB_USER:-campaignMakerAdmin}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-aRZXFK0VVNtW817}
     volumes:
       - ./pg/:/var/lib/postgresql/data
   redis:

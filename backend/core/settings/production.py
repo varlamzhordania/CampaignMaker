@@ -23,9 +23,9 @@ STATICFILES_DIRS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("DB_NAME", "postgres"),
-        'USER': os.getenv("DB_USER", "postgres"),
-        'PASSWORD': os.getenv("DB_PASSWORD", "postgres"),
+        'NAME': os.getenv("DB_NAME", "campaignMakerDB"),
+        'USER': os.getenv("DB_USER", "campaignMakerAdmin"),
+        'PASSWORD': os.getenv("DB_PASSWORD", "aRZXFK0VVNtW817"),
         'HOST': "postgres",  # Use the service name from docker-compose.yml
         'PORT': '5432',
     }
