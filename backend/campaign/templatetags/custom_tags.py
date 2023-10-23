@@ -28,7 +28,7 @@ def load_content_from_url(url):
         return cache_content
 
     try:
-        response = requests.get(domain + url)
+        response = requests.get(domain + url,verify=False)
         if response.status_code == 200:
             return mark_safe(response.text)
     except requests.exceptions.RequestException as e:
