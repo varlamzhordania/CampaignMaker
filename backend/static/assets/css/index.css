@@ -339,6 +339,10 @@ audio, canvas, embed, iframe, img, object, svg, video {
     .attributes .col::after {
         width: 0;
     }
+
+    .customer-video {
+        height: 215px;
+    }
 }
 
 @media screen and (min-width: 576px) {
@@ -358,11 +362,20 @@ audio, canvas, embed, iframe, img, object, svg, video {
         width: 2px;
     }
 
+    .customer-video {
+        height: 180px;
+    }
+
+
 }
 
 @media screen and (min-width: 768px) {
     .community-section {
         margin-top: 20%;
+    }
+
+    .customer-video {
+        height: 135px;
     }
 
 }
@@ -409,6 +422,14 @@ audio, canvas, embed, iframe, img, object, svg, video {
         width: 2px;
     }
 
+    .w-lg-auto {
+        width: auto !important;
+    }
+
+    .customer-video {
+        height: 135px;
+    }
+
 
 }
 
@@ -432,5 +453,10 @@ audio, canvas, embed, iframe, img, object, svg, video {
     .attributes .col:nth-child(3)::after {
         width: 2px;
     }
+
+    .customer-video {
+        height: 180px;
+    }
+
 
 }

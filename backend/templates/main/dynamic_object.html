@@ -8,6 +8,9 @@
                 {% include "main/hero.html" with text=background_text image_url=background_image %}
             {% endwith %}
         {% endwith %}
+        {% if page.body %}
+            {{ page.body|safe }}
+        {% endif %}
         {% for item in page.componentsonpage_set.all %}
             {% load_content_from_url item.component.template.url|default:""|safe %}
         {% endfor %}

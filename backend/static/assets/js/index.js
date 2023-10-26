@@ -5,12 +5,12 @@ const attributes = document.querySelectorAll(".attributes-p")
 
 
 if (attributes)
-    attributes.forEach((item,index) => {
+    attributes.forEach((item, index) => {
         let max = parseInt(item.getAttribute("data-number"))
-        new Counter(`#attributes-${index+1}`, {
+        new Counter(`#attributes-${index + 1}`, {
             target: max,
             type: 'numeric',
-            duration:3000,
+            duration: 3000,
         });
     })
 
@@ -70,15 +70,19 @@ if (document.querySelector(".swiper")) {
         slidesPerView: 1,
         spaceBetween: 30,
         breakpoints: {
-            640: {
+            576: {
                 slidesPerView: 2,
                 spaceBetween: 20,
             },
             768: {
-                slidesPerView: 4,
+                slidesPerView: 3,
                 spaceBetween: 40,
             },
-            1024: {
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+            },
+            1200: {
                 slidesPerView: 5,
                 spaceBetween: 50,
             },
