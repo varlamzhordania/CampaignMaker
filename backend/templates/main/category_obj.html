@@ -2,20 +2,22 @@
 {% load custom_tags %}
 {% block content %}
     {% include "main/header.html" %}
-    {% if page %}
-        {% if page.background_text and page.background %}
-            {% with background_text=page.background_text|safe %}
-                {% with  background_image=page.background.url %}
-                    {% include "main/hero.html" with text=background_text image_url=background_image %}
+    <main class="bg-light-subtle">
+        {% if page %}
+            {% if page.background_text and page.background %}
+                {% with background_text=page.background_text|safe %}
+                    {% with  background_image=page.background.url %}
+                        {% include "main/hero.html" with text=background_text image_url=background_image %}
+                    {% endwith %}
                 {% endwith %}
-            {% endwith %}
+            {% endif %}
+            {% if page.body %}
+                {{ page.body|safe }}
+            {% endif %}
+            {% for item in page.componentsonpage_set.all %}
+                {% load_content_from_url item.component.template.url|default:""|safe %}
+            {% endfor %}
         {% endif %}
-        {% if page.body %}
-            {{ page.body|safe }}
-        {% endif %}
-        {% for item in page.componentsonpage_set.all %}
-            {% load_content_from_url item.component.template.url|default:""|safe %}
-        {% endfor %}
-    {% endif %}
+    </main>
     {% include "main/footer.html" %}
 {% endblock %}
