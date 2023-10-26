@@ -11,7 +11,7 @@
     --bs-primary: var(--primary-color) !important;
     --bs-primary-rgb: 99, 102, 241 !important;
     --bs-warning: var(--warning-color) !important;
-    --second-font-family: 'Open Sans', sans-serif;
+    --second-font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -247,77 +247,63 @@ audio, canvas, embed, iframe, img, object, svg, video {
 
 .step-wrapper {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-    gap: 0;
 }
 
 .step-item {
-    position: relative;
-    display: block;
-    width: 49%;
-    padding: 3rem;
+    display: flex;
+}
+
+.step-item .card {
+    background-color: transparent;
+    border: unset;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .step-item .card-header {
     background-color: transparent;
-    border: 0;
+    border: unset;
 }
 
-.step-item .card {
-    border: 0;
+/*.step-item:nth-child(even) [class^='step-item-'] {*/
+/*    margin-top: 20px;*/
+/*}*/
+
+.step-item .step-item-right {
+    width: 50%;
 }
 
+.step-item .step-item-left {
+    width: 50%;
+}
 
-.step-item::before {
-    content: " ";
-    position: absolute;
+.step-separator {
+    position: relative;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.step-separator::before {
+    content: '';
     width: 20px;
     height: 20px;
-    top: -1rem;
-    outline-width: 2px;
+    position: absolute;
+    outline: 2px solid var(--bs-primary);
     outline-offset: 2px;
-    outline-color: var(--bs-primary);
-    outline-style: solid;
     background-color: var(--bs-primary);
     color: var(--bs-white);
     border-radius: 50%;
     z-index: 2;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 45px;
-    font-weight: 800;
 }
 
-.step-item:nth-child(even)::before {
-    left: -1.67rem;
-}
-
-.step-item:nth-child(odd)::before {
-    right: -1.78rem;
-}
-
-.step-item::after {
-    content: " ";
+.step-separator::after {
+    content: '';
     position: absolute;
     width: 2px;
     height: 100%;
+    z-index: 2;
     background-image: radial-gradient(var(--bs-primary), transparent);
-    top: 0;
-}
-
-.step-item:nth-child(even) {
-    align-self: end;
-}
-
-.step-item:nth-child(even)::after {
-    left: -1.1rem;
-}
-
-.step-item:nth-child(odd)::after {
-    right: -1.2rem;
 }
 
 .mega-menu {
@@ -353,31 +339,6 @@ audio, canvas, embed, iframe, img, object, svg, video {
     .attributes .col::after {
         width: 0;
     }
-
-    .step-item {
-        width: 100%;
-        padding: 1.5rem;
-    }
-
-    .step-item:nth-child(even)::before {
-        left: -0.55rem;
-    }
-
-    .step-item:nth-child(odd)::before {
-        left: -0.55rem;
-    }
-
-    .step-item:nth-child(even) {
-        align-self: start;
-    }
-
-    .step-item:nth-child(even)::after {
-        left: 0;
-    }
-
-    .step-item:nth-child(odd)::after {
-        left: 0;
-    }
 }
 
 @media screen and (min-width: 576px) {
@@ -396,17 +357,40 @@ audio, canvas, embed, iframe, img, object, svg, video {
     .attributes .col:nth-child(3)::after {
         width: 2px;
     }
+
 }
 
 @media screen and (min-width: 768px) {
     .community-section {
         margin-top: 20%;
     }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .step-item:nth-child(odd) .step-item-right {
+        order: 1;
+        width: 100%;
+    }
+
+    .step-item:nth-child(odd) .step-item-left {
+        width: 0%;
+    }
+
+    .step-item:nth-child(even) .step-item-right {
+        width: 0%;
+    }
+
+    .step-item:nth-child(even) .step-item-left {
+        width: 100%;
+    }
+
 }
 
 @media screen and (min-width: 992px) {
     .attributes {
-        bottom: -55%;
+        bottom: -25%;
     }
 
     .community-section {
@@ -449,33 +433,4 @@ audio, canvas, embed, iframe, img, object, svg, video {
         width: 2px;
     }
 
-
-    .step-item {
-        width: 49%;
-        padding: 3rem;
-    }
-
-    .step-item:nth-child(even)::before {
-        left: -1.67rem;
-        right: unset;
-    }
-
-    .step-item:nth-child(odd)::before {
-        right: -1.78rem;
-        left: unset;
-    }
-
-    .step-item:nth-child(even) {
-        align-self: end;
-    }
-
-    .step-item:nth-child(even)::after {
-        left: -1.1rem;
-        right: unset;
-    }
-
-    .step-item:nth-child(odd)::after {
-        right: -1.2rem;
-        left: unset;
-    }
 }

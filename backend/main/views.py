@@ -24,3 +24,57 @@ def category(request, slug, *args, **kwargs):
         "page": queryset.category_page
     }
     return render(request, "main/category_obj.html", my_context)
+
+
+def contact_us(request, *args, **kwargs):
+    page = Page.objects.filter(type="contact").first()
+    my_context = {
+        "Title": "Contact us",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)
+
+
+def about_us(request, *args, **kwargs):
+    page = Page.objects.filter(type="about").first()
+    my_context = {
+        "Title": "About us",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)
+
+
+def privacy_policy(request, *args, **kwargs):
+    page = Page.objects.filter(type="privacy").first()
+    my_context = {
+        "Title": "Privacy Policy",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)
+
+
+def terms(request, *args, **kwargs):
+    page = Page.objects.filter(type="terms").first()
+    my_context = {
+        "Title": "Terms",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)
+
+
+def refund(request, *args, **kwargs):
+    page = Page.objects.filter(type="refund").first()
+    my_context = {
+        "Title": "Refund",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)
+
+
+def feedback(request, *args, **kwargs):
+    page = Page.objects.filter(type="feedback").first()
+    my_context = {
+        "Title": "Feedback",
+        "page": page
+    }
+    return render(request, "main/dynamic_object.html", my_context)

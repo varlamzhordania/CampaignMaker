@@ -15,6 +15,8 @@ PAGE_TYPE_CHOICES = (
     ("signIn", "SignIn Page"),
     ("signUp", "SignUp Page"),
     ("home", "Home Page"),
+    ("about", "Home Page"),
+    ("contact", "Home Page"),
     ("category", "Category Pages"),
     ("privacy", "Privacy Policy Page"),
     ("terms", "Terms Page"),

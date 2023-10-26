@@ -1,6 +1,18 @@
 const toastLiveExample = document.getElementsByClassName('toast')
 const megaMenuToggle = document.getElementById("mega-menu-toggle");
 const megaMenu = document.querySelector(".mega-menu");
+const attributes = document.querySelectorAll(".attributes-p")
+
+
+if (attributes)
+    attributes.forEach((item,index) => {
+        let max = parseInt(item.getAttribute("data-number"))
+        new Counter(`#attributes-${index+1}`, {
+            target: max,
+            type: 'numeric',
+            duration:3000,
+        });
+    })
 
 // Function to close the mega menu
 function closeMegaMenu() {
