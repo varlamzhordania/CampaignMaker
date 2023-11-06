@@ -19,28 +19,28 @@
                         <a class="navbar-brand " href="{% url "main:home" %}">
                             <img src="{{ page_setting.dashboard_logo.url }}" alt="logo" class="w-75 h-auto"/>
                         </a>
-                        <div class="dropdown d-inline d-lg-none">
-                            <button class="btn btn-primary rounded-circle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                <i class="bi bi-person-fill"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
-                                <li>
-                                    <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
-                                       href="{% url "account:profile" %}">
-                                        <i class="bi bi-person"></i>
-                                        <strong>Profile</strong>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
-                                       href="{% url "account:logout" %}">
-                                        <i class="bi bi-box-arrow-right"></i>
-                                        <strong>Logout</strong>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="dropdown d-inline d-lg-none">
+                        <button class="btn btn-primary rounded-circle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="bi bi-person-fill"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
+                                   href="{% url "account:profile" %}">
+                                    <i class="bi bi-person"></i>
+                                    <strong>Profile</strong>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-start align-items-center gap-3"
+                                   href="{% url "account:logout" %}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <strong>Logout</strong>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar">
