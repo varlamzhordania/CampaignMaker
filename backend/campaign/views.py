@@ -11,6 +11,26 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.http import JsonResponse
 from .callback import call_api
+from main.models import Ticket
+
+
+@login_required(login_url="/login")
+def Dashboard(request, *args, **kwargs):
+    payment = request.GET.get("payment_success", None)
+    if payment and payment == "true":
+        fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
+    elif payment and payment == "false":
+        fancy_message(request, "Payment failed", level="error")
+    queryset = Campaign.objects.filter(customer=request.user)[:7]
+    queryset2 = Ticket.objects.filter(author=request.user)[:7]
+    my_context = {
+        "Title": f"Dashboard",
+        "today": datetime.datetime.now(),
+        "base_url": django_settings.EXTERNAL_API_BASE_URL,
+        "campaigns": queryset,
+        "tickets": queryset2,
+    }
+    return render(request, "dashboard/dashboard.html", my_context)
 
 
 @login_required(login_url="/login")
@@ -191,12 +211,7 @@ def AdminCampaignList(request, *args, **kwargs):
 
 
 @login_required(login_url="/login")
-def Dashboard(request, *args, **kwargs):
-    payment = request.GET.get("payment_success", None)
-    if payment and payment == "true":
-        fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
-    elif payment and payment == "false":
-        fancy_message(request, "Payment failed", level="error")
+def CampaignList(request, *args, **kwargs):
     queryset = Campaign.objects.filter(customer=request.user)
     pagination = Paginator(queryset, per_page=10)
     page = request.GET.get('page', 1)
@@ -207,7 +222,7 @@ def Dashboard(request, *args, **kwargs):
         "today": datetime.datetime.now(),
         "base_url": django_settings.EXTERNAL_API_BASE_URL,
     }
-    return render(request, "dashboard/dashboard.html", my_context)
+    return render(request, "dashboard/campaign_list.html", my_context)
 
 
 @login_required(login_url="/login")
@@ -412,6 +427,3 @@ def webhook(request, *args, **kwargs):
             return HttpResponse("something went wrong when trying change campaign status", status=500)
     else:
         return HttpResponse("method get is not allowed", status=400)
-
-
-

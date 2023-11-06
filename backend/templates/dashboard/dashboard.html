@@ -1,123 +1,228 @@
 {% extends "dashboard/index.html" %}
 {% block content %}
-    <h4 class="fw-bold">Hello {{ request.user.username }}</h4>
-    <p class="text-secondary">You can find your campaign history here</p>
-    <div class="card border-0">
-        <div class="card-body table-responsive">
-            <a href="{% url "campaign:campaignCreate" %}" class="btn btn-primary my-3 float-end">
-                Create Campaign
-            </a>
-            <table class="table table-hover" style="max-height: 400px">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Package</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" style="white-space: nowrap">Date Create</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for campaign in campaigns %}
-                    <tr>
-                        <th scope="row">{{ campaign.id }}</th>
-                        <td>{{ campaign.type }}</td>
-                        {% if campaign.campaign_transaction.amount or campaign.campaign_transaction.amount > 0 %}
-                            <td>${{ campaign.campaign_transaction.amount }}</td>
-                        {% else %}
-                            <td>${{ campaign.get_price }}</td>
-                        {% endif %}
-                        {% if campaign.status == "cancel" %}
-                            <td><span class="badge bg-secondary-subtle text-secondary-emphasis">Canceled</span></td>
-                        {% elif campaign.status == "payment" %}
-                            <td><span class="badge bg-info-subtle text-info-emphasis">Waiting for payment</span></td>
-                        {% elif campaign.status == "disapproved" %}
-                            <td><span class="badge bg-danger-subtle text-danger-emphasis">Disapproved</span></td>
-                        {% elif campaign.status == "wait" %}
-                            <td><span class="badge bg-warning-subtle text-warning-emphasis">Waiting for approval</span>
-                            </td>
-                        {% elif campaign.status == "processing" %}
-                            <td><span class="badge bg-primary-subtle text-primary-emphasis">Processing</span></td>
-                        {% elif campaign.status == "complete" %}
-                            <td><span class="badge bg-success-subtle text-success-emphasis">Complete</span></td>
-                        {% endif %}
-                        <td>{{ campaign.create_at }}</td>
-                        <td>
-                            <div class="d-flex justify-content-start align-items-center gap-3">
-                                {% if campaign.campaign_transaction.status == "PENDING" or not campaign.campaign_transaction and campaign.status != "cancel" %}
-                                    <a class="fs-4 rounded-circle text-success"
-                                       href="{% url "checkout:checkout" campaign.id %}" title="Continue payment"
-                                       data-bs-toggle="tooltip">
-                                        <i class="bi bi-cash-coin"></i>
-                                    </a>
-                                {% endif %}
-                                {% if campaign.status == "disapproved" %}
-                                    <a href="{% url "campaign:campaignResubmit" campaign.id %}" role="button"
-                                       data-bs-toggle="tooltip" title="Resubmit campaign"
-                                       class="resubmit-button text-info fs-4">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                {% endif %}
-                                {% if campaign.get_days_difference >= page_setting.show_result and campaign.status == "processing" or campaign.status == "complete" %}
-                                    <span role="button" data-bs-toggle="tooltip" title="Show result"
-                                          data-ca="{{ campaign.id }}" class="show-result-button text-secondary fs-5 ">
+    <h4 class="fw-bold">Hello {{ request.user.get_full_name }}</h4>
+    <p class="text-secondary">Access your complete history and performance statistics here.</p>
+    <section>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-gap-3">
+            <div class="col">
+                <div class="card stats-card gradient-card-1">
+                    <div class="card-body">
+                        <div class="d-flex position-relative h-100 justify-content-around align-items-center gap-1">
+                            <div class="">
+                                <span class="card-text mb-0 fw-medium small">Total spent:</span>
+                                <h2 class="card-title fw-bolder">$123.46</h2>
+                            </div>
+                            <div>
+                                <i class="bi bi-currency-dollar display-4 "></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card stats-card gradient-card-2">
+                    <div class="card-body">
+                        <div class="d-flex position-relative h-100 justify-content-around align-items-center gap-1">
+                            <div class="">
+                                <span class="card-text mb-0 fw-medium small">Total Email Send:</span>
+                                <h2 class="card-title fw-bolder">10000</h2>
+                            </div>
+                            <div>
+                                <i class="bi bi-envelope-check-fill display-4 "></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card stats-card gradient-card-3">
+                    <div class="card-body">
+                        <div class="d-flex position-relative h-100 justify-content-around align-items-center gap-1">
+                            <div class="">
+                                <span class="card-text mb-0 fw-medium small">Total SMS Send:</span>
+                                <h3 class="card-title fw-bolder">10000</h3>
+                            </div>
+                            <div>
+                                <i class="bi bi-chat-left-text-fill display-4 "></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card stats-card gradient-card-4">
+                    <div class="card-body">
+                        <div class="d-flex position-relative h-100 justify-content-around align-items-center gap-1">
+                            <div class="">
+                                <span class="card-text mb-0 fw-medium small">Total Voice Send:</span>
+                                <h3 class="card-title fw-bolder">500</h3>
+                            </div>
+                            <div>
+                                <i class="bi bi-mic-fill display-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row my-3 row-gap-3">
+            <div class="col-12 ">
+                <div class="card border-0">
+                    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold text-primary-emphasis">Last campaigns</h4>
+                        <a href="{% url "campaign:campaignList" %}"
+                           class="fw-bold link-primary small text-decoration-none ">
+                            MORE
+                        </a>
+                    </div>
+                    <div class="card-body pt-0 table-responsive">
+                        <table class="table table-hover" style="max-height: 400px">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Package</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" style="white-space: nowrap">Date Create</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for campaign in campaigns %}
+                                <tr>
+                                    <th scope="row">{{ campaign.id }}</th>
+                                    <td>{{ campaign.type }}</td>
+                                    {% if campaign.campaign_transaction.amount or campaign.campaign_transaction.amount > 0 %}
+                                        <td>${{ campaign.campaign_transaction.amount }}</td>
+                                    {% else %}
+                                        <td>${{ campaign.get_price }}</td>
+                                    {% endif %}
+                                    {% if campaign.status == "cancel" %}
+                                        <td><span
+                                                class="badge bg-secondary-subtle text-secondary-emphasis">Canceled</span>
+                                        </td>
+                                    {% elif campaign.status == "payment" %}
+                                        <td><span
+                                                class="badge bg-info-subtle text-info-emphasis">Waiting for payment</span>
+                                        </td>
+                                    {% elif campaign.status == "disapproved" %}
+                                        <td><span class="badge bg-danger-subtle text-danger-emphasis">Disapproved</span>
+                                        </td>
+                                    {% elif campaign.status == "wait" %}
+                                        <td><span class="badge bg-warning-subtle text-warning-emphasis">Waiting for approval</span>
+                                        </td>
+                                    {% elif campaign.status == "processing" %}
+                                        <td><span
+                                                class="badge bg-primary-subtle text-primary-emphasis">Processing</span>
+                                        </td>
+                                    {% elif campaign.status == "complete" %}
+                                        <td><span class="badge bg-success-subtle text-success-emphasis">Complete</span>
+                                        </td>
+                                    {% endif %}
+                                    <td style="white-space: nowrap">{{ campaign.create_at }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center gap-3">
+                                            {% if campaign.campaign_transaction.status == "PENDING" or not campaign.campaign_transaction and campaign.status != "cancel" %}
+                                                <a class="fs-4 rounded-circle text-success"
+                                                   href="{% url "checkout:checkout" campaign.id %}"
+                                                   title="Continue payment"
+                                                   data-bs-toggle="tooltip">
+                                                    <i class="bi bi-cash-coin"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if campaign.status == "disapproved" %}
+                                                <a href="{% url "campaign:campaignResubmit" campaign.id %}"
+                                                   role="button"
+                                                   data-bs-toggle="tooltip" title="Resubmit campaign"
+                                                   class="resubmit-button text-info fs-4">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if campaign.get_days_difference >= page_setting.show_result and campaign.status == "processing" or campaign.status == "complete" %}
+                                                <span role="button" data-bs-toggle="tooltip" title="Show result"
+                                                      data-ca="{{ campaign.id }}"
+                                                      class="show-result-button text-secondary fs-5 ">
                                         <i class="bi bi-clipboard-data-fill"></i>
                                     </span>
-                                {% endif %}
-                                {% if campaign.status == "payment" or campaign.status == "disapproved" or campaign.status == "wait" %}
-                                    <a href="{% url "campaign:campaignsAction" id=campaign.id status="cancel" %}"
-                                       data-bs-toggle="tooltip" title="Cancel campaign"
-                                       class="text-danger fs-4 rounded-circle">
-                                        <i class="bi bi-x"></i>
-                                    </a>
-                                {% endif %}
-                                <a href="{% url "campaign:campaignRetrieve" campaign.id %}" data-bs-toggle="tooltip"
-                                   title="More" class="text-secondary">
-                                    <i class="bi bi-three-dots-vertical "></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation" class="my-4">
-                <ul class="pagination">
-                    <li class="page-item {% if campaigns.number == 1 %}disabled{% endif %}">
-                        <a class="page-link" href="?page=1" aria-label="First">
-                            First
+                                            {% endif %}
+                                            {% if campaign.status == "payment" or campaign.status == "disapproved" or campaign.status == "wait" %}
+                                                <a href="{% url "campaign:campaignsAction" id=campaign.id status="cancel" %}"
+                                                   data-bs-toggle="tooltip" title="Cancel campaign"
+                                                   class="text-danger fs-4 rounded-circle">
+                                                    <i class="bi bi-x"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="{% url "campaign:campaignRetrieve" campaign.id %}"
+                                               data-bs-toggle="tooltip"
+                                               title="More" class="text-secondary">
+                                                <i class="bi bi-three-dots-vertical "></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card border-0">
+                    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold text-primary-emphasis">Last tickets</h4>
+                        <a href="{% url "main:ticketList" %}" class="fw-bold link-primary small text-decoration-none ">
+                            MORE
                         </a>
-                    </li>
-                    {% if campaigns.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ campaigns.previous_page_number }}"
-                               aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% for page in campaigns.paginator.page_range %}
-                        <li class="page-item {% if page == campaigns.number %}active{% endif %}">
-                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-                        </li>
-                    {% endfor %}
-                    {% if campaigns.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ campaigns.next_page_number }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    <li class="page-item {% if campaigns.number == campaigns.paginator.num_pages %}disabled{% endif %}">
-                        <a class="page-link" href="?page={{ campaigns.paginator.num_pages }}" aria-label="Last">
-                            Last
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                    </div>
+                    <div class="card-body pt-0 table-responsive">
+                        <table class="table table-hover" style="max-height: 400px">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Answered</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" style="white-space: nowrap">Date Create</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <td scope="row">{{ ticket.id }}</td>
+                                    <td>{{ ticket.subject }}</td>
+                                    <td>{% if ticket.get_last_comment %}
+                                        <i class="bi bi-check-circle-fill text-success"></i> {% else %}
+                                        <i class="bi bi-check-circle text-secondary text-opacity-75"></i>{% endif %}
+                                    </td>
+                                    <td>{{ ticket.category }}</td>
+                                    <td>
+                                        {% if ticket.status == "open" %}
+                                            <span class="badge status-open">Open</span>
+                                        {% elif ticket.status == "inProgress" %}
+                                            <span class="badge status-inProgress">In Progress</span>
+                                        {% elif ticket.status == "resolved" %}
+                                            <span class="badge status-resolved">Resolved</span>
+                                        {% elif ticket.status == "closed" %}
+                                            <span class="badge status-closed">Closed</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="white-space: nowrap">{{ ticket.create_at }}</td>
+                                    <td><a href="{% url "main:ticketRetrieve" ticket.id %}"
+                                           class="text-secondary text-opacity-75"><i class="bi bi-eye-fill"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
     <!-- Modal -->
     <div class="modal fade" id="show-result" tabindex="-1" aria-labelledby="show-result" aria-hidden="true">
         <div class="modal-dialog modal-xl">

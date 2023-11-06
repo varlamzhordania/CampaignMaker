@@ -1,0 +1,48 @@
+{% extends "dashboard/index.html" %}
+{% load static %}
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <img src="{% static "assets/img/5124556.png" %}" width="350" height="300" class="mx-auto"/>
+        <p class="fw-bold text-primary-emphasis fs-3 text-center w-100">
+            Contact our support team
+        </p>
+    </div>
+    <form enctype="multipart/form-data" action="." method="post">
+    {% csrf_token %}
+        <div class="card border-0">
+            <div class="card-body">
+                <div class="row row-cols-1 row-gap-2">
+                    <div class="col col-12 col-md-6 col-lg-6">
+                        <label class="form-label" for="{{ form.subject.name }}">
+                            {{ form.subject.label }}
+                        </label>
+                        {{ form.subject }}
+                    </div>
+                    <div class="col col-12 col-md-6 col-lg-6">
+                        <label class="form-label" for="{{ form.category.name }}">
+                            {{ form.category.label }}
+                        </label>
+                        {{ form.category }}
+                    </div>
+                    <div class="col col-12">
+                        <label class="form-label" for="{{ form.description.name }}">
+                            {{ form.description.label }}
+                        </label>
+                        {{ form.description }}
+                    </div>
+                    <div class="col-12">
+                        <label for="file"
+                               class="form-label my-2">Attachment:</label><br/>
+                        <input type="file" name="file" class="custom-file-input mx-auto w-auto" id="attachment-1" multiple>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-secondary mt-3 w-100" role="button" type="submit">
+                            Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

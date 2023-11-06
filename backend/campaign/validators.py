@@ -4,6 +4,17 @@ from django.conf import settings
 import os
 
 
+def ticket_safe_extensions(value):
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.mp3', '.m4a', '.wav', '.jpg', '.jpeg', '.png', '.gif', '.doc', '.docx', '.xls', '.xlsx',
+                        '.pdf', ".webm", " .mov", ".ogg", ".mp4", ".mkv"]
+
+    if not ext.lower() in valid_extensions:
+        raise ValidationError(
+            'Only .mp3, .m4a, .wav, .jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .webm, .mov, .ogg, .mp4, .mkv and .pdf files are allowed.'
+        )
+
+
 def validate_file_size(value):
     if value.size > 20 * 1024 * 1024:
         raise ValidationError("File size cannot exceed 20MB.")

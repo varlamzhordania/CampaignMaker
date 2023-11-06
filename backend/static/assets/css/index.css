@@ -12,7 +12,12 @@
     --bs-primary-rgb: 99, 102, 241 !important;
     --bs-warning: var(--warning-color) !important;
     --second-font-family: 'Poppins', sans-serif;
+    --gradient-1: linear-gradient(45deg, #FF6B6B, #FFC371);
+    --gradient-2: linear-gradient(45deg, #FF71A6, #FFAFD8);
+    --gradient-3: linear-gradient(45deg, #6ACDDB, #6A4DDB);
+    --gradient-4: linear-gradient(45deg, #A6C0FE, #F68084);
 }
+
 
 body {
     margin: 0;
@@ -25,7 +30,6 @@ body {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     width: 100vw;
-    overflow-x: hidden;
 }
 
 html::-webkit-scrollbar {

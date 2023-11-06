@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Settings, Categories, Page, Seo, CustomerVideo, FAQ, ComponentsOnPage, Components
+from .models import Settings, Categories, Page, Seo, CustomerVideo, FAQ, ComponentsOnPage, Components, Ticket, \
+    TicketCategory, TicketComment, TicketAttachment
 from mptt.admin import MPTTModelAdmin
 import nested_admin
 from .forms import PageAdminForm, ComponentsOnPageForm
@@ -41,9 +42,34 @@ class ComponentAdmin(admin.ModelAdmin):
     list_display = ["id", "user", "name", "is_active", "create_at", "update_at"]
 
 
+class TicketAttachmentInline(nested_admin.NestedTabularInline, ):
+    model = TicketAttachment
+    extra = 1
+
+
+class TicketAttachmentAdmin(admin.ModelAdmin):
+    list_display = ["id", "ticket", "comment", "file", "create_at", "update_at"]
+    list_filter = ["create_at", "update_at"]
+
+
+class TicketCommentInline(nested_admin.NestedStackedInline, ):
+    model = TicketComment
+    inlines = [TicketAttachmentInline]
+    extra = 1
+
+
+class TicketAdmin(nested_admin.NestedModelAdmin):
+    list_display = ["id", "author", "subject", "category", "status", "create_at", "update_at"]
+    list_filter = ["category", "status", "create_at"]
+    inlines = [TicketCommentInline, TicketAttachmentInline]
+
+
 admin.site.register(Settings)
 admin.site.register(FAQ)
 admin.site.register(Categories, CategoriesAdmin)
 admin.site.register(Page, PageAdmin)
 admin.site.register(CustomerVideo)
 admin.site.register(Components)
+admin.site.register(Ticket, TicketAdmin)
+admin.site.register(TicketCategory)
+admin.site.register(TicketAttachment, TicketAttachmentAdmin)

@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
 from mptt.models import TreeForeignKey, MPTTModel
 from autoslug import AutoSlugField
-from campaign.validators import video_validator, validate_template_format
+from campaign.validators import video_validator, validate_template_format, ticket_safe_extensions
 from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -24,8 +24,21 @@ PAGE_TYPE_CHOICES = (
     ("feedback", "Feedback Page"),
 )
 
+STATUS_CHOICES = (
+    ('open', 'Open'),
+    ('inProgress', 'In Progress'),
+    ('resolved', 'Resolved'),
+    ('closed', 'Closed'),
+)
+
 
 # Create your models here.
+
+def attachment_file(instance, filename):
+    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
+    extension = filename.split('.')[-1]
+    return f'tickets/attachments/{timestamp}.{extension}'
+
 
 def category_image(instance, filename):
     timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
@@ -313,6 +326,147 @@ class CustomerVideo(models.Model):
         except Exception as e:
             print(e)
             return False
+
+
+class TicketCategory(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name"),
+        blank=False,
+        null=False,
+        unique=False,
+        help_text=_("format: required, max-255 character, name of your ticket category")
+    )
+    slug = AutoSlugField(
+        allow_unicode=True,
+        populate_from="name",
+        editable=True,
+        unique=True,
+        verbose_name=_("Safe URL"),
+        blank=True,
+        null=False
+    )
+    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    class Meta:
+        verbose_name = _("Ticket Category")
+        verbose_name_plural = _("Ticket Categories")
+
+    def __str__(self):
+        return self.name
+
+
+class Ticket(models.Model):
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='ticket_author',
+        verbose_name=_("Author")
+    )
+    status = models.CharField(
+        max_length=20,
+        verbose_name=_("Status"),
+        choices=STATUS_CHOICES,
+        default="open",
+    )
+
+    subject = models.CharField(
+        max_length=200,
+        verbose_name=_("Subject"),
+        blank=False,
+        null=False,
+        help_text=_("format: required , max-200")
+    )
+
+    description = models.TextField(
+        max_length=3000,
+        verbose_name=_("Description"),
+        help_text=_("format:required , max-3000"),
+        blank=False,
+        null=False
+    )
+    category = models.ForeignKey(
+        TicketCategory,
+        related_name="ticket_category",
+        on_delete=models.SET_NULL,
+        verbose_name=_("Category"),
+        blank=True,
+        null=True,
+    )
+
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    class Meta:
+        verbose_name = _("Ticket")
+        verbose_name_plural = _("Tickets")
+        ordering = ["-id"]
+
+    def __str__(self):
+        return f"{self.author.username} : {self.subject}"
+
+    def get_last_comment(self):
+        queryset = self.ticket_comment.last()
+        if queryset and not queryset.author == self.author:
+            return True
+        else:
+            return False
+
+    def get_attachment(self):
+        queryset = self.ticket_attachment.filter(ticket_id=self.id, comment__isnull=True)
+        return queryset
+
+
+class TicketComment(models.Model):
+    ticket = models.ForeignKey(
+        Ticket,
+        on_delete=models.CASCADE,
+        related_name='ticket_comment',
+        verbose_name=_("Ticket")
+    )
+    author = models.ForeignKey(get_user_model(), verbose_name=_("ticket_comment_author"), on_delete=models.CASCADE)
+    comment = models.TextField(
+        max_length=3000,
+        verbose_name=_("Comment"),
+        help_text=_("format:required , max-3000"),
+        blank=False,
+        null=False
+    )
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.ticket.subject}'
+
+    def get_attachment(self):
+        queryset = self.ticket_comment_attachment.filter(ticket_id=self.ticket.id, comment_id=self.id)
+        return queryset
+
+
+class TicketAttachment(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='ticket_attachment')
+    comment = models.ForeignKey(
+        TicketComment,
+        on_delete=models.CASCADE,
+        related_name='ticket_comment_attachment',
+        null=True,
+        blank=True
+    )
+    file = models.FileField(
+        upload_to=attachment_file,
+        blank=False,
+        null=False,
+        validators=[
+            ticket_safe_extensions
+        ]
+    )
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    def __str__(self):
+        return f"Attachment for : {self.ticket.subject}"
 
 
 class Settings(models.Model):
