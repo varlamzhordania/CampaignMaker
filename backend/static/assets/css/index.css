@@ -188,7 +188,7 @@ audio, canvas, embed, iframe, img, object, svg, video {
     align-items: center;
     height: 70vh;
     width: 100%;
-    background-image: url("/static/assets/img/hero.jpg");
+    background-image: url("/static/assets/img/hero.svg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
