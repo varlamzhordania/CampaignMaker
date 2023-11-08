@@ -5,4 +5,4 @@ Disallow: /register/
 Disallow: /login/
 Disallow: /dashboard/
 Allow: /
-Sitemap: https://www.zoomreachout.com/sitemap.xml
+Sitemap: https://www.zoomreachout.com/sitemap.xml/

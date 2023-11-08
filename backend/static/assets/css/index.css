@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 
 :root {
     --primary-light: #eff0fe;
@@ -86,7 +93,8 @@ html::-webkit-scrollbar-thumb {
 }
 
 .shadow-0 {
-    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
 }
 
 .outline-0 {
@@ -121,14 +129,25 @@ html::-webkit-scrollbar-thumb {
 }
 
 .flex-1 {
-    flex: 1 1 0%;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 0%;
+            flex: 1 1 0%;
 }
 
 .all-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 
@@ -169,6 +188,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
     bottom: 0;
     background-color: var(--bs-primary);
     height: 2px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
@@ -182,10 +203,19 @@ audio, canvas, embed, iframe, img, object, svg, video {
 
 .hero {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 70vh;
     width: 100%;
     background-image: url("/static/assets/img/hero.svg");
@@ -203,6 +233,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
     display: block;
     width: 100%;
     height: 100%;
+    background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.1)));
+    background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
     background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
     border-radius: var(--bs-border-radius);
 }
@@ -229,6 +261,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
 
 .card-community {
     border-bottom: 4px solid transparent !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
@@ -237,13 +271,17 @@ audio, canvas, embed, iframe, img, object, svg, video {
 }
 
 .swiper-pagination-bullet {
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
     transition: 0.4s;
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
     display: inline-block;
     background-color: var(--bs-primary-active);
-    transform: scaleX(2) !important;
+    -webkit-transform: scaleX(2) !important;
+        -ms-transform: scaleX(2) !important;
+            transform: scaleX(2) !important;
     border-radius: 2.2px;
     margin-right: 10px !important;
     margin-left: 10px !important;
@@ -254,6 +292,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
 }
 
 .step-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -284,8 +324,12 @@ audio, canvas, embed, iframe, img, object, svg, video {
 .step-separator {
     position: relative;
     width: 80px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .step-separator::before {
@@ -307,6 +351,7 @@ audio, canvas, embed, iframe, img, object, svg, video {
     width: 2px;
     height: 100%;
     z-index: 2;
+    background-image: -o-radial-gradient(var(--bs-primary), transparent);
     background-image: radial-gradient(var(--bs-primary), transparent);
 }
 
@@ -319,6 +364,8 @@ audio, canvas, embed, iframe, img, object, svg, video {
     opacity: 0;
     height: 0;
     min-height: 150px;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
     transition: all 0.3s;
     background-color: var(--bs-body-bg);
     z-index: 10;
@@ -387,7 +434,9 @@ audio, canvas, embed, iframe, img, object, svg, video {
 @media screen and (max-width: 768px) {
 
     .step-item:nth-child(odd) .step-item-right {
-        order: 1;
+        -webkit-box-ordinal-group: 2;
+            -ms-flex-order: 1;
+                order: 1;
         width: 100%;
     }
 

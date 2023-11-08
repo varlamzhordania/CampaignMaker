@@ -40,9 +40,9 @@
 
     {% endwith %}
 
-    <link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}?v={{ asset_version }}" rel="stylesheet"
+    <link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}?v={{ asset_version }}" async="true" rel="stylesheet"
           type="text/css"/>
-    <link href="{% static 'assets/bootstrap-icons/bootstrap-icons.css' %}?v={{ asset_version }}" rel="stylesheet"
+    <link href="{% static 'assets/bootstrap-icons/bootstrap-icons.css' %}?v={{ asset_version }}" async="true" rel="stylesheet"
           type="text/css"/>
     <link rel="stylesheet" async="true" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 

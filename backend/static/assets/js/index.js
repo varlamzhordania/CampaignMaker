@@ -27,10 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
-                console.log("not visited", entry.target)
                 if (entry.isIntersecting) {
 
-                    console.log("visited", entry.target)
                     entry.target.classList.toggle("opacity-0")
                     let animation = entry.target.getAttribute("data-animate")
                     entry.target.classList.add("animate__animated");

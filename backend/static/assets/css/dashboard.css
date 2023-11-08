@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 :root {
     --primary-light: #eff0fe;
     --primary-color: #6366f1;
@@ -69,6 +76,8 @@ main {
     bottom: 0;
     background-color: var(--bs-primary);
     height: 2px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
@@ -97,9 +106,15 @@ main {
 
 
 .steps {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     margin-bottom: 2rem;
     position: relative;
 }
@@ -109,6 +124,8 @@ main {
     height: 50px;
     border-radius: 50%;
     background-color: white;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
     transition: .4s;
     border: none;
 }
@@ -142,6 +159,7 @@ main {
 
 #progress::-webkit-progress-value {
     background-color: var(--bs-primary);
+    -webkit-transition: .5s ease;
     transition: .5s ease;
 }
 
@@ -151,6 +169,8 @@ main {
 }
 
 .custom-file-input {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
     width: 35%;
 }
@@ -169,7 +189,8 @@ main {
     margin: auto;
     left: 0;
     right: 0;
-    justify-self: center;
+    -ms-grid-column-align: center;
+        justify-self: center;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
@@ -255,6 +276,8 @@ main {
 .stats-card {
     height: 150px;
     border-width: 0;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
