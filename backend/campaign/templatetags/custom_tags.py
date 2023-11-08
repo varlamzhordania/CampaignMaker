@@ -24,13 +24,13 @@ def has_group(user, group_name):
 def load_content_from_url(url):
     cache_content = cache.get(url)
     if cache_content is not None:
-        print("cached")
         return cache_content
-
     try:
-        response = requests.get(domain + url,verify=False)
+        response = requests.get(domain + url, verify=False)
         if response.status_code == 200:
-            return mark_safe(response.text)
+            data = mark_safe(response.text)
+            cache.set(url, data, 900)
+            return data
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
 

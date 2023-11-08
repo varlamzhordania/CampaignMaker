@@ -3,6 +3,7 @@ from .models import CustomerVideo, FAQ, Categories, Page, Ticket, TicketAttachme
 from django.core.paginator import Paginator
 from .forms import TicketCreateForm, TicketAttachmentForm, TicketCommentCreateForm
 from core.utils import fancy_message
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -91,9 +92,28 @@ def ticket_list(request, *args, **kwargs):
 
 
 def home(request, *args, **kwargs):
-    video_queryset = CustomerVideo.objects.filter(is_active=True)
-    faq_queryset = FAQ.objects.filter(is_active=True)
-    page = Page.objects.filter(type="home").first()
+    page_data = cache.get("home_page")
+    customer_videos_data = cache.get("customer_videos")
+    faq_data = cache.get("faq")
+
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="home").first()
+        cache.set('home_page', page, 900)
+
+    if customer_videos_data is not None:
+        video_queryset = customer_videos_data
+    else:
+        video_queryset = CustomerVideo.objects.filter(is_active=True)
+        cache.set('customer_videos', video_queryset, 900)
+
+    if faq_data is not None:
+        faq_queryset = faq_data
+    else:
+        faq_queryset = FAQ.objects.filter(is_active=True)
+        cache.set('faq', faq_queryset, 900)
+
     my_context = {
         "Title": "Home",
         "customer_videos": video_queryset,
@@ -104,7 +124,14 @@ def home(request, *args, **kwargs):
 
 
 def category(request, slug, *args, **kwargs):
-    queryset = get_object_or_404(Categories, slug=slug, is_active=True)
+
+    queryset_data = cache.get(f"category-{slug}")
+    if queryset_data is not None:
+        queryset = queryset_data
+    else:
+        queryset = get_object_or_404(Categories, slug=slug, is_active=True)
+        cache.set(f"category-{slug}", queryset, 900)
+
     my_context = {
         "category": queryset,
         "page": queryset.category_page
@@ -113,7 +140,13 @@ def category(request, slug, *args, **kwargs):
 
 
 def contact_us(request, *args, **kwargs):
-    page = Page.objects.filter(type="contact").first()
+    page_data = cache.get("contact_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="contact").first()
+        cache.set('contact_page', page, 900)
+
     my_context = {
         "Title": "Contact us",
         "page": page
@@ -122,7 +155,13 @@ def contact_us(request, *args, **kwargs):
 
 
 def about_us(request, *args, **kwargs):
-    page = Page.objects.filter(type="about").first()
+    page_data = cache.get("about_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="about").first()
+        cache.set('about_page', page, 900)
+
     my_context = {
         "Title": "About us",
         "page": page
@@ -131,7 +170,13 @@ def about_us(request, *args, **kwargs):
 
 
 def privacy_policy(request, *args, **kwargs):
-    page = Page.objects.filter(type="privacy").first()
+    page_data = cache.get("privacy_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="privacy").first()
+        cache.set('privacy_page', page, 900)
+
     my_context = {
         "Title": "Privacy Policy",
         "page": page
@@ -140,7 +185,13 @@ def privacy_policy(request, *args, **kwargs):
 
 
 def terms(request, *args, **kwargs):
-    page = Page.objects.filter(type="terms").first()
+    page_data = cache.get("term_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="terms").first()
+        cache.set('term_page', page, 900)
+
     my_context = {
         "Title": "Terms",
         "page": page
@@ -149,7 +200,13 @@ def terms(request, *args, **kwargs):
 
 
 def refund(request, *args, **kwargs):
-    page = Page.objects.filter(type="refund").first()
+    page_data = cache.get("refund_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="refund").first()
+        cache.set('refund_page', page, 900)
+
     my_context = {
         "Title": "Refund",
         "page": page
@@ -158,7 +215,13 @@ def refund(request, *args, **kwargs):
 
 
 def feedback(request, *args, **kwargs):
-    page = Page.objects.filter(type="feedback").first()
+    page_data = cache.get("feedback_page")
+    if page_data is not None:
+        page = page_data
+    else:
+        page = Page.objects.filter(type="feedback").first()
+        cache.set('feedback_page', page, 900)
+
     my_context = {
         "Title": "Feedback",
         "page": page
