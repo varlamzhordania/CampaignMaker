@@ -10,6 +10,10 @@ from autoslug import AutoSlugField
 from campaign.validators import video_validator, validate_template_format, ticket_safe_extensions
 from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
+from django.urls import reverse
+
+
+
 
 PAGE_TYPE_CHOICES = (
     ("signIn", "SignIn Page"),
@@ -112,6 +116,9 @@ class Categories(MPTTModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('main:category', args=[str(self.slug)])
 
 
 class Components(models.Model):

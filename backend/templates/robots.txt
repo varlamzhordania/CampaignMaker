@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /register/
+Disallow: /login/
+Disallow: /dashboard/
+Allow: /
+Sitemap: https://www.zoomreachout.com/sitemap.xml

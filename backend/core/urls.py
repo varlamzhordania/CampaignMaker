@@ -20,6 +20,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from account.forms import StylesCustomPasswordResetForm, StylesCustomSetPasswordForm
+from django.contrib.sitemaps.views import sitemap
+from main.sitemap import StaticViewSitemap, HomeViewSitemap, CategoryViewSitemap
+from django.views.generic.base import TemplateView
+
+
+
+sitemaps = {
+    'home': HomeViewSitemap,
+    'categories': CategoryViewSitemap,
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
 
@@ -54,5 +65,7 @@ urlpatterns = [
                       name="password_reset_complete"
                   ),
                   path("ckeditor5/", include('django_ckeditor_5.urls')),
+                  path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}),
+                  path("robots.txt/",TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),)
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
