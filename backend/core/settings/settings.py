@@ -554,3 +554,5 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+STATIC_VERSION = "1"
