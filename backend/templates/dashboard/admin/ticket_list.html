@@ -1,0 +1,115 @@
+{% extends "dashboard/index.html" %}
+{% block content %}
+    <div class="card border-0">
+        <div class="card-header bg-white">
+            <h3 class="card-title">
+                Ticket List
+            </h3>
+        </div>
+        {{ request.path.queryparams }}
+        <div class="card-body ">
+            <div class="d-flex flex-column gap-5 mb-3 ">
+                <div class="d-flex flex-wrap gap-2 justify-content-start justify-content-md-center align-self-center">
+                    <a class="btn status-neutral fw-bolder {% if not status %}active{% endif %}" href=".">
+                        ALL
+                    </a>
+                    <a class="btn status-open fw-bolder {% if status == "open" %}active{% endif %}"
+                       href=".?status=open">
+                        Open
+                    </a>
+                    <a class="btn status-inProgress fw-bolder {% if status == "inProgress" %}active{% endif %}"
+                       href=".?status=inProgress">
+                        In Progress
+                    </a>
+                    <a class="btn status-resolved fw-bolder {% if status == "resolved" %}active{% endif %}"
+                       href=".?status=resolved">
+                        Resolved
+                    </a>
+                    <a class="btn status-closed fw-bolder {% if status == "closed" %}active{% endif %}"
+                       href=".?status=closed">
+                        Closed
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive" style="padding: 0 20px;">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Answered</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" style="white-space: nowrap">Date Create</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td scope="row">{{ ticket.id }}</td>
+                            <td>{{ ticket.subject }}</td>
+                            <td>{% if ticket.get_last_comment %}
+                                <i class="bi bi-check-circle-fill text-success"></i> {% else %}
+                                <i class="bi bi-check-circle text-secondary text-opacity-75"></i>{% endif %}</td>
+                            <td>{{ ticket.category }}</td>
+                            <td>
+                                {% if ticket.status == "open" %}
+                                    <span class="badge status-open">Open</span>
+                                {% elif ticket.status == "inProgress" %}
+                                    <span class="badge status-inProgress">In Progress</span>
+                                {% elif ticket.status == "resolved" %}
+                                    <span class="badge status-resolved">Resolved</span>
+                                {% elif ticket.status == "closed" %}
+                                    <span class="badge status-closed">Closed</span>
+                                {% endif %}
+                            </td>
+                            <td style="white-space: nowrap">{{ ticket.create_at }}</td>
+                            <td><a href="{% url "cms:adminTicketRetrieve" ticket.id %}"
+                                   class="text-secondary text-opacity-75"><i class="bi bi-eye-fill"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Page navigation" class="my-4">
+                <ul class="pagination">
+                    <li class="page-item {% if tickets.number == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            First
+                        </a>
+                    </li>
+                    {% if tickets.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ tickets.previous_page_number }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in tickets.paginator.page_range %}
+                        <li class="page-item {% if page == tickets.number %}active{% endif %}">
+                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if tickets.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ tickets.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item {% if tickets.number == tickets.paginator.num_pages %}disabled{% endif %}">
+                        <a class="page-link" href="?page={{ tickets.paginator.num_pages }}" aria-label="Last">
+                            Last
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

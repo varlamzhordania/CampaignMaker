@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'campaign',
     'checkout',
     'main',
+    'cms',
     # External Apps
     # 'ckeditor',
     'django_ckeditor_5',

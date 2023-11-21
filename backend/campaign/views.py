@@ -21,16 +21,23 @@ def Dashboard(request, *args, **kwargs):
         fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
     elif payment and payment == "false":
         fancy_message(request, "Payment failed", level="error")
-    queryset = Campaign.objects.filter(customer=request.user)[:7]
-    queryset2 = Ticket.objects.filter(author=request.user)[:7]
-    my_context = {
-        "Title": f"Dashboard",
-        "today": datetime.datetime.now(),
-        "base_url": django_settings.EXTERNAL_API_BASE_URL,
-        "campaigns": queryset,
-        "tickets": queryset2,
-    }
-    return render(request, "dashboard/dashboard.html", my_context)
+
+    if is_admin(request.user):
+        my_context = {
+            "Title": f"Dashboard",
+        }
+        return render(request, "dashboard/admin/dashboard.html", my_context)
+    else:
+        queryset = Campaign.objects.filter(customer=request.user)[:7]
+        queryset2 = Ticket.objects.filter(author=request.user)[:7]
+        my_context = {
+            "Title": f"Dashboard",
+            "today": datetime.datetime.now(),
+            "base_url": django_settings.EXTERNAL_API_BASE_URL,
+            "campaigns": queryset,
+            "tickets": queryset2,
+        }
+        return render(request, "dashboard/dashboard.html", my_context)
 
 
 @login_required(login_url="/login")
@@ -107,65 +114,6 @@ def CampaignResubmit(request, pk, *args, **kwargs):
 
 
 # Create your views here.
-@login_required(login_url="/login")
-@user_passes_test(is_admin, login_url="/login")
-def AdminCampaignNote(request, *args, **kwargs):
-    if request.method == "POST":
-        queryset = get_object_or_404(Campaign, id=request.POST.get("disapprove-campaign-id", 0))
-        data = {
-            "admin": request.user,
-            "note": request.POST.get("note", ""),
-            "status": "disapproved",
-        }
-        form = CampaignDisapproveForm(instance=queryset, data=data)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.is_resubmit = False
-            obj.save()
-            fancy_message(request, f"Campaign-{obj.id} : status changed to {data.get('status')}", level="success")
-            return redirect("campaign:adminCampaigns")
-        else:
-            fancy_message(request, form.errors, level="error")
-            return redirect("campaign:adminCampaigns")
-    else:
-        fancy_message(request, "invalid method", level="error")
-        return redirect("campaign:adminCampaigns")
-
-
-@login_required(login_url="/login")
-@user_passes_test(is_admin, login_url="/login")
-def AdminCampaignAudio(request, *args, **kwargs):
-    if request.method == "POST":
-        queryset = get_object_or_404(CampaignAudio, campaign_id=request.POST.get("change-audio-campaign-id", 0))
-        data = {
-            "text": queryset.text
-        }
-        form = CampaignAudioForm(instance=queryset, data=data, files=request.FILES)
-        if form.is_valid():
-            obj = form.save()
-            fancy_message(request, f"Campaign-{obj.id} : audio file updated", level="success")
-            return redirect("campaign:adminCampaigns")
-        else:
-            fancy_message(request, form.errors, level="error")
-            return redirect("campaign:adminCampaigns")
-    else:
-        fancy_message(request, "invalid method", level="error")
-        return redirect("campaign:adminCampaigns")
-
-
-# Create your views here.
-@login_required(login_url="/login")
-@user_passes_test(is_admin, login_url="/login")
-def AdminCampaignActions(request, id, status, *args, **kwargs):
-    queryset = Campaign.objects.get(pk=id)
-    queryset.status = str(status)
-    queryset.admin = request.user
-    if status == "processing":
-        queryset.is_resubmit = False
-        call_api(queryset)
-    queryset.save()
-    fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
-    return redirect("campaign:adminCampaigns")
 
 
 @login_required(login_url="/login")
@@ -178,37 +126,6 @@ def CampaignActions(request, id, status, *args, **kwargs):
     queryset.save()
     fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
     return redirect("campaign:dashboard")
-
-
-@login_required(login_url="/login")
-@user_passes_test(is_admin, login_url="/login")
-def AdminCampaignList(request, *args, **kwargs):
-    form = CampaignDisapproveForm()
-    form2 = CampaignAudioForm()
-    status = request.GET.get("status", None)
-    search = request.GET.get("search", None)
-    resubmit = request.GET.get("resubmit", None)
-    page = request.GET.get('page', 1)
-    queryset = Campaign.objects.all()
-
-    if status:
-        queryset = queryset.filter(status=status)
-
-    if search:
-        queryset = queryset.filter(
-            Q(id__icontains=search) |
-            Q(customer__username=search) |
-            Q(customer__email__icontains=search)
-        )
-
-    if resubmit:
-        queryset = queryset.filter(is_resubmit=resubmit)
-    pagination = Paginator(queryset, per_page=10)
-    items = pagination.get_page(page)
-    my_context = {"Title": "Campaign List", "campaigns": items, "form": form, "form2": form2, "status": status,
-                  "is_resubmit": resubmit}
-    return render(request, "dashboard/admin/campaign_list.html", my_context)
-
 
 @login_required(login_url="/login")
 def CampaignList(request, *args, **kwargs):
@@ -240,42 +157,6 @@ def ListOfEmailTemplates(request, *args, **kwargs):
     return JsonResponse(serializer, safe=False)
 
 
-@login_required(login_url="/login")
-@user_passes_test(is_admin, login_url="/login")
-def ListOfCampaigns(request, *args, **kwargs):
-    queryset = Campaign.objects.all()
-    params = request.GET.get("id", None)
-    if params:
-        queryset = queryset.filter(id=params)
-    serializer = [
-        {
-            "id": item.id,
-            "customer": item.customer.username,
-            "type": {
-                "id": item.type.id,
-                "name": item.type.name,
-                "slug": item.type.slug,
-                "price": item.type.price,
-            },
-            "email": {
-                "id": item.campaign_email.id,
-                "subject": item.campaign_email.subject,
-                "body": item.campaign_email.body,
-
-            },
-            "sms": {
-                "id": item.campaign_sms.id,
-                "body": item.campaign_sms.body,
-            },
-            "audio": {
-                "id": item.campaign_audio.id,
-                "text": item.campaign_audio.text,
-            }
-        }
-        for item in queryset
-    ]
-
-    return JsonResponse(serializer, safe=False)
 
 
 @login_required(login_url="/login")

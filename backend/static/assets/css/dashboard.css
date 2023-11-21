@@ -6,7 +6,6 @@
 */
 
 
-
 :root {
     --primary-light: #eff0fe;
     --primary-color: #6366f1;
@@ -112,11 +111,11 @@ main {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     margin-bottom: 2rem;
     position: relative;
 }
@@ -192,7 +191,7 @@ main {
     left: 0;
     right: 0;
     -ms-grid-column-align: center;
-        justify-self: center;
+    justify-self: center;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
@@ -311,29 +310,92 @@ main {
 .status-open {
     background-color: #dae4f6; /* Soft blue */
     color: #3b5998; /* Stronger blue text */
+    border: 2px solid transparent;
 }
 
 /* Styles for "In Progress" status badge */
 .status-inProgress {
     background-color: #efdae4; /* Soft pink */
     color: #a629aa; /* Stronger pink text */
+    border: 2px solid transparent;
 }
 
 /* Styles for "Resolved" status badge */
 .status-resolved {
     background-color: #d6f2f5; /* Soft aqua blue */
     color: #007f7c; /* Stronger teal text */
+    border: 2px solid transparent;
 }
 
 /* Styles for "Closed" status badge */
 .status-closed {
     background-color: #e7fadd; /* Soft lime green */
     color: #4a8c4f; /* Stronger green text */
+    border: 2px solid transparent;
 }
 
 .status-neutral {
     background-color: #f0f0f0; /* Light gray */
     color: #000; /* Black text for a neutral category */
+    border: 2px solid transparent;
+}
+
+.btn.status-open {
+    background-color: transparent; /* Soft blue */
+    color: #3b5998; /* Stronger blue text */
+    border: 2px solid #dae4f6;
+}
+
+/* Styles for "In Progress" status badge */
+.btn.status-inProgress {
+    background-color: transparent; /* Soft pink */
+    color: #a629aa; /* Stronger pink text */
+    border: 2px solid #efdae4;
+}
+
+/* Styles for "Resolved" status badge */
+.btn.status-resolved {
+    background-color: transparent; /* Soft aqua blue */
+    color: #007f7c; /* Stronger teal text */
+    border: 2px solid #d6f2f5;
+}
+
+/* Styles for "Closed" status badge */
+.btn.status-closed {
+    background-color: transparent; /* Soft lime green */
+    color: #4a8c4f; /* Stronger green text */
+    border: 2px solid #e7fadd;
+}
+
+.btn.status-neutral {
+    background-color: transparent; /* Light gray */
+    color: #000; /* Black text for a neutral category */
+    border: 2px solid #f0f0f0;
+}
+
+.btn.status-open:hover, .btn.status-open:focus, .btn.status-open:active, .btn.status-open.active {
+    border-color: transparent !important;
+    background-color: #dae4f6;
+}
+
+.btn.status-inProgress:hover, .btn.status-inProgress:focus, .btn.status-inProgress:active, .btn.status-inProgress.active {
+    border-color: transparent !important;
+    background-color: #efdae4;
+}
+
+.btn.status-resolved:hover, .btn.status-resolved:focus, .btn.status-resolved:active, .btn.status-resolved.active {
+    border-color: transparent !important;
+    background-color: #d6f2f5;
+}
+
+.btn.status-closed:hover, .btn.status-closed:focus, .btn.status-closed:active, .btn.status-closed.active {
+    border-color: transparent !important;
+    background-color: #e7fadd;
+}
+
+.btn.status-neutral:hover, .btn.status-neutral:focus, .btn.status-neutral:active, .btn.status-neutral.active {
+    border-color: transparent !important;
+    background-color: #f0f0f0;
 }
 
 @media screen and (min-width: 0) {

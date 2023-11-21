@@ -1,7 +1,9 @@
 {% load custom_tags %}
 {% load static %}
 {% url "campaign:dashboard" as dashboard %}
-{% url "campaign:adminCampaigns" as campaigns %}
+{% url "cms:adminCampaigns" as adminCampaignList %}
+{% url "cms:adminTickets" as adminTicketList %}
+{% url "cms:adminContacts" as adminContactsList %}
 {% url "campaign:campaignList" as campaignList %}
 {% url "main:ticketList" as ticketList %}
 <header class="bg-light-subtle sticky-top pb-1" id="header">
@@ -49,21 +51,32 @@
                             <a class="nav-link {% if request.path == dashboard %}active{% endif %}"
                                {% if request.path == dashboard %}aria-current="page"{% endif %} href="{{ dashboard }}">Dashboard</a>
                         </li>
-                        <li class="nav-item px-3 px-lg-0">
-                            <a class="nav-link {% if request.path == campaignList %}active{% endif %}"
-                               {% if request.path == campaignList %}aria-current="page"{% endif %}
-                               href="{{ campaignList }}">Campaigns</a>
-                        </li>
-                        <li class="nav-item px-3 px-lg-0">
-                            <a class="nav-link {% if request.path == ticketList %}active{% endif %}"
-                               {% if request.path == ticketList %}aria-current="page"{% endif %}
-                               href="{{ ticketList }}">Support</a>
-                        </li>
                         {% if request.user|has_group:"admin" %}
                             <li class="nav-item px-3 px-lg-0">
-                                <a class="nav-link {% if request.path == campaigns %}active{% endif %}"
-                                   {% if request.path == campaigns %}aria-current="page"{% endif %}
-                                   href="{{ campaigns }}">Management</a>
+                                <a class="nav-link {% if request.path == adminCampaignList %}active{% endif %}"
+                                   {% if request.path == adminCampaignList %}aria-current="page"{% endif %}
+                                   href="{{ adminCampaignList }}">Campaigns</a>
+                            </li>
+                            <li class="nav-item px-3 px-lg-0">
+                                <a class="nav-link {% if request.path == adminTicketList %}active{% endif %}"
+                                   {% if request.path == adminTicketList %}aria-current="page"{% endif %}
+                                   href="{{ adminTicketList }}">Tickets</a>
+                            </li>
+                            <li class="nav-item px-3 px-lg-0">
+                                <a class="nav-link {% if request.path == adminContactsList %}active{% endif %}"
+                                   {% if request.path == adminContactsList %}aria-current="page"{% endif %}
+                                   href="{{ adminContactsList }}">Contacts</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item px-3 px-lg-0">
+                                <a class="nav-link {% if request.path == campaignList %}active{% endif %}"
+                                   {% if request.path == campaignList %}aria-current="page"{% endif %}
+                                   href="{{ campaignList }}">Campaigns</a>
+                            </li>
+                            <li class="nav-item px-3 px-lg-0">
+                                <a class="nav-link {% if request.path == ticketList %}active{% endif %}"
+                                   {% if request.path == ticketList %}aria-current="page"{% endif %}
+                                   href="{{ ticketList }}">Support</a>
                             </li>
                         {% endif %}
                     </ul>
