@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Settings, Categories, Page, Seo, CustomerVideo, FAQ, ComponentsOnPage, Components, Ticket, \
-    TicketCategory, TicketComment, TicketAttachment
+    TicketCategory, TicketComment, TicketAttachment, ContactUs
 from mptt.admin import MPTTModelAdmin
 import nested_admin
 from .forms import PageAdminForm, ComponentsOnPageForm
@@ -64,6 +64,11 @@ class TicketAdmin(nested_admin.NestedModelAdmin):
     inlines = [TicketCommentInline, TicketAttachmentInline]
 
 
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ["id", "name", "email", "is_check", "create_at", "update_at"]
+    list_filter = ["is_check", "create_at", "update_at"]
+
+
 admin.site.register(Settings)
 admin.site.register(FAQ)
 admin.site.register(Categories, CategoriesAdmin)
@@ -73,3 +78,4 @@ admin.site.register(Components)
 admin.site.register(Ticket, TicketAdmin)
 admin.site.register(TicketCategory)
 admin.site.register(TicketAttachment, TicketAttachmentAdmin)
+admin.site.register(ContactUs, ContactUsAdmin)

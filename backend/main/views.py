@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CustomerVideo, FAQ, Categories, Page, Ticket, TicketAttachment
 from django.core.paginator import Paginator
-from .forms import TicketCreateForm, TicketAttachmentForm, TicketCommentCreateForm
+from .forms import TicketCreateForm, TicketAttachmentForm, TicketCommentCreateForm, ContactUsForm
 from core.utils import fancy_message
 from django.core.cache import cache
 
@@ -124,7 +124,6 @@ def home(request, *args, **kwargs):
 
 
 def category(request, slug, *args, **kwargs):
-
     queryset_data = cache.get(f"category-{slug}")
     if queryset_data is not None:
         queryset = queryset_data
@@ -140,6 +139,18 @@ def category(request, slug, *args, **kwargs):
 
 
 def contact_us(request, *args, **kwargs):
+    if request.method == "POST":
+        form = ContactUsForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            fancy_message(
+                request,
+                "Our support will review and answer you as soon as possible",
+                level="success"
+            )
+            return redirect("main:contact")
+        else:
+            fancy_message(request, form.errors, level="error")
     page_data = cache.get("contact_page")
     if page_data is not None:
         page = page_data
@@ -147,9 +158,12 @@ def contact_us(request, *args, **kwargs):
         page = Page.objects.filter(type="contact").first()
         cache.set('contact_page', page, 900)
 
+    form = ContactUsForm(request.POST)
+
     my_context = {
         "Title": "Contact us",
-        "page": page
+        "page": page,
+        "form": form
     }
     return render(request, "main/dynamic_object.html", my_context)
 

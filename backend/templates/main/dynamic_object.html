@@ -18,6 +18,42 @@
                 {% load_content_from_url item.component.template.url|default:""|safe %}
             {% endfor %}
         {% endif %}
+        {% if form %}
+            <section class="position-relative d-block mx-0 mx-md-5 py-5">
+                <form action="." method="post" enctype="multipart/form-data">
+                    <div class="card bg-transparent border-0 shadow-lg w-75 mx-auto">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="row row-gap-3">
+                                <div class="col col-12">
+                                    <label for="{{ form.name.name }}" class="form-label">
+                                        {{ form.name.label }}
+                                    </label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="col col-12">
+                                    <label for="{{ form.email.name }}" class="form-label">
+                                        {{ form.email.label }}
+                                    </label>
+                                    {{ form.email }}
+                                </div>
+                                <div class="col col-12">
+                                    <label for="{{ form.message.name }}" class="form-label">
+                                        {{ form.message.label }}
+                                    </label>
+                                    {{ form.message }}
+                                </div>
+                                <div class="col col-12">
+                                    <button class="btn btn-secondary float-end" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        {% endif %}
     </main>
     {% include "main/footer.html" %}
 {% endblock %}

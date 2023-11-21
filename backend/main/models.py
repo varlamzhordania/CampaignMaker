@@ -12,9 +12,6 @@ from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
 from django.urls import reverse
 
-
-
-
 PAGE_TYPE_CHOICES = (
     ("signIn", "SignIn Page"),
     ("signUp", "SignUp Page"),
@@ -474,6 +471,29 @@ class TicketAttachment(models.Model):
 
     def __str__(self):
         return f"Attachment for : {self.ticket.subject}"
+
+
+class ContactUs(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_("Name"), blank=False, null=False)
+    email = models.EmailField(verbose_name=_("Email"), blank=False, null=False)
+    message = models.TextField(
+        max_length=600,
+        verbose_name=_("Message"),
+        help_text=_("format:required , max-3000"),
+        blank=False,
+        null=False
+    )
+    is_check = models.BooleanField(verbose_name=_("Is Check"), default=False)
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
+    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+
+    class Meta:
+        verbose_name = _("Contact Us")
+        verbose_name_plural = _("Contact Us")
+        ordering = ["-id"]
+
+    def __str__(self):
+        return f"{self.id}-{self.name}"
 
 
 class Settings(models.Model):
