@@ -30,6 +30,9 @@ services:
       - ./backend/static/:/home/campaign/backend/static
       - ./backend/media/:/home/campaign/backend/media
       - ./backend/staticfiles/:/home/campaign/backend/staticfiles
+      - /home/whatsapp-partners/backend/static/:/home/whatsapp/backend/static
+      - /home/whatsapp-partners/backend/media/:/home/whatsapp/backend/media
+      - /home/whatsapp-partners/backend/staticfiles/:/home/whatsapp/backend/staticfiles
     depends_on:
       - django
   postgres:
