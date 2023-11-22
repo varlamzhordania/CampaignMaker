@@ -24,7 +24,7 @@ class ContactUsForm(forms.ModelForm):
         )
     )
     message = forms.CharField(
-        required=True, label="Message", max_length=600, widget=forms.Textarea(
+        required=True, label="Message", max_length=350, widget=forms.Textarea(
             attrs={
                 "class": "form-control",
                 "id": "message",

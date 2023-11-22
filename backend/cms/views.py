@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from core.utils import fancy_message, is_admin, string_to_context
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.paginator import Paginator
@@ -7,11 +7,25 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from campaign.forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
 from campaign.models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, CampaignEmail, \
     CampaignEmailTemplate, CampaignType
-from main.models import Ticket, TicketAttachment
+from main.models import Ticket, TicketAttachment, ContactUs
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.http import JsonResponse
 from main.forms import TicketCommentCreateForm, TicketAttachmentForm
+
+
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
+def AdminTicketAction(request, pk, status, *args, **kwargs):
+    queryset = get_object_or_404(Ticket, id=pk)
+    queryset.status = status
+    queryset.save()
+    fancy_message(
+        request,
+        f"Ticket-{pk} : status successfully changed to {status}",
+        level="success"
+    )
+    return redirect("cms:adminTicketRetrieve", pk=pk)
 
 
 @login_required(login_url="/login")
@@ -77,11 +91,54 @@ def AdminTicketList(request, *args, **kwargs):
 @login_required(login_url="/login")
 @user_passes_test(is_admin, login_url="/login")
 def AdminContactList(request, *args, **kwargs):
+    check = bool(request.GET.get("is_check", False))
+    page = request.GET.get("page", 1)
+    queryset = ContactUs.objects.all()
+
+    if check:
+        queryset = queryset.filter(is_check=True)
+
+    paginator = Paginator(queryset, per_page=10)
+    items = paginator.get_page(page)
+
     my_context = {
-        "Title": "Contact List"
+        "Title": "Contact List",
+        "contacts": items,
+        "is_check": check,
     }
 
     return render(request, "dashboard/admin/contact_list.html", my_context)
+
+
+@login_required(login_url="/login")
+@user_passes_test(is_admin, login_url="/login")
+def AdminContactAction(request, pk, check):
+    queryset = get_object_or_404(ContactUs, id=pk)
+    if check == "true":
+        queryset.is_check = True
+        queryset.save()
+        fancy_message(
+            request,
+            f"Contact-{pk} : check status successfully changed",
+            level="success"
+        )
+        return redirect("cms:adminContacts")
+    elif check == "false":
+        queryset.is_check = False
+        queryset.save()
+        fancy_message(
+            request,
+            f"Contact-{pk} : check status successfully changed",
+            level="success"
+        )
+        return redirect("cms:adminContacts")
+    else:
+        fancy_message(
+            request,
+            f"incorrect query param",
+            level="error"
+        )
+        return redirect("cms:adminContacts")
 
 
 @login_required(login_url="/login")

@@ -477,9 +477,9 @@ class ContactUs(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Name"), blank=False, null=False)
     email = models.EmailField(verbose_name=_("Email"), blank=False, null=False)
     message = models.TextField(
-        max_length=600,
+        max_length=350,
         verbose_name=_("Message"),
-        help_text=_("format:required , max-3000"),
+        help_text=_("format:required , max-350"),
         blank=False,
         null=False
     )

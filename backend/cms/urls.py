@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import AdminCampaignActions, AdminCampaignAudio, AdminCampaignNote, AdminCampaignList, ListOfCampaigns, \
-    AdminTicketList, AdminContactList, AdminTicketRetrieve
+    AdminTicketList, AdminContactList, AdminTicketRetrieve, AdminTicketAction, AdminContactAction
 
 app_name = 'cms'
 
@@ -12,5 +12,7 @@ urlpatterns = [
     path("dashboard/admin/campaigns/", AdminCampaignList, name="adminCampaigns"),
     path("dashboard/admin/tickets/", AdminTicketList, name="adminTickets"),
     path("dashboard/admin/tickets/<int:pk>/", AdminTicketRetrieve, name="adminTicketRetrieve"),
+    path("dashboard/admin/tickets/<int:pk>/<str:status>/", AdminTicketAction, name="adminTicketAction"),
     path("dashboard/admin/contacts/", AdminContactList, name="adminContacts"),
+    path("dashboard/admin/contacts/<int:pk>/<str:check>/", AdminContactAction, name="adminContactAction"),
 ]
