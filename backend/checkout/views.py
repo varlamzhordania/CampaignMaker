@@ -8,7 +8,7 @@ import stripe
 
 # Create your views here.
 stripe.api_key = settings.STRIPE_SECRET_KEY
-endpoint_secret = settings.STRIPE_WEBHOOK_ENDPOINT_SECRET_KEY
+endpoint_secret = settings.STRIPE_WEBHOOK_KEY
 domain = settings.BASE_DOMAIN
 
 

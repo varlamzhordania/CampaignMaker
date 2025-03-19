@@ -2,17 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from core.settings.settings import DEBUG
 
 
 def main():
     """Run administrative tasks."""
-    if DEBUG:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.development')
-        print("Manage: Django loaded up in setting mode : Development")
-    else:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings.production')
-        print("Manage: Django loaded up in setting mode : Production")
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
     try:
         from django.core.management import execute_from_command_line
