@@ -16,11 +16,13 @@ services:
       - redis
     env_file:
       - ./docker.env
-  celery:
+  celery_worker:
     container_name: celery_worker
     build:
       context: ./backend
     command: celery -A core worker --loglevel=info
+    volumes:
+      - ./backend/:/home/campaign/backend
     depends_on:
       - redis
       - django
@@ -65,7 +67,7 @@ services:
       - '6379:6379'
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
   memcached:
     image: memcached
     container_name: memcached
