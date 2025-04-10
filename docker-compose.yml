@@ -63,7 +63,9 @@ services:
     image: redis
     ports:
       - '6379:6379'
-    command: ["redis-server", "--active-defrag"]
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
   memcached:
     image: memcached
     container_name: memcached
