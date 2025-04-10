@@ -1,15 +1,17 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.http import Http404
-from .forms import StylesCustomUserCreationForm, StylesCustomUserChangeForm, StylesCustomPasswordChangeForm
-from django.contrib import messages
-from core.utils import fancy_message
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user
+
+from core.utils import fancy_message
 from main.models import Page
 
+from .decorators import unauthenticated_user
+from .forms import StylesCustomUserCreationForm, StylesCustomUserChangeForm, \
+    StylesCustomPasswordChangeForm
+from .models import UserBusinessProfile
 
-# Create your views here.
+
 @login_required(login_url="/login")
 def Profile(request, *args, **kwargs):
     user = request.user
@@ -24,7 +26,8 @@ def Profile(request, *args, **kwargs):
             return redirect(request.META["HTTP_REFERER"])
     form = StylesCustomUserChangeForm(instance=user)
     password_form = StylesCustomPasswordChangeForm(user)
-    my_context = {"Title": f"Profile | {request.user}", "form": form, "password_form": password_form}
+    my_context = {"Title": f"Profile | {request.user}", "form": form,
+                  "password_form": password_form}
     return render(request, "dashboard/profile.html", my_context)
 
 
@@ -81,9 +84,9 @@ def Register(request, *args, **kwargs):
         form = StylesCustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user, backend="campaign.backends.EmailBackend")
+            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
             fancy_message(request, f"welcome {user.username}")
-            return redirect("campaign:dashboard")
+            return redirect("account:businessSetup")
         else:
             fancy_message(request, form.errors, level="error")
 
@@ -93,9 +96,28 @@ def Register(request, *args, **kwargs):
         "last_name": request.POST.get("last_name", None),
         "email": request.POST.get("email", None),
         "username": request.POST.get("username", None),
-        "business_name": request.POST.get("business_name", None),
         "phone_number": request.POST.get("phone_number", None),
     }
     form = StylesCustomUserCreationForm(initial=previous_data)
     my_context = {"Title": "Register", "form": form}
     return render(request, "register.html", my_context)
+
+
+@login_required(login_url="/login")
+def BusinesSetup(request, *args, **kwargs):
+    user = request.user
+
+    if not user.show_questions:
+        return redirect("campaign:dashboard")
+
+    user_profile, created = UserBusinessProfile.objects.get_or_create(user=user)
+
+    profile_progress = user_profile.get_profile_progress()
+    incomplete_steps = profile_progress["remaining_steps"]
+
+    my_context = {
+        "Title": "Tell us about your business",
+        "incomplete_steps": incomplete_steps,
+    }
+
+    return render(request, "dashboard/business_setup.html", my_context)

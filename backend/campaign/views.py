@@ -113,9 +113,6 @@ def CampaignResubmit(request, pk, *args, **kwargs):
     return render(request, "dashboard/campaign_resubmit.html", my_context)
 
 
-# Create your views here.
-
-
 @login_required(login_url="/login")
 def CampaignActions(request, id, status, *args, **kwargs):
     queryset = get_object_or_404(Campaign, pk=id, customer_id=request.user.id)
@@ -155,8 +152,6 @@ def ListOfEmailTemplates(request, *args, **kwargs):
     ]
 
     return JsonResponse(serializer, safe=False)
-
-
 
 
 @login_required(login_url="/login")

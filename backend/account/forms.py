@@ -142,17 +142,6 @@ class StylesCustomUserChangeForm(UserChangeForm):
         )
     )
 
-    business_name = forms.CharField(
-        max_length=255, required=True, label=_("Business Name"), widget=forms.TextInput(
-            attrs={
-                "class": "form-control border-always outline-0 shadow-0 lh-lg",
-                "name": "business_name",
-                "id": "business_name",
-                "placeholder": "Business Name",
-            }
-        )
-    )
-
     phone_number = PhoneNumberField(
         disabled=True, required=True, label="Phone", widget=forms.TextInput(
             attrs={
@@ -166,7 +155,7 @@ class StylesCustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ["email", "phone_number", "first_name", "middle_name", "last_name", "business_name"]
+        fields = ["email", "phone_number", "first_name", "middle_name", "last_name"]
 
 
 class StylesCustomUserCreationForm(UserCreationForm):
@@ -243,17 +232,6 @@ class StylesCustomUserCreationForm(UserCreationForm):
         )
     )
 
-    business_name = forms.CharField(
-        max_length=255, required=True, label=_("Business Name"), widget=forms.TextInput(
-            attrs={
-                "class": "form-control border-always outline-0 shadow-0 lh-lg",
-                "name": "business_name",
-                "id": "business_name",
-                "placeholder": "Business Name",
-            }
-        )
-    )
-
     phone_number = PhoneNumberField(
         required=True, label="Phone", widget=forms.TextInput(
             attrs={
@@ -267,7 +245,7 @@ class StylesCustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["first_name", "middle_name", "last_name", "username", "email", "business_name", "phone_number",
+        fields = ["first_name", "middle_name", "last_name", "username", "email", "phone_number",
                   "password1", "password2", ]
 
 

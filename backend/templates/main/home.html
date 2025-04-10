@@ -150,7 +150,8 @@
                 </div>
                 <div class="col col-12 col-md-12 col-xl-7">
                     <div class="card bg-transparent border-0 mx-auto w-75">
-                        <img src="{% static "assets/img/community-5.webp" %}" alt="community image" width="780" height="100%" class="card-img"
+                        <img src="{% static "assets/img/community-5.webp" %}" alt="community image" width="780"
+                             height="100%" class="card-img"
                              loading="lazy"/>
                     </div>
                 </div>
@@ -163,12 +164,15 @@
                 <div class="col">
                     <div class="card bg-transparent border-0">
                         <div class="card-body">
-                            <video controls poster="{{ page_setting.intro_thumbnail.url }}" class="rounded-2 card-img"
-                                   preload="none" loop="false">
-                                <source src="{{ page_setting.intro_video.url }}"
-                                        type="video/{{ page_setting.get_video_ext }}">
-                                Your browser does not support the video tag.
-                            </video>
+                            {% if page_setting.intro_thumbnail and page_setting.intro_video %}
+                                <video controls poster="{{ page_setting.intro_thumbnail.url }}"
+                                       class="rounded-2 card-img"
+                                       preload="none" loop="false">
+                                    <source src="{{ page_setting.intro_video.url }}"
+                                            type="video/{{ page_setting.get_video_ext }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,2945 @@
+[
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 1,
+    "fields": {
+      "industry": 1,
+      "name": "What type of food or beverage products do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 2,
+    "fields": {
+      "industry": 1,
+      "name": "Who is your primary target audience?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 3,
+    "fields": {
+      "industry": 1,
+      "name": "Do you have a physical location, online delivery, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 4,
+    "fields": {
+      "industry": 1,
+      "name": "What are your most popular menu items or products?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 5,
+    "fields": {
+      "industry": 1,
+      "name": "Are you currently running any seasonal or promotional offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 6,
+    "fields": {
+      "industry": 1,
+      "name": "What is your unique selling proposition (USP)?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 7,
+    "fields": {
+      "industry": 1,
+      "name": "Which delivery platforms or ordering methods do you support?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 8,
+    "fields": {
+      "industry": 1,
+      "name": "What is your average customer spend per transaction?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 9,
+    "fields": {
+      "industry": 1,
+      "name": "Are you focusing on brand awareness, increasing foot traffic, boosting online orders, or customer retention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 10,
+    "fields": {
+      "industry": 1,
+      "name": "Do you have any dietary specialties?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 11,
+    "fields": {
+      "industry": 2,
+      "name": "What type of products do you sell?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 12,
+    "fields": {
+      "industry": 2,
+      "name": "Do you have physical stores, an online store, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 13,
+    "fields": {
+      "industry": 2,
+      "name": "Who is your primary target customer demographic?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 14,
+    "fields": {
+      "industry": 2,
+      "name": "What are your best-selling products or categories?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 15,
+    "fields": {
+      "industry": 2,
+      "name": "Do you offer seasonal sales or promotions?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 16,
+    "fields": {
+      "industry": 2,
+      "name": "Are you focusing on local customers, international customers, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 17,
+    "fields": {
+      "industry": 2,
+      "name": "What is your average customer purchase value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 18,
+    "fields": {
+      "industry": 2,
+      "name": "Do you have a loyalty or rewards program?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 19,
+    "fields": {
+      "industry": 2,
+      "name": "Are you looking to increase foot traffic, online sales, or customer retention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 20,
+    "fields": {
+      "industry": 2,
+      "name": "Do you have any eco-friendly or sustainable product lines?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 21,
+    "fields": {
+      "industry": 3,
+      "name": "What type of technology products or services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 22,
+    "fields": {
+      "industry": 3,
+      "name": "Who is your primary target market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 23,
+    "fields": {
+      "industry": 3,
+      "name": "What is your unique value proposition in the tech industry?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 24,
+    "fields": {
+      "industry": 3,
+      "name": "Are you currently running any product launches or updates?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 25,
+    "fields": {
+      "industry": 3,
+      "name": "What is your pricing model?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 26,
+    "fields": {
+      "industry": 3,
+      "name": "Do you provide technical support or customer success services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 27,
+    "fields": {
+      "industry": 3,
+      "name": "Are you focused on acquiring new users, increasing engagement, or retaining existing users?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 28,
+    "fields": {
+      "industry": 3,
+      "name": "What integration or compatibility features does your product offer?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 29,
+    "fields": {
+      "industry": 3,
+      "name": "Are you targeting specific geographic markets?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 30,
+    "fields": {
+      "industry": 3,
+      "name": "Do you have partnerships with other technology providers or platforms?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 31,
+    "fields": {
+      "industry": 4,
+      "name": "What type of healthcare services or products do you provide?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 32,
+    "fields": {
+      "industry": 4,
+      "name": "Who is your primary patient or customer demographic?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 33,
+    "fields": {
+      "industry": 4,
+      "name": "Do you specialize in any particular areas of healthcare?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 34,
+    "fields": {
+      "industry": 4,
+      "name": "What is your approach to patient care or customer service?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 35,
+    "fields": {
+      "industry": 4,
+      "name": "Are you focusing on attracting new patients, retaining existing ones, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 36,
+    "fields": {
+      "industry": 4,
+      "name": "Do you accept insurance, and if so, which providers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 37,
+    "fields": {
+      "industry": 4,
+      "name": "What are your main channels for patient engagement and communication?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 38,
+    "fields": {
+      "industry": 4,
+      "name": "Do you offer emergency services or only scheduled appointments?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 39,
+    "fields": {
+      "industry": 4,
+      "name": "Are you currently running any health awareness campaigns or promotions?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 40,
+    "fields": {
+      "industry": 4,
+      "name": "What safety or hygiene protocols do you emphasize in your practice?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 41,
+    "fields": {
+      "industry": 5,
+      "name": "What financial services or products do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 42,
+    "fields": {
+      "industry": 5,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 43,
+    "fields": {
+      "industry": 5,
+      "name": "Are you regulated by specific financial authorities or certifications?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 44,
+    "fields": {
+      "industry": 5,
+      "name": "What is your approach to client financial education or advisory?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 45,
+    "fields": {
+      "industry": 5,
+      "name": "Are you focusing on customer acquisition, retention, or upselling services?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 46,
+    "fields": {
+      "industry": 5,
+      "name": "Do you have any partnerships with other financial institutions or platforms?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 47,
+    "fields": {
+      "industry": 5,
+      "name": "What is your typical client investment or transaction size?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 48,
+    "fields": {
+      "industry": 5,
+      "name": "Are you offering any special rates, incentives, or promotional offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 49,
+    "fields": {
+      "industry": 5,
+      "name": "What digital platforms or tools do you use to engage clients?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 50,
+    "fields": {
+      "industry": 5,
+      "name": "What measures do you take to ensure data security and client confidentiality?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 51,
+    "fields": {
+      "industry": 6,
+      "name": "What type of educational services or programs do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 52,
+    "fields": {
+      "industry": 6,
+      "name": "Who is your primary student demographic?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 53,
+    "fields": {
+      "industry": 6,
+      "name": "Are your services delivered in-person, online, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 54,
+    "fields": {
+      "industry": 6,
+      "name": "Do you follow a standardized curriculum or a custom-developed one?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 55,
+    "fields": {
+      "industry": 6,
+      "name": "What sets your educational offering apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 56,
+    "fields": {
+      "industry": 6,
+      "name": "Do you offer certifications, diplomas, or degrees upon completion?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 57,
+    "fields": {
+      "industry": 6,
+      "name": "Are you looking to increase enrollments, improve retention, or promote specific programs?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 58,
+    "fields": {
+      "industry": 6,
+      "name": "Do you run sessions year-round or follow academic terms/seasons?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 59,
+    "fields": {
+      "industry": 6,
+      "name": "Do you have partnerships with schools, universities, or education platforms?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 60,
+    "fields": {
+      "industry": 6,
+      "name": "How do you measure student success and satisfaction?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 61,
+    "fields": {
+      "industry": 7,
+      "name": "What types of properties do you deal with?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 62,
+    "fields": {
+      "industry": 7,
+      "name": "Are you primarily a broker, developer, investor, or property manager?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 63,
+    "fields": {
+      "industry": 7,
+      "name": "What geographic locations or regions do you focus on?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 64,
+    "fields": {
+      "industry": 7,
+      "name": "Who is your primary target audience?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 65,
+    "fields": {
+      "industry": 7,
+      "name": "Do you specialize in new developments, existing properties, or both?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 66,
+    "fields": {
+      "industry": 7,
+      "name": "What is your average property value or deal size?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 67,
+    "fields": {
+      "industry": 7,
+      "name": "Are you focusing on attracting buyers, sellers, tenants, or investors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 68,
+    "fields": {
+      "industry": 7,
+      "name": "Do you offer virtual tours or online property listings?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 69,
+    "fields": {
+      "industry": 7,
+      "name": "Are you running any promotional campaigns or limited-time offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 70,
+    "fields": {
+      "industry": 7,
+      "name": "What makes your real estate services unique in the market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 71,
+    "fields": {
+      "industry": 8,
+      "name": "What types of products do you manufacture?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 72,
+    "fields": {
+      "industry": 8,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 73,
+    "fields": {
+      "industry": 8,
+      "name": "Where are your manufacturing facilities located?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 74,
+    "fields": {
+      "industry": 8,
+      "name": "What is your typical production capacity or volume?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 75,
+    "fields": {
+      "industry": 8,
+      "name": "Are you focused on custom manufacturing, mass production, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 76,
+    "fields": {
+      "industry": 8,
+      "name": "What is your average order size or transaction value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 77,
+    "fields": {
+      "industry": 8,
+      "name": "Do you have sustainability or eco-friendly manufacturing initiatives?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 78,
+    "fields": {
+      "industry": 8,
+      "name": "Are you running any promotional offers or new product launches?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 79,
+    "fields": {
+      "industry": 8,
+      "name": "Do you distribute products locally, nationally, or internationally?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 80,
+    "fields": {
+      "industry": 8,
+      "name": "What are your primary distribution channels?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 81,
+    "fields": {
+      "industry": 9,
+      "name": "What types of transportation services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 82,
+    "fields": {
+      "industry": 9,
+      "name": "What regions or routes do you primarily operate in?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 83,
+    "fields": {
+      "industry": 9,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 84,
+    "fields": {
+      "industry": 9,
+      "name": "What is your typical delivery or transit time?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 85,
+    "fields": {
+      "industry": 9,
+      "name": "Do you offer real-time tracking or shipment updates?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 86,
+    "fields": {
+      "industry": 9,
+      "name": "Are you focused on local, regional, or international services?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 87,
+    "fields": {
+      "industry": 9,
+      "name": "What is your fleet size and vehicle types?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 88,
+    "fields": {
+      "industry": 9,
+      "name": "Do you provide special handling services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 89,
+    "fields": {
+      "industry": 9,
+      "name": "Are you currently running any promotions or seasonal offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 90,
+    "fields": {
+      "industry": 9,
+      "name": "What is your unique value proposition in the transportation market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 91,
+    "fields": {
+      "industry": 10,
+      "name": "What type of entertainment services or productions do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 92,
+    "fields": {
+      "industry": 10,
+      "name": "Who is your primary audience or fan base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 93,
+    "fields": {
+      "industry": 10,
+      "name": "Are you focused on live events, digital content, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 94,
+    "fields": {
+      "industry": 10,
+      "name": "Do you collaborate with artists, influencers, or other entertainment brands?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 95,
+    "fields": {
+      "industry": 10,
+      "name": "Are you currently promoting any upcoming events or releases?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 96,
+    "fields": {
+      "industry": 10,
+      "name": "What platforms or channels do you use to distribute or promote your content?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 97,
+    "fields": {
+      "industry": 10,
+      "name": "What is your average audience size or engagement rate?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 98,
+    "fields": {
+      "industry": 10,
+      "name": "Do you offer ticketed experiences, subscriptions, or free content?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 99,
+    "fields": {
+      "industry": 10,
+      "name": "Are you looking to increase brand awareness, ticket sales, or audience engagement?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 100,
+    "fields": {
+      "industry": 10,
+      "name": "What makes your entertainment offering unique in the market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 101,
+    "fields": {
+      "industry": 11,
+      "name": "What types of telecommunications services do you provide?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 102,
+    "fields": {
+      "industry": 11,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 103,
+    "fields": {
+      "industry": 11,
+      "name": "What is your coverage area or network reach?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 104,
+    "fields": {
+      "industry": 11,
+      "name": "Do you offer bundled packages or standalone services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 105,
+    "fields": {
+      "industry": 11,
+      "name": "Are you currently running any promotional offers or service upgrades?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 106,
+    "fields": {
+      "industry": 11,
+      "name": "What platforms or channels do you use for customer support?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 107,
+    "fields": {
+      "industry": 11,
+      "name": "What is your average contract length or subscription term?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 108,
+    "fields": {
+      "industry": 11,
+      "name": "Are you focusing on customer acquisition, retention, or upselling?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 109,
+    "fields": {
+      "industry": 11,
+      "name": "Do you offer custom solutions for businesses or large enterprises?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 110,
+    "fields": {
+      "industry": 11,
+      "name": "What sets your telecommunications services apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 111,
+    "fields": {
+      "industry": 12,
+      "name": "What type of agricultural products or services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 112,
+    "fields": {
+      "industry": 12,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 113,
+    "fields": {
+      "industry": 12,
+      "name": "What is your farming or production scale?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 114,
+    "fields": {
+      "industry": 12,
+      "name": "Are your products distributed locally, nationally, or internationally?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 115,
+    "fields": {
+      "industry": 12,
+      "name": "Do you follow sustainable or organic farming practices?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 116,
+    "fields": {
+      "industry": 12,
+      "name": "Are you currently running any seasonal promotions or harvest campaigns?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 117,
+    "fields": {
+      "industry": 12,
+      "name": "What challenges do you face in production or distribution?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 118,
+    "fields": {
+      "industry": 12,
+      "name": "Do you offer agritech solutions or use advanced technologies?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 119,
+    "fields": {
+      "industry": 12,
+      "name": "Are you focused on increasing production, expanding markets, or improving sustainability?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 120,
+    "fields": {
+      "industry": 12,
+      "name": "What makes your agricultural products or services unique in the market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 121,
+    "fields": {
+      "industry": 13,
+      "name": "What type of automotive products or services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 122,
+    "fields": {
+      "industry": 13,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 123,
+    "fields": {
+      "industry": 13,
+      "name": "Do you specialize in new vehicles, used vehicles, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 124,
+    "fields": {
+      "industry": 13,
+      "name": "What are your most popular models or services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 125,
+    "fields": {
+      "industry": 13,
+      "name": "Are you currently running any promotions or financing offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 126,
+    "fields": {
+      "industry": 13,
+      "name": "Do you offer online purchasing or booking options?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 127,
+    "fields": {
+      "industry": 13,
+      "name": "What is your typical price range or average transaction value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 128,
+    "fields": {
+      "industry": 13,
+      "name": "Are you focusing on local, regional, or national markets?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 129,
+    "fields": {
+      "industry": 13,
+      "name": "Do you provide vehicle customization or specialty services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 130,
+    "fields": {
+      "industry": 13,
+      "name": "What sets your automotive business apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 131,
+    "fields": {
+      "industry": 14,
+      "name": "What types of construction services do you provide?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 132,
+    "fields": {
+      "industry": 14,
+      "name": "Who is your primary client base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 133,
+    "fields": {
+      "industry": 14,
+      "name": "What geographic areas do you serve?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 134,
+    "fields": {
+      "industry": 14,
+      "name": "Do you specialize in new builds, renovations, or both?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 135,
+    "fields": {
+      "industry": 14,
+      "name": "What is your average project size or budget?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 136,
+    "fields": {
+      "industry": 14,
+      "name": "Are you currently running any promotional offers or seasonal campaigns?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 137,
+    "fields": {
+      "industry": 14,
+      "name": "Do you work with subcontractors, in-house teams, or both?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 138,
+    "fields": {
+      "industry": 14,
+      "name": "What materials or construction methods do you specialize in?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 139,
+    "fields": {
+      "industry": 14,
+      "name": "Are you focusing on acquiring new clients, upselling services, or improving client retention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 140,
+    "fields": {
+      "industry": 14,
+      "name": "What makes your construction services unique in the market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 141,
+    "fields": {
+      "industry": 15,
+      "name": "What types of pharmaceutical products do you manufacture or distribute?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 142,
+    "fields": {
+      "industry": 15,
+      "name": "Who is your primary customer base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 143,
+    "fields": {
+      "industry": 15,
+      "name": "Are your products regulated by specific authorities?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 144,
+    "fields": {
+      "industry": 15,
+      "name": "What is your distribution model?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 145,
+    "fields": {
+      "industry": 15,
+      "name": "Are you currently promoting any new drugs or medical solutions?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 146,
+    "fields": {
+      "industry": 15,
+      "name": "Do you follow GMP or other certification standards?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 147,
+    "fields": {
+      "industry": 15,
+      "name": "Are you focusing on expanding market reach, increasing brand awareness, or improving customer retention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 148,
+    "fields": {
+      "industry": 15,
+      "name": "What are your main marketing channels?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 149,
+    "fields": {
+      "industry": 15,
+      "name": "Do you offer patient education or support programs?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 150,
+    "fields": {
+      "industry": 15,
+      "name": "What sets your pharmaceutical products apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 151,
+    "fields": {
+      "industry": 16,
+      "name": "What types of fashion products do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 152,
+    "fields": {
+      "industry": 16,
+      "name": "Who is your primary customer demographic?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 153,
+    "fields": {
+      "industry": 16,
+      "name": "Are your collections seasonal, year-round, or both?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 154,
+    "fields": {
+      "industry": 16,
+      "name": "Do you focus on online sales, in-store sales, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 155,
+    "fields": {
+      "industry": 16,
+      "name": "Are you currently running any sales, promotions, or new collection launches?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 156,
+    "fields": {
+      "industry": 16,
+      "name": "What is your price range or average order value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 157,
+    "fields": {
+      "industry": 16,
+      "name": "Do you have a sustainability or ethical sourcing policy?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 158,
+    "fields": {
+      "industry": 16,
+      "name": "What are your primary sales channels?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 159,
+    "fields": {
+      "industry": 16,
+      "name": "Are you looking to increase brand awareness, sales, or customer loyalty?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 160,
+    "fields": {
+      "industry": 16,
+      "name": "What sets your fashion brand apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 161,
+    "fields": {
+      "industry": 17,
+      "name": "What types of sports or fitness services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 162,
+    "fields": {
+      "industry": 17,
+      "name": "Who is your primary target audience?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 163,
+    "fields": {
+      "industry": 17,
+      "name": "Do you focus on individual training, group classes, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 164,
+    "fields": {
+      "industry": 17,
+      "name": "Are you currently running any membership offers or promotions?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 165,
+    "fields": {
+      "industry": 17,
+      "name": "What is your average membership fee or service cost?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 166,
+    "fields": {
+      "industry": 17,
+      "name": "Do you offer virtual classes, in-person sessions, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 167,
+    "fields": {
+      "industry": 17,
+      "name": "What facilities or equipment are available at your location(s)?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 168,
+    "fields": {
+      "industry": 17,
+      "name": "Are you looking to increase new memberships, member retention, or brand awareness?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 169,
+    "fields": {
+      "industry": 17,
+      "name": "Do you organize events, tournaments, or community fitness challenges?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 170,
+    "fields": {
+      "industry": 17,
+      "name": "What makes your sports or fitness services unique in the market?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 171,
+    "fields": {
+      "industry": 18,
+      "name": "What type of hospitality services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 172,
+    "fields": {
+      "industry": 18,
+      "name": "Who is your primary target audience?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 173,
+    "fields": {
+      "industry": 18,
+      "name": "Do you offer seasonal packages, promotions, or loyalty programs?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 174,
+    "fields": {
+      "industry": 18,
+      "name": "What is your typical price range or average booking value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 175,
+    "fields": {
+      "industry": 18,
+      "name": "Are you focusing on attracting new guests, retaining loyal customers, or increasing event bookings?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 176,
+    "fields": {
+      "industry": 18,
+      "name": "Do you have facilities for events, conferences, or weddings?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 177,
+    "fields": {
+      "industry": 18,
+      "name": "What amenities or unique experiences do you provide?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 178,
+    "fields": {
+      "industry": 18,
+      "name": "Are you active on booking platforms or online travel agencies (OTAs)?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 179,
+    "fields": {
+      "industry": 18,
+      "name": "Do you have partnerships with local businesses or tour operators?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 180,
+    "fields": {
+      "industry": 18,
+      "name": "What sets your hospitality services apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 181,
+    "fields": {
+      "industry": 19,
+      "name": "What types of beauty or personal care services/products do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 182,
+    "fields": {
+      "industry": 19,
+      "name": "Who is your primary customer demographic?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 183,
+    "fields": {
+      "industry": 19,
+      "name": "Are your services or products available in-store, online, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 184,
+    "fields": {
+      "industry": 19,
+      "name": "Do you offer any subscription services, memberships, or loyalty programs?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 185,
+    "fields": {
+      "industry": 19,
+      "name": "Are you currently running any promotions, new launches, or seasonal offers?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 186,
+    "fields": {
+      "industry": 19,
+      "name": "What is your typical price range or average transaction value?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 187,
+    "fields": {
+      "industry": 19,
+      "name": "Do you use sustainable, cruelty-free, or organic products?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 188,
+    "fields": {
+      "industry": 19,
+      "name": "What are your primary sales and marketing channels?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 189,
+    "fields": {
+      "industry": 19,
+      "name": "Are you focusing on acquiring new customers, customer retention, or increasing sales per customer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 190,
+    "fields": {
+      "industry": 19,
+      "name": "What sets your beauty or personal care brand apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 191,
+    "fields": {
+      "industry": 20,
+      "name": "What is the main mission or cause of your organization?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 192,
+    "fields": {
+      "industry": 20,
+      "name": "Who is your primary audience or beneficiary group?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 193,
+    "fields": {
+      "industry": 20,
+      "name": "What types of programs or services do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 194,
+    "fields": {
+      "industry": 20,
+      "name": "Are you focused on fundraising, advocacy, or service delivery?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 195,
+    "fields": {
+      "industry": 20,
+      "name": "What are your primary fundraising channels?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 196,
+    "fields": {
+      "industry": 20,
+      "name": "Do you have partnerships with other organizations or sponsors?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 197,
+    "fields": {
+      "industry": 20,
+      "name": "Are you currently running any campaigns or awareness drives?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 198,
+    "fields": {
+      "industry": 20,
+      "name": "Do you engage with volunteers, and how do you manage them?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 199,
+    "fields": {
+      "industry": 20,
+      "name": "What tools or platforms do you use for outreach and communication?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 200,
+    "fields": {
+      "industry": 20,
+      "name": "What makes your nonprofit organization unique in its mission?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 201,
+    "fields": {
+      "industry": 21,
+      "name": "What types of security services or solutions do you offer?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 1,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 202,
+    "fields": {
+      "industry": 21,
+      "name": "Who is your primary client base?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 2,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 203,
+    "fields": {
+      "industry": 21,
+      "name": "Are you focused on proactive monitoring, incident response, or prevention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 3,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 204,
+    "fields": {
+      "industry": 21,
+      "name": "Do you offer on-site services, remote services, or both?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 4,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 205,
+    "fields": {
+      "industry": 21,
+      "name": "Are you currently running any promotions or security awareness campaigns?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 5,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 206,
+    "fields": {
+      "industry": 21,
+      "name": "What industries or sectors do you primarily serve?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 6,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 207,
+    "fields": {
+      "industry": 21,
+      "name": "Do you provide 24/7 support or emergency response services?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 7,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 208,
+    "fields": {
+      "industry": 21,
+      "name": "Are you focusing on new client acquisition, upselling, or client retention?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 8,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 209,
+    "fields": {
+      "industry": 21,
+      "name": "Do you integrate with smart home or enterprise security systems?",
+      "answer_type": "text",
+      "optional": true,
+      "is_active": true,
+      "question_order": 9,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.IndustryQuestion",
+    "pk": 210,
+    "fields": {
+      "industry": 21,
+      "name": "What sets your security services apart from competitors?",
+      "answer_type": "text",
+      "optional": false,
+      "is_active": true,
+      "question_order": 10,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  }
+]
+
+
+

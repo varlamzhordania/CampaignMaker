@@ -2,10 +2,13 @@ from core.ckeditor import BASE_CKEDITOR_5_CONFIGS
 from pathlib import Path
 import environ
 
-env = environ.Env()
-environ.Env.read_env()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+
+ENV_FILE_PATH = BASE_DIR.parent / "development.env"
+
+environ.Env.read_env(env_file=ENV_FILE_PATH)
 
 SECRET_KEY = env('DJANGO_SECRET_KEY', default="dsadsaldadsaskdladkalsdkdald")
 
@@ -25,16 +28,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     # Internal Apps
-    'account',
-    'campaign',
-    'checkout',
-    'main',
-    'cms',
+    'account.apps.AccountConfig',
+    'campaign.apps.CampaignConfig',
+    'checkout.apps.CheckoutConfig',
+    'main.apps.MainConfig',
+    'cms.apps.CmsConfig',
+    'api.apps.ApiConfig',
     # External Apps
-    # 'ckeditor',
     'django_ckeditor_5',
     'mptt',
     'nested_admin',
+    'rest_framework',
+    'django_filters',
+    'import_export',
 
 ]
 
@@ -146,6 +152,32 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# REST Framework Settings
+REST_FRAMEWORK = {
+    # Authentication Settings
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',  # Rate limiting for anonymous users
+        'rest_framework.throttling.UserRateThrottle',  # Rate limiting for authenticated users
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',  # Limit anonymous users to 100 requests per day
+        'user': '1000/day',  # Limit authenticated users to 1000 requests per day
+    },
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 25,
+
+}
+
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="sk_***")
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="pk_***")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY", default="whsec_***")
@@ -155,8 +187,8 @@ BASE_DOMAIN = env("BASE_DOMAIN", default="http://127.0.0.1:8000")
 if not DEBUG:
     CACHES = {
         'default': {
-            "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            'LOCATION': env("REDIS_HOST"),  # Use the REDIS_HOST environment variable
+            'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+            'LOCATION': env('MEMCACHE_HOST', default='127.0.0.1:11211'),
         }
     }
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -168,6 +200,30 @@ EMAIL_PORT = env("EMAIL_PORT", default="")
 EMAIL_USE_TLS = env("EMAIL_USE_TLS", default="")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_password", default="")
+
+RABBITMQ_HOST = env("RABBITMQ_HOST")
+RABBITMQ_PORT = env("RABBITMQ_PORT")
+RABBITMQ_USER = env("RABBITMQ_USER")
+RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD")
+RABBITMQ_QUEUE_NAME = env("RABBITMQ_QUEUE_NAME")
+RABBITMQ_VHOST = env("RABBITMQ_VHOST")
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_TIME_LIMIT = 300  # Task time limit in seconds
+CELERY_TASK_RETRY = True
+CELERY_TASK_DEFAULT_RETRY_DELAY = 60
+CELERY_TASK_MAX_RETRIES = 3
+CELERY_TIMEZONE = 'UTC'
+CELERY_BEAT_SCHEDULE = {
+    # Example: 'task_name': {'task': 'task_path', 'schedule': 'interval_or_cron'}
+}
+
+# Enable Celery logging (if you want to see detailed Celery logs)
+CELERYD_HIJACK_ROOT_LOGGER = False
 
 EXTERNAL_API_BASE_URL = env("EXTERNAL_API_BASE_URL", default="")
 

@@ -1,0 +1,63 @@
+{% extends "dashboard/index.html" %}
+{% load static %}
+{% load i18n %}
+{% block header %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block content %}
+    <section class="d-flex justify-content-center align-items-center" style="height: 60dvh">
+        <div class="card bg-transparent border-0">
+            <div class="card-header border-bottom-0 bg-transparent" id="card-header">
+                <h3 class="card-title text-center">
+                    {% blocktranslate with name=request.user.get_full_name %}
+                        Hey
+                        <strong class="text-capitalize text-primary">
+                            {{ name }}
+                        </strong>
+                        👋
+                    {% endblocktranslate %}
+                </h3>
+                <h4 class="card-title text-center">
+                    {% blocktranslate %}
+                        Are you ready to tell us more about your business?
+                    {% endblocktranslate %}
+                </h4>
+            </div>
+            <div class="card-body" id="card-body">
+                <p class="card-text text-center">
+                    {% blocktranslate %}
+                        This information will help us understand your business better
+                        and get a better result at the end for you.
+                    {% endblocktranslate %}
+                </p>
+
+{#                {% if incomplete_steps %}#}
+{#                    <ul class="list-group">#}
+{#                        {% for step in incomplete_steps %}#}
+{#                            <li class="list-group-item">#}
+{#                                <strong>{{ step }}</strong>#}
+{#                                <p>Complete the {{ step }} step to finish your business profile.</p>#}
+{#                                <a href="{% url 'account:businessSetup' %}" class="btn btn-primary">Go to {{ step }}</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                {% else %}#}
+{#                    <p>Your profile is complete!</p>#}
+{#                {% endif %}#}
+
+                <div class="d-flex w-100 justify-content-center align-items-center gap-2">
+                    <button class="btn btn-primary" id="start-questionnaire">
+                        {% translate 'Start Questionnaire' %}
+                    </button>
+                    <a href="{% url 'campaign:dashboard' %}" class="btn btn-outline-primary">
+                        {% translate 'Skip for Later' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block script %}
+    <script src={% static 'assets/js/questionnaire.js' %}></script>
+{% endblock %}

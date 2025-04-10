@@ -6,6 +6,7 @@
 {% url "cms:adminContacts" as adminContactsList %}
 {% url "campaign:campaignList" as campaignList %}
 {% url "main:ticketList" as ticketList %}
+{% url 'account:businessSetup' as businessSetupPage %}
 <header class="bg-light-subtle sticky-top pb-1" id="header">
     <div class="position-relative">
         <nav class="position-relative navbar navbar-expand-lg bg-transparent w-100 z-1">
@@ -77,6 +78,13 @@
                                 <a class="nav-link {% if request.path == ticketList %}active{% endif %}"
                                    {% if request.path == ticketList %}aria-current="page"{% endif %}
                                    href="{{ ticketList }}">Support</a>
+                            </li>
+                        {% endif %}
+                        {% if request.user.show_questions %}
+                            <li class="nav-item d-flex align-items-center px-3 px-lg-0">
+                                <a class="badge text-primary {% if request.path == businessSetupPage %}active{% endif %}"
+                                   {% if request.path == businessSetupPage %}aria-current="page"{% endif %}
+                                   href="{{ businessSetupPage }}">tell us about your self</a>
                             </li>
                         {% endif %}
                     </ul>

@@ -1,0 +1,213 @@
+[
+  {
+    "model": "account.Industry",
+    "pk": 1,
+    "fields": {
+      "name": "Food & Beverage",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 2,
+    "fields": {
+      "name": "Retail",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 3,
+    "fields": {
+      "name": "Technology",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 4,
+    "fields": {
+      "name": "Healthcare",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 5,
+    "fields": {
+      "name": "Finance",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 6,
+    "fields": {
+      "name": "Education",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 7,
+    "fields": {
+      "name": "Real Estate",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 8,
+    "fields": {
+      "name": "Manufacturing",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 9,
+    "fields": {
+      "name": "Transportation",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 10,
+    "fields": {
+      "name": "Entertainment",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 11,
+    "fields": {
+      "name": "Telecommunications",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 12,
+    "fields": {
+      "name": "Agriculture",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 13,
+    "fields": {
+      "name": "Automotive",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 14,
+    "fields": {
+      "name": "Construction",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 15,
+    "fields": {
+      "name": "Pharmaceutical",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 16,
+    "fields": {
+      "name": "Fashion",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 17,
+    "fields": {
+      "name": "Sports & Fitness",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 18,
+    "fields": {
+      "name": "Hospitality",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 19,
+    "fields": {
+      "name": "Beauty & Personal Care",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 20,
+    "fields": {
+      "name": "Nonprofit",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  },
+  {
+    "model": "account.Industry",
+    "pk": 21,
+    "fields": {
+      "name": "Security",
+      "is_active": true,
+      "create_at": "2025-04-09T12:00:00Z",
+      "update_at": "2025-04-09T12:00:00Z"
+    }
+  }
+]
+

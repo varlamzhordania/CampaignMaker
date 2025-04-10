@@ -13,7 +13,6 @@ from django.template import Template, Context
 from django.template.loader import render_to_string
 from django_ckeditor_5.fields import CKEditor5Field
 from main.models import Settings
-# Create your models here.
 
 
 CAMPAIGN_STATUS = (

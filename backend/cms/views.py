@@ -187,13 +187,13 @@ def AdminCampaignNote(request, *args, **kwargs):
             obj.is_resubmit = False
             obj.save()
             fancy_message(request, f"Campaign-{obj.id} : status changed to {data.get('status')}", level="success")
-            return redirect("campaign:adminCampaigns")
+            return redirect("cms:adminCampaigns")
         else:
             fancy_message(request, form.errors, level="error")
-            return redirect("campaign:adminCampaigns")
+            return redirect("cms:adminCampaigns")
     else:
         fancy_message(request, "invalid method", level="error")
-        return redirect("campaign:adminCampaigns")
+        return redirect("cms:adminCampaigns")
 
 
 @login_required(login_url="/login")
@@ -208,13 +208,13 @@ def AdminCampaignAudio(request, *args, **kwargs):
         if form.is_valid():
             obj = form.save()
             fancy_message(request, f"Campaign-{obj.id} : audio file updated", level="success")
-            return redirect("campaign:adminCampaigns")
+            return redirect("cms:adminCampaigns")
         else:
             fancy_message(request, form.errors, level="error")
-            return redirect("campaign:adminCampaigns")
+            return redirect("cms:adminCampaigns")
     else:
         fancy_message(request, "invalid method", level="error")
-        return redirect("campaign:adminCampaigns")
+        return redirect("cms:adminCampaigns")
 
 
 @login_required(login_url="/login")
@@ -225,10 +225,10 @@ def AdminCampaignActions(request, id, status, *args, **kwargs):
     queryset.admin = request.user
     if status == "processing":
         queryset.is_resubmit = False
-        call_api(queryset)
+        # call_api(queryset)
     queryset.save()
     fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
-    return redirect("campaign:adminCampaigns")
+    return redirect("cms:adminCampaigns")
 
 
 # HTTP API
