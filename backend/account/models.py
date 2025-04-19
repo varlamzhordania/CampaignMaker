@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+from core.models import BaseModel
+
 
 class User(AbstractUser):
     email = models.EmailField(_("email address"), blank=True, unique=True)
@@ -39,7 +41,7 @@ class User(AbstractUser):
         self.save(update_fields=["show_questions"])
 
 
-class Industry(models.Model):
+class Industry(BaseModel):
     name = models.CharField(
         verbose_name=_("Industry Name"),
         max_length=255,
@@ -52,8 +54,6 @@ class Industry(models.Model):
         default=False,
         help_text=_("Indicates if the industry is currently active and visible in the system.")
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Created"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Industry")
@@ -63,7 +63,7 @@ class Industry(models.Model):
         return self.name
 
 
-class UserBusinessProfile(models.Model):
+class UserBusinessProfile(BaseModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="business_profile",
         help_text=_("The user who owns this business profile.")
@@ -120,8 +120,6 @@ class UserBusinessProfile(models.Model):
             "List keywords or phrases that best represent your business (e.g., fresh, local, innovative)."
         )
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Created"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("User Business Profile")
@@ -171,7 +169,7 @@ class UserBusinessProfile(models.Model):
         }
 
 
-class BusinessAudience(models.Model):
+class BusinessAudience(BaseModel):
     class GenderChoice(models.TextChoices):
         MALE = "Male", _("Male")
         FEMALE = "Female", _("Female")
@@ -221,9 +219,10 @@ class BusinessAudience(models.Model):
             "Describe your audience focus. It could be location-based, interest-based, or based on other criteria."
         )
     )
+    is_active = None
 
 
-class IndustryQuestion(models.Model):
+class IndustryQuestion(BaseModel):
     class AnswerType(models.TextChoices):
         # CHECKBOX = "checkbox", _("Checkbox")
         # RADIO = "radio", _("Radio")
@@ -267,8 +266,6 @@ class IndustryQuestion(models.Model):
         verbose_name=_("Question Order"),
         help_text=_("The order in which this question will appear relative to other questions.")
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Created"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Industry Question")
@@ -279,7 +276,7 @@ class IndustryQuestion(models.Model):
         return self.name
 
 
-class UserIndustryAnswer(models.Model):
+class UserIndustryAnswer(BaseModel):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="industry_answers",
         help_text=_("The user who provided this answer.")
@@ -301,8 +298,7 @@ class UserIndustryAnswer(models.Model):
         verbose_name=_("Answered"),
         help_text=_("Indicates whether the user has answered this question or not.")
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Created"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     def __str__(self):
         return f"Answer by {self.user.username} to {self.question.name}"

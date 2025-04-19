@@ -1,12 +1,12 @@
+import nested_admin
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
+
+from .forms import PageAdminForm, ComponentsOnPageForm
 from .models import Settings, Categories, Page, Seo, CustomerVideo, FAQ, ComponentsOnPage, Components, Ticket, \
     TicketCategory, TicketComment, TicketAttachment, ContactUs
-from mptt.admin import MPTTModelAdmin
-import nested_admin
-from .forms import PageAdminForm, ComponentsOnPageForm
 
 
-# Register your models here.
 class SeoStackedInline(nested_admin.NestedStackedInline):
     model = Seo
     extra = 1
@@ -39,7 +39,7 @@ class CategoriesAdmin(MPTTModelAdmin, nested_admin.NestedModelAdmin):
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "name", "is_active", "create_at", "update_at"]
+    list_display = ["id", "user", "name", "is_active", "created_at", "updated_at"]
 
 
 class TicketAttachmentInline(nested_admin.NestedTabularInline, ):
@@ -48,8 +48,8 @@ class TicketAttachmentInline(nested_admin.NestedTabularInline, ):
 
 
 class TicketAttachmentAdmin(admin.ModelAdmin):
-    list_display = ["id", "ticket", "comment", "file", "create_at", "update_at"]
-    list_filter = ["create_at", "update_at"]
+    list_display = ["id", "ticket", "comment", "file", "created_at", "updated_at"]
+    list_filter = ["created_at", "updated_at"]
 
 
 class TicketCommentInline(nested_admin.NestedStackedInline, ):
@@ -59,14 +59,14 @@ class TicketCommentInline(nested_admin.NestedStackedInline, ):
 
 
 class TicketAdmin(nested_admin.NestedModelAdmin):
-    list_display = ["id", "author", "subject", "category", "status", "create_at", "update_at"]
-    list_filter = ["category", "status", "create_at"]
+    list_display = ["id", "author", "subject", "category", "status", "created_at", "updated_at"]
+    list_filter = ["category", "status", "created_at"]
     inlines = [TicketCommentInline, TicketAttachmentInline]
 
 
 class ContactUsAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "email", "is_check", "create_at", "update_at"]
-    list_filter = ["is_check", "create_at", "update_at"]
+    list_display = ["id", "name", "email", "is_check", "created_at", "updated_at"]
+    list_filter = ["is_check", "created_at", "updated_at"]
 
 
 admin.site.register(Settings)

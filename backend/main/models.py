@@ -1,77 +1,23 @@
 import os.path
 import os
+
+from decimal import Decimal
+
 from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
-from decimal import Decimal
-from mptt.models import TreeForeignKey, MPTTModel
-from autoslug import AutoSlugField
-from campaign.validators import video_validator, validate_template_format, ticket_safe_extensions
 from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
 from django.urls import reverse
+from autoslug import AutoSlugField
+from mptt.models import TreeForeignKey, MPTTModel
 
-PAGE_TYPE_CHOICES = (
-    ("signIn", "SignIn Page"),
-    ("signUp", "SignUp Page"),
-    ("home", "Home Page"),
-    ("about", "About US Page"),
-    ("contact", "Contact US Page"),
-    ("category", "Category Pages"),
-    ("privacy", "Privacy Policy Page"),
-    ("terms", "Terms Page"),
-    ("refund", "Refund Page"),
-    ("feedback", "Feedback Page"),
-)
-
-STATUS_CHOICES = (
-    ('open', 'Open'),
-    ('inProgress', 'In Progress'),
-    ('resolved', 'Resolved'),
-    ('closed', 'Closed'),
-)
+from campaign.validators import video_validator, validate_template_format, ticket_safe_extensions
+from core.models import BaseModel, UploadPath
 
 
-# Create your models here.
-
-def attachment_file(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'tickets/attachments/{timestamp}.{extension}'
-
-
-def category_image(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'category/images/{timestamp}.{extension}'
-
-
-def logo_image(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'images/website/{timestamp}.{extension}'
-
-
-def video_intro(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'video/website/{timestamp}.{extension}'
-
-
-def customer_video(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'video/customer/{timestamp}.{extension}'
-
-
-def component_template(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'components/template/{timestamp}.{extension}'
-
-
-class Categories(MPTTModel):
+class Categories(MPTTModel,BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -89,10 +35,6 @@ class Categories(MPTTModel):
         blank=True,
         null=False
     )
-
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
     parent = TreeForeignKey(
         "self",
         on_delete=models.SET_NULL,
@@ -118,7 +60,7 @@ class Categories(MPTTModel):
         return reverse('main:category', args=[str(self.slug)])
 
 
-class Components(models.Model):
+class Components(BaseModel):
     user = models.ForeignKey(
         get_user_model(),
         verbose_name=_("Author"),
@@ -146,17 +88,14 @@ class Components(models.Model):
         null=False,
     )
     template = models.FileField(
-        upload_to=component_template,
+        upload_to=UploadPath("components", "template"),
         blank=False,
         null=False,
         validators=[validate_template_format],
         verbose_name=_("Template"),
         help_text=_("format: only .html .htm are allowed"),
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
     is_public = models.BooleanField(verbose_name=_("Public Component"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         ordering = ["-id"]
@@ -168,6 +107,18 @@ class Components(models.Model):
 
 
 class Page(models.Model):
+    class TypeChoices(models.TextChoices):
+        SIGNIN = "signIn", _("Signin Page")
+        SIGNUP = "signUp", _("Signup Page")
+        HOME = "home", _("Home Page")
+        ABOUT = "about", _("About Page")
+        CONTACT = "contact", _("ContactUS Page")
+        CATEGORY = "category", _("Category Pages")
+        PRIVACY = "privacy", _("Privacy Page")
+        TERMS = "terms", _("Terms Page")
+        REFUND = "refund", _("Refund Page")
+        FEEDBACK = "feedback", _("Feedback Page")
+
     category = models.OneToOneField(
         Categories,
         verbose_name=_("Category"),
@@ -175,14 +126,16 @@ class Page(models.Model):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        help_text=_("format: enter value only if you are creating record for category otherwise leave it empty")
+        help_text=_(
+            "format: enter value only if you are creating record for category otherwise leave it empty"
+        )
     )
     type = models.CharField(
         max_length=255,
-        choices=PAGE_TYPE_CHOICES,
+        choices=TypeChoices.choices,
         blank=False,
         null=False,
-        default="category",
+        default=TypeChoices.CATEGORY,
         help_text=_(
             "format: create only 1 record with types , example only create 1 home page record rest wont be count except category"
         )
@@ -272,7 +225,7 @@ class Seo(models.Model):
         return str(self.id)
 
 
-class FAQ(models.Model):
+class FAQ(BaseModel):
     question = models.CharField(
         max_length=255,
         blank=False,
@@ -285,9 +238,6 @@ class FAQ(models.Model):
         blank=False, null=False,
         help_text=_("format: required")
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("FAQ")
@@ -298,9 +248,9 @@ class FAQ(models.Model):
         return self.question
 
 
-class CustomerVideo(models.Model):
+class CustomerVideo(BaseModel):
     video = models.FileField(
-        upload_to=customer_video,
+        upload_to=UploadPath("video", "customer"),
         blank=True,
         null=True,
         verbose_name=_("Video"),
@@ -310,15 +260,12 @@ class CustomerVideo(models.Model):
         ],
     )
     thumbnail = models.ImageField(
-        upload_to=logo_image,
+        upload_to=UploadPath("images", "website"),
         blank=True,
         null=True,
         verbose_name=_("Introduction Thumbnail"),
         help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         ordering = ["-id"]
@@ -332,7 +279,7 @@ class CustomerVideo(models.Model):
             return False
 
 
-class TicketCategory(models.Model):
+class TicketCategory(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -350,9 +297,6 @@ class TicketCategory(models.Model):
         blank=True,
         null=False
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Ticket Category")
@@ -362,7 +306,13 @@ class TicketCategory(models.Model):
         return self.name
 
 
-class Ticket(models.Model):
+class Ticket(BaseModel):
+    class StatusChoices(models.TextChoices):
+        OPEN = "open", _("Open")
+        INPROGRESS = "inProgress", _("In Progress")
+        RESOLVED = "resolved", _("Resolved")
+        CLOSED = "closed", _("Closed")
+
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -372,8 +322,8 @@ class Ticket(models.Model):
     status = models.CharField(
         max_length=20,
         verbose_name=_("Status"),
-        choices=STATUS_CHOICES,
-        default="open",
+        choices=StatusChoices.choices,
+        default=StatusChoices.OPEN,
     )
 
     subject = models.CharField(
@@ -399,9 +349,7 @@ class Ticket(models.Model):
         blank=True,
         null=True,
     )
-
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     class Meta:
         verbose_name = _("Ticket")
@@ -423,14 +371,18 @@ class Ticket(models.Model):
         return queryset
 
 
-class TicketComment(models.Model):
+class TicketComment(BaseModel):
     ticket = models.ForeignKey(
         Ticket,
         on_delete=models.CASCADE,
         related_name='ticket_comment',
         verbose_name=_("Ticket")
     )
-    author = models.ForeignKey(get_user_model(), verbose_name=_("ticket_comment_author"), on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        get_user_model(),
+        verbose_name=_("ticket_comment_author"),
+        on_delete=models.CASCADE
+    )
     comment = models.TextField(
         max_length=3000,
         verbose_name=_("Comment"),
@@ -438,18 +390,20 @@ class TicketComment(models.Model):
         blank=False,
         null=False
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.ticket.subject}'
 
     def get_attachment(self):
-        queryset = self.ticket_comment_attachment.filter(ticket_id=self.ticket.id, comment_id=self.id)
+        queryset = self.ticket_comment_attachment.filter(
+            ticket_id=self.ticket.id,
+            comment_id=self.id
+        )
         return queryset
 
 
-class TicketAttachment(models.Model):
+class TicketAttachment(BaseModel):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='ticket_attachment')
     comment = models.ForeignKey(
         TicketComment,
@@ -459,21 +413,20 @@ class TicketAttachment(models.Model):
         blank=True
     )
     file = models.FileField(
-        upload_to=attachment_file,
+        upload_to=UploadPath("tickets", "attachments"),
         blank=False,
         null=False,
         validators=[
             ticket_safe_extensions
         ]
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     def __str__(self):
         return f"Attachment for : {self.ticket.subject}"
 
 
-class ContactUs(models.Model):
+class ContactUs(BaseModel):
     name = models.CharField(max_length=255, verbose_name=_("Name"), blank=False, null=False)
     email = models.EmailField(verbose_name=_("Email"), blank=False, null=False)
     message = models.TextField(
@@ -484,9 +437,7 @@ class ContactUs(models.Model):
         null=False
     )
     is_check = models.BooleanField(verbose_name=_("Is Check"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
-
+    is_active = None
     class Meta:
         verbose_name = _("Contact Us")
         verbose_name_plural = _("Contact Us")
@@ -498,11 +449,15 @@ class ContactUs(models.Model):
 
 class Settings(models.Model):
     site_name = models.CharField(
-        max_length=255, null=False, blank=False, verbose_name=_("Site Name"),
+        max_length=255,
+        null=False,
+        blank=False,
+        verbose_name=_("Site Name"),
         help_text=_("format:max-255, the name of website")
     )
     tax = models.IntegerField(
-        default=0, verbose_name=_("Tax"),
+        default=0,
+        verbose_name=_("Tax"),
         help_text=_(
             "format: enter as percentage , it will be use on checkout and use total price for calculation"
         )
@@ -512,7 +467,9 @@ class Settings(models.Model):
         blank=False,
         null=False,
         verbose_name=_("Show Result"),
-        help_text=_("format: default-3, days difference between campaign create date and the day they can see result")
+        help_text=_(
+            "format: default-3, days difference between campaign create date and the day they can see result"
+        )
     )
     audio_text_length = models.PositiveIntegerField(
         default=400,
@@ -529,25 +486,27 @@ class Settings(models.Model):
         default=10.00,
         blank=False,
         verbose_name=_("Audio Price"),
-        help_text=_("format: default-10.00,  maximum price 99999999.99, used for text to audio extra price"),
+        help_text=_(
+            "format: default-10.00,  maximum price 99999999.99, used for text to audio extra price"
+        ),
         validators=[MinValueValidator(Decimal("0.00"))]
     )
     logo = models.ImageField(
-        upload_to=logo_image,
+        upload_to=UploadPath("images", "website"),
         blank=True,
         null=True,
         verbose_name=_("Main Logo"),
         help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
     )
     dashboard_logo = models.ImageField(
-        upload_to=logo_image,
+        upload_to=UploadPath("images", "website"),
         blank=True,
         null=True,
         verbose_name=_("Dashboard Logo"),
         help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
     )
     intro_video = models.FileField(
-        upload_to=video_intro,
+        upload_to=UploadPath("video", "website"),
         blank=True,
         null=True,
         verbose_name=_("Introduction Video"),
@@ -557,21 +516,36 @@ class Settings(models.Model):
         ],
     )
     intro_thumbnail = models.ImageField(
-        upload_to=logo_image,
+        upload_to=UploadPath("images", "website"),
         blank=True,
         null=True,
         verbose_name=_("Introduction Thumbnail"),
         help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
     )
-    facebook = models.URLField(verbose_name=_("Facebook"), help_text=_("format: absolute URL"), blank=True, null=True)
-    instagram = models.URLField(verbose_name=_("Instagram"), help_text=_("format: absolute URL"), blank=True, null=True)
+    facebook = models.URLField(
+        verbose_name=_("Facebook"),
+        help_text=_("format: absolute URL"),
+        blank=True,
+        null=True
+    )
+    instagram = models.URLField(
+        verbose_name=_("Instagram"),
+        help_text=_("format: absolute URL"),
+        blank=True,
+        null=True
+    )
     x_twitter = models.URLField(
         verbose_name=_("X(Twitter)"),
         help_text=_("format: absolute URL,"),
         blank=True,
         null=True
     )
-    youtube = models.URLField(verbose_name=_("Youtube"), help_text=_("format: absolute URL"), blank=True, null=True)
+    youtube = models.URLField(
+        verbose_name=_("Youtube"),
+        help_text=_("format: absolute URL"),
+        blank=True,
+        null=True
+    )
     api_token = models.TextField(
         verbose_name=_("Api Token"),
         help_text=_("format: used in post request to create campaign"),

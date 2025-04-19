@@ -5,8 +5,8 @@
     "fields": {
       "name": "Food & Beverage",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -15,8 +15,8 @@
     "fields": {
       "name": "Retail",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -25,8 +25,8 @@
     "fields": {
       "name": "Technology",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -35,8 +35,8 @@
     "fields": {
       "name": "Healthcare",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -45,8 +45,8 @@
     "fields": {
       "name": "Finance",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -55,8 +55,8 @@
     "fields": {
       "name": "Education",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -65,8 +65,8 @@
     "fields": {
       "name": "Real Estate",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -75,8 +75,8 @@
     "fields": {
       "name": "Manufacturing",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -85,8 +85,8 @@
     "fields": {
       "name": "Transportation",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -95,8 +95,8 @@
     "fields": {
       "name": "Entertainment",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -105,8 +105,8 @@
     "fields": {
       "name": "Telecommunications",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -115,8 +115,8 @@
     "fields": {
       "name": "Agriculture",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -125,8 +125,8 @@
     "fields": {
       "name": "Automotive",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -135,8 +135,8 @@
     "fields": {
       "name": "Construction",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -145,8 +145,8 @@
     "fields": {
       "name": "Pharmaceutical",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -155,8 +155,8 @@
     "fields": {
       "name": "Fashion",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -165,8 +165,8 @@
     "fields": {
       "name": "Sports & Fitness",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -175,8 +175,8 @@
     "fields": {
       "name": "Hospitality",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -185,8 +185,8 @@
     "fields": {
       "name": "Beauty & Personal Care",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -195,8 +195,8 @@
     "fields": {
       "name": "Nonprofit",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   },
   {
@@ -205,8 +205,8 @@
     "fields": {
       "name": "Security",
       "is_active": true,
-      "create_at": "2025-04-09T12:00:00Z",
-      "update_at": "2025-04-09T12:00:00Z"
+      "created_at": "2025-04-09T12:00:00Z",
+      "updated_at": "2025-04-09T12:00:00Z"
     }
   }
 ]

@@ -66,8 +66,8 @@ admin.site.register(User, CustomUserAdmin)
 
 @admin.register(Industry)
 class IndustryAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'name', 'is_active', 'create_at', 'update_at']
-    list_filter = ['is_active', 'create_at', 'update_at']
+    list_display = ['id', 'name', 'is_active', 'created_at', 'updated_at']
+    list_filter = ['is_active', 'created_at', 'updated_at']
     search_fields = ['id', 'name']
     resource_classes = [IndustryResource]
 
@@ -75,7 +75,7 @@ class IndustryAdmin(ImportExportModelAdmin):
 @admin.register(IndustryQuestion)
 class IndustryQuestionAdmin(ImportExportModelAdmin):
     list_display = ['id', 'industry', 'name', 'answer_type', 'question_order', 'optional',
-                    'is_active', 'create_at', 'update_at']
-    list_filter = ['optional', 'answer_type', 'is_active', 'create_at', 'update_at', 'industry']
+                    'is_active', 'created_at', 'updated_at']
+    list_filter = ['optional', 'answer_type', 'is_active', 'created_at', 'updated_at', 'industry']
     search_fields = ['id', 'name']
     resource_classes = [IndustryQuestionResource]

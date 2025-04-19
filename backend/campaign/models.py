@@ -1,48 +1,23 @@
+from decimal import Decimal
+from datetime import datetime
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator
-from decimal import Decimal
-from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-import os
-from .validators import validate_file_size, validate_file_extension, validate_file_duration, validate_template_format
-from datetime import datetime
 from django.utils import timezone
 from django.template import Template, Context
-from django.template.loader import render_to_string
 from django_ckeditor_5.fields import CKEditor5Field
+from autoslug import AutoSlugField
+
 from main.models import Settings
+from core.models import BaseModel, UploadPath
+
+from .validators import validate_file_size, validate_file_extension, validate_file_duration, \
+    validate_template_format
 
 
-CAMPAIGN_STATUS = (
-    ("cancel", "Canceled"),
-    ("payment", "Waiting for payment"),
-    ("disapproved", "Disapproved"),
-    ("wait", "Waiting for approval"),
-    ("processing", "Processing"),
-    ("complete", "Complete"),
-)
-
-
-def template_image(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'email_templates/images/{timestamp}.{extension}'
-
-
-def template_extra(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    extension = filename.split('.')[-1]
-    return f'email_templates/extra/{timestamp}.{extension}'
-
-
-def get_template_upload_path(instance, filename):
-    timestamp = timezone.now().strftime('%Y%m%d_%H%M%S')
-    return f'email_templates/{timestamp}.html'
-
-
-class CampaignEmailTemplate(models.Model):
+class CampaignEmailTemplate(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -52,7 +27,7 @@ class CampaignEmailTemplate(models.Model):
         help_text=_("format: required, max-255 character, name of your Email Template")
     )
     template = models.FileField(
-        upload_to=get_template_upload_path,
+        upload_to=UploadPath("templates", "email"),
         blank=False,
         null=False,
         validators=[validate_template_format],
@@ -60,17 +35,11 @@ class CampaignEmailTemplate(models.Model):
         help_text=_("format: only .html .htm are allowed"),
     )
     thumbnail = models.ImageField(
-        upload_to=template_image,
+        upload_to=UploadPath("images", "thumbnail"),
         blank=False,
         null=False,
         verbose_name=_("Template Thumbnail"),
         help_text=_("format: JPEG,JPG,PNG,SVG,WEBP")
-    )
-    extra = models.FileField(
-        upload_to=template_extra,
-        blank=True,
-        null=True,
-        verbose_name=_("Template Extra"),
     )
     price = models.DecimalField(
         max_digits=10,
@@ -93,10 +62,6 @@ class CampaignEmailTemplate(models.Model):
         null=False
     )
 
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
-
     class Meta:
         verbose_name = _("Email Template")
         verbose_name_plural = _("Email templates")
@@ -110,7 +75,7 @@ class CampaignEmailTemplate(models.Model):
         return rendered_content
 
 
-class CampaignType(models.Model):
+class CampaignType(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -138,9 +103,6 @@ class CampaignType(models.Model):
         help_text=_("format: maximum price 99999999.99"),
         validators=[MinValueValidator(Decimal("0.01"))]
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Campaign Type")
@@ -153,7 +115,7 @@ class CampaignType(models.Model):
         return f"{self.name} - {self.price}"
 
 
-class CampaignZip(models.Model):
+class CampaignZip(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -179,9 +141,6 @@ class CampaignZip(models.Model):
         unique=False,
         help_text=_("format: required, max-16")
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Campaign Zip")
@@ -194,7 +153,15 @@ class CampaignZip(models.Model):
         return f"{self.name} - {self.price}"
 
 
-class Campaign(models.Model):
+class Campaign(BaseModel):
+    class StatusChoices(models.TextChoices):
+        CANCEL = "cancel", _("Canceled"),
+        PAYMENT = "payment", _("Waiting for payment")
+        DISAPPROVED = "disapprove", _("Disapproved")
+        WAITING = "wait", _("Waiting for approval")
+        PROCESSING = "processing", _("Processing")
+        COMPLETED = "complete", _("Completed")
+
     customer = models.ForeignKey(
         get_user_model(),
         verbose_name=_("Customer"),
@@ -233,10 +200,10 @@ class Campaign(models.Model):
     )
     status = models.CharField(
         max_length=31,
-        choices=CAMPAIGN_STATUS,
+        choices=StatusChoices.choices,
         blank=False,
         null=False,
-        default="payment",
+        default=StatusChoices.PAYMENT,
         verbose_name=_("Status"),
     )
     note = models.TextField(
@@ -254,10 +221,11 @@ class Campaign(models.Model):
     is_resubmit = models.BooleanField(
         default=False,
         verbose_name=_("Is Resubmitted"),
-        help_text=_("format: default false , if false allow user to resubmit if status is equal to disapprove"),
+        help_text=_(
+            "format: default false , if false allow user to resubmit if status is equal to disapprove"
+        ),
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     class Meta:
         verbose_name = _("Campaign")
@@ -301,7 +269,7 @@ class Campaign(models.Model):
         return difference.days
 
 
-class CampaignSMSType(models.Model):
+class CampaignSMSType(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -319,9 +287,6 @@ class CampaignSMSType(models.Model):
         blank=True,
         null=False
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("SMS Type")
@@ -331,7 +296,7 @@ class CampaignSMSType(models.Model):
         return self.name
 
 
-class CampaignSMS(models.Model):
+class CampaignSMS(BaseModel):
     campaign = models.OneToOneField(
         Campaign,
         verbose_name=_("Campaign"),
@@ -353,9 +318,7 @@ class CampaignSMS(models.Model):
     body = models.TextField(
         blank=False, null=False, verbose_name=_("SMS Body")
     )
-    # is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     class Meta:
         verbose_name = _("CampaignSMS")
@@ -365,7 +328,7 @@ class CampaignSMS(models.Model):
         return self.campaign.__str__()
 
 
-class CampaignEmailType(models.Model):
+class CampaignEmailType(BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -383,9 +346,6 @@ class CampaignEmailType(models.Model):
         blank=True,
         null=False
     )
-    is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
 
     class Meta:
         verbose_name = _("Email Type")
@@ -395,7 +355,7 @@ class CampaignEmailType(models.Model):
         return self.name
 
 
-class CampaignEmail(models.Model):
+class CampaignEmail(BaseModel):
     campaign = models.OneToOneField(
         Campaign,
         verbose_name=_("Campaign"),
@@ -423,10 +383,8 @@ class CampaignEmail(models.Model):
     )
     body = CKEditor5Field(
         blank=False, null=False, verbose_name=_("Email Body")
-        )
-    # is_active = models.BooleanField(verbose_name=_("Published"), default=False)
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    )
+    is_active = None
 
     class Meta:
         verbose_name = _("CampaignEmail")
@@ -436,13 +394,7 @@ class CampaignEmail(models.Model):
         return self.campaign.__str__()
 
 
-def generate_filename(instance, filename):
-    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-    extension = filename.split('.')[-1]
-    return f"audio/audio_{timestamp}.{extension}"
-
-
-class CampaignAudio(models.Model):
+class CampaignAudio(BaseModel):
     campaign = models.OneToOneField(
         Campaign,
         verbose_name=_("Campaign"),
@@ -459,7 +411,7 @@ class CampaignAudio(models.Model):
         help_text=_("format: the text that user want to convert to audio")
     )
     file = models.FileField(
-        upload_to=generate_filename,
+        upload_to=UploadPath("uploads", "audio"),
         verbose_name=_("File"),
         help_text=_("format: Only .mp3, .m4a and .wav files are allowed."),
         validators=[
@@ -470,8 +422,7 @@ class CampaignAudio(models.Model):
         blank=True,
         null=True,
     )
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Date Create"))
-    update_at = models.DateTimeField(auto_now=True, verbose_name=_("Date Modified"))
+    is_active = None
 
     class Meta:
         verbose_name = _("CampaignAudio")
@@ -479,3 +430,134 @@ class CampaignAudio(models.Model):
 
     def __str__(self):
         return self.campaign.__str__()
+
+
+class SocialMedia(BaseModel):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name"),
+        blank=False,
+        null=False,
+        unique=True,
+        help_text=_("format: required, max-255 character")
+    )
+    slug = AutoSlugField(
+        verbose_name=_("Social Media SLUG"),
+        populate_from="name",
+        editable=True,
+        unique=True,
+        help_text=_("format: required, max-255 character")
+    )
+    object_name = models.CharField(
+        max_length=255,
+        verbose_name=_("Object Name"),
+        blank=False,
+        null=False,
+        unique=True,
+        help_text=_(
+            "format: required, max-255 character, this name will be used to when sending the data, example: 'facebook':{}"
+        )
+    )
+    tutorial_video = models.URLField(
+        verbose_name=_("Tutorial Video URL"),
+        blank=True,
+        null=True,
+        help_text=_("Optional link to a tutorial video on how to fill this form")
+    )
+    manual_guide = models.TextField(
+        verbose_name=_("Manual Guide"),
+        blank=True,
+        null=True,
+        help_text=_("Optional step-by-step guide for users on how to complete the form")
+    )
+
+    class Meta:
+        verbose_name = _("Social Media")
+        verbose_name_plural = _("Social Medias")
+        ordering = ("name",)
+
+    def __str__(self):
+        return self.name
+
+
+class SocialMediaFields(BaseModel):
+    social_media = models.ForeignKey(
+        SocialMedia,
+        verbose_name=_("Social Media"),
+        related_name="social_media_fields",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Field Name"),
+        blank=False,
+        null=False,
+        help_text=_("format: required, max-255 character, example: username, password...etc")
+    )
+
+    class Meta:
+        verbose_name = _("Social Media Fields")
+        verbose_name_plural = _("Social Media Fields")
+        ordering = ("social_media", "name",)
+
+    def __str__(self):
+        return f"{self.social_media.name} : {self.name}"
+
+
+class CampaignSocialMediaEntry(BaseModel):
+    campaign = models.ForeignKey(
+        Campaign,
+        verbose_name=_("Campaign"),
+        related_name="campaign_social_media_entry",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+        help_text=_("format: required, belonging campaign")
+    )
+    social_media = models.ForeignKey(
+        SocialMedia,
+        verbose_name=_("Social Media"),
+        related_name="entries",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+    is_active = None
+
+    class Meta:
+        verbose_name = _("Campaign Social Media Entry")
+        verbose_name_plural = _("Campaign Social Media Entries")
+
+    def __str__(self):
+        return f"campaign: {self.campaign.id} - {self.social_media.name} entry #{self.pk}"
+
+
+class CampaignSocialMediaFieldValue(BaseModel):
+    entry = models.ForeignKey(
+        CampaignSocialMediaEntry,
+        verbose_name=_("Entry"),
+        related_name="field_values",
+        on_delete=models.CASCADE
+    )
+    field = models.ForeignKey(
+        SocialMediaFields,
+        verbose_name=_("Field"),
+        related_name="field_values",
+        on_delete=models.CASCADE
+    )
+    value = models.CharField(
+        max_length=1024,
+        verbose_name=_("Value"),
+        help_text=_("Value for this field, e.g. username or password")
+    )
+    is_active = None
+
+    class Meta:
+        verbose_name = _("Social Media Field Value")
+        verbose_name_plural = _("Social Media Field Values")
+        unique_together = ('entry', 'field')
+
+    def __str__(self):
+        return f"{self.entry} - {self.field.name}: {self.value}"
