@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import IndustryListAPIView, IndustryQuestionListAPIView, \
-    UserBusinessProfileAndQuestionsApiView
+    UserBusinessProfileAndQuestionsApiView, EmailTemplateRetrieveSlugView, CampaignAudioRetrieveView
 
 app_name = 'api'
 
@@ -11,5 +11,15 @@ urlpatterns = [
         "user/business/profile/",
         UserBusinessProfileAndQuestionsApiView.as_view(),
         name="user_business_profile"
+    ),
+    path(
+        "campaign/email/template/<slug:slug>/",
+        EmailTemplateRetrieveSlugView.as_view(),
+        name="campaign_email_template"
+    ),
+    path(
+        "campaign/audio/<int:pk>/",
+        CampaignAudioRetrieveView.as_view(),
+        name="campaign_email"
     ),
 ]

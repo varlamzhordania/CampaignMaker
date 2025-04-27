@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Zoomreachout API
+  version: 1.0.0
+paths:
+  /api/industry/:
+    get:
+      operationId: api_industry_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Industry'
+          description: ''
+  /api/industry/questions/:
+    get:
+      operationId: api_industry_questions_list
+      parameters:
+      - in: query
+        name: industry
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IndustryQuestion'
+          description: ''
+  /api/user/business/profile/:
+    post:
+      operationId: api_user_business_profile_create
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    AnswerTypeEnum:
+      enum:
+      - text
+      type: string
+      description: '* `text` - Text'
+    Industry:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Industry Name
+          description: Enter the name of the industry (e.g., Food & Beverage, Retail,
+            etc.)
+          maxLength: 255
+        is_active:
+          type: boolean
+          title: Published
+          description: Indicates if the industry is currently active and visible in
+            the system.
+      required:
+      - id
+      - name
+    IndustryQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        name:
+          type: string
+          title: Question Name
+          description: The name or description of the question.
+          maxLength: 255
+        answer_type:
+          allOf:
+          - $ref: '#/components/schemas/AnswerTypeEnum'
+          description: |-
+            Select the type of answer that the question expects (e.g., text, checkbox, or radio).
+
+            * `text` - Text
+        optional:
+          type: boolean
+          title: Optional Question
+          description: Check if the question is optional. Optional questions can be
+            skipped by users.
+        is_active:
+          type: boolean
+          title: Published
+          description: Indicates if the question is active and visible to users.
+        question_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          description: The order in which this question will appear relative to other
+            questions.
+        industry:
+          type: integer
+          description: The industry this question is related to.
+      required:
+      - created_at
+      - id
+      - industry
+      - name
+      - updated_at
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

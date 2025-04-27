@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic.base import TemplateView
+from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 
 from account.forms import StylesCustomPasswordResetForm, StylesCustomSetPasswordForm
 from main.sitemap import StaticViewSitemap, HomeViewSitemap, CategoryViewSitemap
@@ -53,7 +54,14 @@ urlpatterns = ([
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}),
     path(
         "robots.txt/",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), )
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), ),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path(
+        'api/schema/docs/',
+        SpectacularSwaggerView.as_view(url_name='schema'),
+        name='swagger-ui'
+        ),
+
 ])
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

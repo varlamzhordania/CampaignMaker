@@ -16,41 +16,49 @@
                     <progress id="progress" value=0 max=100></progress>
                     <div class="step-item">
                         <button id="step-button-1" class="step-button  border border-1 text-center" type="button">
-                            1
+                            <i class="bi bi-clipboard"></i>
                         </button>
-                        <div class="step-title fw-bold text-uppercase">
+                        <div class="step-title fw-medium text-capitalize">
                             Details
                         </div>
                     </div>
                     <div class="step-item">
                         <button id="step-button-2" class="step-button  border border-1 text-center" type="button">
-                            2
+                            <i class="bi bi-chat"></i>
                         </button>
-                        <div class="step-title fw-bold text-uppercase">
+                        <div class="step-title fw-medium text-capitalize">
                             SMS
                         </div>
                     </div>
                     <div class="step-item">
                         <button id="step-button-3" class="step-button  border border-1 text-center" type="button">
-                            3
+                            <i class="bi bi-envelope"></i>
                         </button>
-                        <div class="step-title fw-bold text-uppercase">
+                        <div class="step-title fw-medium text-capitalize">
                             Email
                         </div>
                     </div>
                     <div class="step-item">
                         <button id="step-button-4" class="step-button  border border-1 text-center" type="button">
-                            4
+                            <i class="bi-mic"></i>
                         </button>
-                        <div class="step-title fw-bold text-uppercase">
+                        <div class="step-title fw-medium text-capitalize">
                             Audio
                         </div>
                     </div>
                     <div class="step-item">
                         <button id="step-button-5" class="step-button  border border-1 text-center" type="button">
-                            5
+                            <i class="bi-instagram"></i>
                         </button>
-                        <div class="step-title fw-bold text-uppercase">
+                        <div class="step-title fw-medium text-capitalize">
+                            Social
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <button id="step-button-6" class="step-button  border border-1 text-center" type="button">
+                            <i class="bi-easel"></i>
+                        </button>
+                        <div class="step-title fw-medium text-capitalize">
                             Preview
                         </div>
                     </div>
@@ -332,8 +340,89 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-0 ">
+                <div class="card border-0">
                     <div id="collapseFifth" class="collapse fifth" aria-labelledby="headingFifth"
+                         data-bs-parent="#steps-list">
+                        <div class="card-header p-5 pb-0 bg-transparent border-0 ">
+                            <h3 class="fw-bold">
+                                Social Media
+                            </h3>
+                            <p class="text-muted">
+                                Please follow the guideline that provided for each social media.
+                            </p>
+                        </div>
+                        <div class="card-body p-5">
+                            {% for social in socials %}
+                                <div class="card border-0">
+                                    <div class="card-header border-0">
+                                        <h4 class="card-title text-capitalize">{{ social.name }}</h4>
+                                        <p>{{ social.manual_guide }}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        {% if social.tutorial_video %}
+                                            <div class="ratio-16x9 d-flex justify-content-center align-items-center">
+                                                <video src="{{ social.tutorial_video.url }}" controls height="180"
+                                                       width="320">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if social.social_media_fields.all %}
+                                            {% for field in social.social_media_fields.all %}
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="id_{{ social.object_name }}_{{ field.object_name }}">{{ field.name }}</label>
+                                                    <input
+                                                            type="text"
+                                                            id="id_{{ social.object_name }}_{{ field.object_name }}"
+                                                            name="{{ social.object_name }}_{{ field.object_name }}"
+                                                            class="form-control"
+                                                            required
+                                                    >
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No fields available.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p>No social media items found.</p>
+                            {% endfor %}
+
+
+                            <div class="card-footer bg-transparent border-0">
+                                <div class="d-inline-flex justify-content-start align-items-center gap-2">
+                                    <button class="step-back btn btn-primary float-start collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseForth" aria-expanded="false"
+                                            aria-controls="collapseForth"
+                                    >
+                                        <i class="bi bi-chevron-left"></i>
+                                        Back
+                                    </button>
+                                    <a class="btn btn-secondary my-4 float-start"
+                                       href="{% url "campaign:dashboard" %}"
+                                    >
+                                        Cancel
+                                    </a>
+                                </div>
+                                <button class="btn btn-primary step-next fifth float-end collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSixth" aria-expanded="false"
+                                        aria-controls="collapseSixth" disabled>
+
+                                    Next
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 ">
+                    <div id="collapseSixth" class="collapse sixth" aria-labelledby="headingSixth"
                          data-bs-parent="#steps-list">
                         <div class="card-header p-5 pb-0 bg-transparent border-0 ">
                             <h3 class="fw-bold">
@@ -359,7 +448,6 @@
                             </div>
                             <div class="html_content overflow-auto" id="html_content"
                                  style="max-height: 400px;min-width: 320px;max-width: 600px">
-
                             </div>
                             <input type="hidden" id="method" name="payment_method">
                             <div class="d-flex mt-3 justify-content-between align-items-center w-100">
@@ -367,8 +455,8 @@
                                     <button class="step-back btn btn-primary float-start collapsed"
                                             type="button"
                                             data-bs-toggle="collapse"
-                                            data-bs-target="#collapseForth" aria-expanded="false"
-                                            aria-controls="collapseForth"
+                                            data-bs-target="#collapseFifth" aria-expanded="false"
+                                            aria-controls="collapseFifth"
                                     >
                                         <i class="bi bi-chevron-left"></i>
                                         Back

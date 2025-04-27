@@ -1,9 +1,8 @@
 from decimal import Decimal
-from datetime import datetime
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, FileExtensionValidator
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.template import Template, Context
@@ -442,7 +441,7 @@ class SocialMedia(BaseModel):
         help_text=_("format: required, max-255 character")
     )
     slug = AutoSlugField(
-        verbose_name=_("Social Media SLUG"),
+        verbose_name=_("slug"),
         populate_from="name",
         editable=True,
         unique=True,
@@ -453,16 +452,19 @@ class SocialMedia(BaseModel):
         verbose_name=_("Object Name"),
         blank=False,
         null=False,
-        unique=True,
         help_text=_(
             "format: required, max-255 character, this name will be used to when sending the data, example: 'facebook':{}"
         )
     )
-    tutorial_video = models.URLField(
-        verbose_name=_("Tutorial Video URL"),
+    tutorial_video = models.FileField(
+        verbose_name=_("Tutorial Video"),
+        upload_to=UploadPath("uploads", "video"),
+        validators=[
+            FileExtensionValidator(allowed_extensions=["mp4", "webm", 'ogg', 'mkv']),
+        ],
         blank=True,
         null=True,
-        help_text=_("Optional link to a tutorial video on how to fill this form")
+        help_text=_("Optional file for a tutorial video on how to fill this form")
     )
     manual_guide = models.TextField(
         verbose_name=_("Manual Guide"),
@@ -475,6 +477,7 @@ class SocialMedia(BaseModel):
         verbose_name = _("Social Media")
         verbose_name_plural = _("Social Medias")
         ordering = ("name",)
+        unique_together = ("name", "object_name")
 
     def __str__(self):
         return self.name
@@ -496,14 +499,52 @@ class SocialMediaFields(BaseModel):
         null=False,
         help_text=_("format: required, max-255 character, example: username, password...etc")
     )
+    object_name = models.CharField(
+        max_length=255,
+        verbose_name=_("Object Name"),
+        blank=False,
+        null=False,
+        help_text=_(
+            "format: required, max-255 character, this name will be used to when sending the data, example: 'username':''}"
+        )
+    )
 
     class Meta:
         verbose_name = _("Social Media Fields")
         verbose_name_plural = _("Social Media Fields")
         ordering = ("social_media", "name",)
+        unique_together = ("social_media", "name", "object_name")
 
     def __str__(self):
         return f"{self.social_media.name} : {self.name}"
+
+
+class SocialMediaAccounts(BaseModel):
+    social_media = models.ForeignKey(
+        SocialMedia,
+        verbose_name=_("Social Media"),
+        related_name="social_media_accounts",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+    username = models.CharField(
+        max_length=255,
+        verbose_name=_("Username"),
+        blank=False,
+        null=False,
+        help_text=_(
+            "format: required, max-255 character, this can contain email,phone or any other type of social media identifier"
+        )
+    )
+
+    class Meta:
+        verbose_name = _("Social Media Accounts")
+        verbose_name_plural = _("Social Media Accounts")
+        ordering = ("social_media", "username",)
+
+    def __str__(self):
+        return f"{self.social_media.name} : {self.username}"
 
 
 class CampaignSocialMediaEntry(BaseModel):
@@ -544,7 +585,7 @@ class CampaignSocialMediaFieldValue(BaseModel):
     field = models.ForeignKey(
         SocialMediaFields,
         verbose_name=_("Field"),
-        related_name="field_values",
+        related_name="entry_field_values",
         on_delete=models.CASCADE
     )
     value = models.CharField(

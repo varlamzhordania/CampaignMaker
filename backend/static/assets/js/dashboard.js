@@ -224,10 +224,15 @@ changeAudioButtons.forEach(button => {
 })
 
 
+const getProgressEachSteps = () => {
+    const steps = document.querySelectorAll(".step-item")
+    return 100 / (steps.length) + 5
+}
+
 Array.from(stepBack).forEach((button, index) => {
     button.addEventListener('click', () => {
         let old_value = parseInt(progress.getAttribute("value"))
-        progress.setAttribute('value', old_value - 25);
+        progress.setAttribute('value', old_value - getProgressEachSteps());
         const stepButton = document.getElementById(`step-button-${index + 1}`)
         stepButton.classList.remove("done")
     })
@@ -237,7 +242,7 @@ Array.from(stepBack).forEach((button, index) => {
 Array.from(stepNext).forEach((button, index) => {
     button.addEventListener('click', () => {
         let old_value = parseInt(progress.getAttribute("value"))
-        progress.setAttribute('value', old_value + 25);
+        progress.setAttribute('value', old_value + getProgressEachSteps());
         const stepButton = document.getElementById(`step-button-${index + 1}`)
         stepButton.classList.add("done")
     })
@@ -267,6 +272,8 @@ function checkFormCompletion() {
             counter = "three";
         } else if (currentStepForm.classList.contains("forth")) {
             counter = "forth";
+        } else if (currentStepForm.classList.contains("fifth")) {
+            counter = "fifth";
         }
 
         if (counter !== null && counter !== "undefined" && counter !== undefined) {
@@ -286,7 +293,6 @@ let excludedTextarea = document.querySelector('#id_body');
 if (excludedTextarea) {
     excludedTextarea.removeEventListener('input', checkFormCompletion);
 }
-
 
 
 let secondStep = document.getElementById('collapseTwo');

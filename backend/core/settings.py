@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'import_export',
-
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -163,7 +163,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.AllowAny',
     ],
-
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',  # Rate limiting for anonymous users
         'rest_framework.throttling.UserRateThrottle',  # Rate limiting for authenticated users
@@ -264,3 +264,11 @@ LOGGING = {
 }
 
 STATIC_VERSION = "1"
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Zoomreachout API',
+    'DESCRIPTION': '',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}

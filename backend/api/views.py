@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -8,7 +8,11 @@ from django.db import transaction
 
 from account.models import Industry, IndustryQuestion, UserBusinessProfile, BusinessAudience, \
     UserIndustryAnswer
-from .serializers import IndustrySerializer, IndustryQuestionSerializer
+from campaign.models import CampaignEmailTemplate, CampaignAudio
+
+from .serializers import IndustrySerializer, IndustryQuestionSerializer, \
+    UserBusinessProfileSerializer, BusinessAudienceSerializer, CampaignEmailTemplateSerializer, \
+    CampaignAudioSerializer
 
 
 class IndustryListAPIView(ListAPIView):
@@ -26,6 +30,8 @@ class IndustryQuestionListAPIView(ListAPIView):
 
 
 class UserBusinessProfileAndQuestionsApiView(APIView):
+    serializer_classes = [UserBusinessProfileSerializer, BusinessAudienceSerializer]
+
     def post(self, request: Request, *args, **kwargs) -> Response:
         user = request.user
         data = request.data.copy()
@@ -60,7 +66,6 @@ class UserBusinessProfileAndQuestionsApiView(APIView):
 
                 questions_data = data.get('questions', {})
 
-                # Loop over the questions data and save user responses
                 for question_key, answer in questions_data.items():
                     question_id = question_key.split('_')[1]
                     try:
@@ -87,3 +92,14 @@ class UserBusinessProfileAndQuestionsApiView(APIView):
                 {"detail": "There was an error processing your data."},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class EmailTemplateRetrieveSlugView(RetrieveAPIView):
+    queryset = CampaignEmailTemplate.objects.filter(is_active=True)
+    serializer_class = CampaignEmailTemplateSerializer
+    lookup_field = 'slug'
+
+
+class CampaignAudioRetrieveView(RetrieveAPIView):
+    queryset = CampaignAudio.objects.all()
+    serializer_class = CampaignAudioSerializer

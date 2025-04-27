@@ -1,8 +1,7 @@
 from django import forms
-from .models import Campaign, CampaignType, CampaignZip, CampaignSMS, CampaignSMSType, CampaignEmailType, CampaignEmail, \
+from .models import Campaign, CampaignType, CampaignSMS, CampaignSMSType, CampaignEmailType, CampaignEmail, \
     CampaignAudio
 from django.utils.translation import gettext_lazy as _
-from .validators import validate_file_duration
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 class CampaignDisapproveForm(forms.ModelForm):

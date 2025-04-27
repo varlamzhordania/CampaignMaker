@@ -1,16 +1,16 @@
 import datetime
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm, CampaignDisapproveForm
-from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, CampaignEmail, \
-    CampaignEmailTemplate, CampaignType
-from core.utils import fancy_message, is_admin, string_to_context
+from django.contrib.auth.decorators import login_required
+from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm
+from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, \
+    CampaignEmail, \
+    CampaignEmailTemplate, CampaignType, SocialMedia, CampaignSocialMediaEntry, \
+    CampaignSocialMediaFieldValue
+from core.utils import fancy_message, is_admin
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
 from django.http import JsonResponse
-from .callback import call_api
 from main.models import Ticket
 
 
@@ -18,7 +18,11 @@ from main.models import Ticket
 def Dashboard(request, *args, **kwargs):
     payment = request.GET.get("payment_success", None)
     if payment and payment == "true":
-        fancy_message(request, "Your Payment was successful and after review your campaign will start", level="success")
+        fancy_message(
+            request,
+            "Your Payment was successful and after review your campaign will start",
+            level="success"
+        )
     elif payment and payment == "false":
         fancy_message(request, "Payment failed", level="error")
 
@@ -75,9 +79,15 @@ def CampaignResubmit(request, pk, *args, **kwargs):
             if form2.is_valid():
                 form3 = CampaignEmailForm(instance=campaign_email, data=campaign_email_data)
                 if form3.is_valid():
-                    form4 = CampaignAudioForm(instance=campaign_audio, data=request.POST, files=request.FILES)
+                    form4 = CampaignAudioForm(
+                        instance=campaign_audio,
+                        data=request.POST,
+                        files=request.FILES
+                    )
                     if form4.is_valid():
-                        campaign.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
+                        campaign.email_template = CampaignEmailTemplate.objects.get(
+                            id=selected_template
+                        )
                         campaign.is_resubmit = True
                         campaign.save()
                         form2.save()
@@ -123,6 +133,7 @@ def CampaignActions(request, id, status, *args, **kwargs):
     queryset.save()
     fancy_message(request, f"Campaign-{id} : status changed to {status}", level="success")
     return redirect("campaign:dashboard")
+
 
 @login_required(login_url="/login")
 def CampaignList(request, *args, **kwargs):
@@ -184,7 +195,8 @@ def EmailPreview(request, pk, *args, **kwargs):
             type_obj = get_object_or_404(CampaignEmailType, id=type)
             my_context = {
                 "content": queryset.get_rendered_content(
-                    {"body": content, "greeting": type_obj.name, "first_name": "john", "last_name": "doe"}
+                    {"body": content, "greeting": type_obj.name, "first_name": "john",
+                     "last_name": "doe"}
                 ),
                 "type": type_obj.name
             }
@@ -199,86 +211,136 @@ def EmailPreview(request, pk, *args, **kwargs):
 
 @login_required(login_url="/login")
 def CampaignCreate(request, *args, **kwargs):
+    socials = SocialMedia.objects.filter(is_active=True).prefetch_related("social_media_fields")
     campaign_data = {}
     campaign_sms_data = {}
     campaign_email_data = {}
-    if request.method == "POST":
-        campaign_data = {
-            "type": request.POST.getlist("type")[0],
-        }
-        selected_template = request.POST.get("selected-template", None)
-        campaign_sms_data = {
-            "type": request.POST.getlist("type")[1],
-            "body": request.POST.getlist("body")[0]
-        }
-        campaign_email_data = {
-            "type": request.POST.getlist("type")[2],
-            "subject": request.POST.get("subject"),
-            "body": request.POST.getlist("body")[1]
-        }
-        zip_selects = []
 
-        for i in range(1, 4):
-            zip_code = request.POST.get(f"select-{i}", None)
-            if zip_code and zip_code != "empty":
-                zip_selects.append(int(zip_code))
-        if len(zip_selects) > 0:
-            form1 = CampaignForm(campaign_data)
-            if selected_template:
-                if form1.is_valid():
-                    form2 = CampaignSMSForm(campaign_sms_data)
-                    if form2.is_valid():
-                        form3 = CampaignEmailForm(campaign_email_data)
-                        if form3.is_valid():
-                            form4 = CampaignAudioForm(request.POST, files=request.FILES)
-                            if form4.is_valid():
-                                campaign_obj = form1.save(commit=False)
-                                campaign_obj.customer = request.user
-                                campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
-                                campaign_obj.save()
-                                campaign_obj.zips.set(zip_selects)
-                                sms_obj = form2.save(commit=False)
-                                sms_obj.campaign = campaign_obj
-                                sms_obj.save()
-                                email_obj = form3.save(commit=False)
-                                email_obj.campaign = campaign_obj
-                                email_obj.save()
-                                audio_obj = form4.save(commit=False)
-                                audio_obj.campaign = campaign_obj
-                                audio_obj.save()
-                                fancy_message(request, "New campaign successfully created", level="success")
-                                if request.POST["payment_method"] == "pay":
-                                    return redirect(f"/checkout/payment/{campaign_obj.id}/")
-                                else:
-                                    return redirect(f"campaign:dashboard")
-                            else:
-                                fancy_message(request, form4.errors, level="error")
-                        else:
-                            fancy_message(request, form3.errors, level="error")
-                    else:
-                        fancy_message(request, form2.errors, level="error")
-                else:
-                    fancy_message(request, form1.errors, level="error")
-            else:
-                fancy_message(request, "please select an email template", level="error")
-        else:
-            fancy_message(request, "please select zip codes", level="error")
+    if request.method == "POST":
+        campaign_data["type"] = request.POST.getlist("type")[0]
+        selected_template = request.POST.get("selected-template", None)
+
+        # Consolidate campaign data
+        campaign_sms_data.update(
+            {
+                "type": request.POST.getlist("type")[1],
+                "body": request.POST.getlist("body")[0]
+            }
+        )
+
+        campaign_email_data.update(
+            {
+                "type": request.POST.getlist("type")[2],
+                "subject": request.POST.get("subject"),
+                "body": request.POST.getlist("body")[1]
+            }
+        )
+
+        zip_selects = [
+            int(request.POST.get(f"select-{i}", None))
+            for i in range(1, 4)
+            if request.POST.get(f"select-{i}", None) != "empty"
+        ]
+
+        if not zip_selects:
+            fancy_message(request, "Please select zip codes", level="error")
+            return redirect(request.path)
+
+        form1 = CampaignForm(campaign_data)
+        if not form1.is_valid():
+            fancy_message(request, form1.errors, level="error")
+            return redirect(request.path)
+
+        if not selected_template:
+            fancy_message(request, "Please select an email template", level="error")
+            return redirect(request.path)
+
+        form2 = CampaignSMSForm(campaign_sms_data)
+        if not form2.is_valid():
+            fancy_message(request, form2.errors, level="error")
+            return redirect(request.path)
+
+        form3 = CampaignEmailForm(campaign_email_data)
+        if not form3.is_valid():
+            fancy_message(request, form3.errors, level="error")
+            return redirect(request.path)
+
+        form4 = CampaignAudioForm(request.POST, files=request.FILES)
+        if not form4.is_valid():
+            fancy_message(request, form4.errors, level="error")
+            return redirect(request.path)
+
+        # Save the campaign object and its related data
+        campaign_obj = form1.save(commit=False)
+        campaign_obj.customer = request.user
+        campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
+        campaign_obj.save()
+        campaign_obj.zips.set(zip_selects)
+
+        sms_obj = form2.save(commit=False)
+        sms_obj.campaign = campaign_obj
+        sms_obj.save()
+
+        email_obj = form3.save(commit=False)
+        email_obj.campaign = campaign_obj
+        email_obj.save()
+
+        audio_obj = form4.save(commit=False)
+        audio_obj.campaign = campaign_obj
+        audio_obj.save()
+
+        # Save social media entries
+        for social in socials:
+            social_media_data = {
+                field: request.POST.get(f"{social.object_name}_{field.object_name}")
+                for field in social.social_media_fields.all()
+                if request.POST.get(f"{social.object_name}_{field.object_name}")
+            }
+
+            if social_media_data:
+                entry = CampaignSocialMediaEntry.objects.create(
+                    campaign=campaign_obj,
+                    social_media=social
+                )
+
+                for field, value in social_media_data.items():
+                    CampaignSocialMediaFieldValue.objects.create(
+                        entry=entry,
+                        field=field,
+                        value=value
+                    )
+
+        # Success message and redirect
+        fancy_message(request, "New campaign successfully created", level="success")
+
+        # Payment handling
+        if request.POST.get("payment_method") == "pay":
+            return redirect(f"/checkout/payment/{campaign_obj.id}/")
+
+        return redirect("campaign:dashboard")
+
+    # Initialize the forms with existing data
     form1 = CampaignForm(initial=campaign_data)
     form2 = CampaignSMSForm(initial=campaign_sms_data)
     form3 = CampaignEmailForm(initial=campaign_email_data)
     form4 = CampaignAudioForm(initial=request.POST, files=request.FILES)
+
+    # Additional context for the template
     zips = CampaignZip.objects.filter(is_active=True)
     email_templates = CampaignEmailTemplate.objects.filter(is_active=True)
-    my_context = {
-        "Title": f"Campaign | Create",
+
+    context = {
+        "Title": "Campaign | Create",
         "form1": form1,
         "form2": form2,
         "form3": form3,
         "form4": form4,
         "zips": zips,
         "templates": email_templates,
+        "socials": socials,
     }
-    return render(request, "dashboard/create_campaign.html", my_context)
+
+    return render(request, "dashboard/create_campaign.html", context)
 
 
 def webhook(request, *args, **kwargs):
@@ -300,6 +362,9 @@ def webhook(request, *args, **kwargs):
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            return HttpResponse("something went wrong when trying change campaign status", status=500)
+            return HttpResponse(
+                "something went wrong when trying change campaign status",
+                status=500
+            )
     else:
         return HttpResponse("method get is not allowed", status=400)
