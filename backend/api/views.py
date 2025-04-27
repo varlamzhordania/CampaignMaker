@@ -1,4 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -97,9 +98,11 @@ class UserBusinessProfileAndQuestionsApiView(APIView):
 class EmailTemplateRetrieveSlugView(RetrieveAPIView):
     queryset = CampaignEmailTemplate.objects.filter(is_active=True)
     serializer_class = CampaignEmailTemplateSerializer
+    permission_classes = [IsAdminUser]
     lookup_field = 'slug'
 
 
 class CampaignAudioRetrieveView(RetrieveAPIView):
+    permission_classes = [IsAdminUser]
     queryset = CampaignAudio.objects.all()
     serializer_class = CampaignAudioSerializer
