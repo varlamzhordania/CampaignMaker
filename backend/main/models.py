@@ -17,7 +17,7 @@ from campaign.validators import video_validator, validate_template_format, ticke
 from core.models import BaseModel, UploadPath
 
 
-class Categories(MPTTModel,BaseModel):
+class Categories(MPTTModel, BaseModel):
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -144,7 +144,7 @@ class Page(models.Model):
         blank=True, null=True, verbose_name=_("Background Text"), config_name="admin",
     )
     background = models.ImageField(
-        upload_to="",
+        upload_to=UploadPath('pages', 'background'),
         blank=True,
         null=True,
         verbose_name=_("Background Image"),
@@ -438,6 +438,7 @@ class ContactUs(BaseModel):
     )
     is_check = models.BooleanField(verbose_name=_("Is Check"), default=False)
     is_active = None
+
     class Meta:
         verbose_name = _("Contact Us")
         verbose_name_plural = _("Contact Us")
