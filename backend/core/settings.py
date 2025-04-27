@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'mptt',
     'nested_admin',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'import_export',
     'drf_spectacular',
@@ -157,6 +158,7 @@ REST_FRAMEWORK = {
     # Authentication Settings
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
 
     'DEFAULT_PERMISSION_CLASSES': [
@@ -264,7 +266,6 @@ LOGGING = {
 }
 
 STATIC_VERSION = "1"
-
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Zoomreachout API',
