@@ -32,7 +32,7 @@ class UserBusinessProfileSerializer(serializers.ModelSerializer):
 class BusinessAudienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessAudience
-        fields = '__all__'
+        exclude = ["created_at", "updated_at"]
 
 
 class IndustryQuestionSerializer(serializers.ModelSerializer):
@@ -44,4 +44,21 @@ class IndustryQuestionSerializer(serializers.ModelSerializer):
 class UserIndustryAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserIndustryAnswer
-        fields = '__all__'
+        fields = ["id", "answer", "answered", ]
+
+
+class UserBusinessFullProfileSerializer(serializers.ModelSerializer):
+    business_audience = BusinessAudienceSerializer(read_only=True)
+    industry_answers = UserIndustryAnswerSerializer(
+        many=True,
+        read_only=True,
+        source='user.industry_answers'
+    )
+    industry = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = UserBusinessProfile
+        fields = [
+            'id', 'user', 'business_name', 'industry', 'location', 'website', 'work_hours',
+            'brand_tone', 'brand_keywords', 'business_audience', 'industry_answers'
+        ]

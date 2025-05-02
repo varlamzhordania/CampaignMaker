@@ -13,7 +13,7 @@ from campaign.models import CampaignEmailTemplate, CampaignAudio
 
 from .serializers import IndustrySerializer, IndustryQuestionSerializer, \
     UserBusinessProfileSerializer, BusinessAudienceSerializer, CampaignEmailTemplateSerializer, \
-    CampaignAudioSerializer
+    CampaignAudioSerializer, UserBusinessFullProfileSerializer
 
 
 class IndustryListAPIView(ListAPIView):
@@ -106,3 +106,24 @@ class CampaignAudioRetrieveView(RetrieveAPIView):
     permission_classes = [IsAdminUser]
     queryset = CampaignAudio.objects.all()
     serializer_class = CampaignAudioSerializer
+
+
+class UserBusinessFullProfileAPIView(APIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = UserBusinessFullProfileSerializer
+
+    def get(self, request: Request, user_id: int, *args, **kwargs) -> Response:
+        try:
+            profile = UserBusinessProfile.objects.select_related(
+                'business_audience'
+            ).prefetch_related(
+                'user__industry_answers__question'
+            ).get(user_id=user_id)
+        except UserBusinessProfile.DoesNotExist:
+            return Response(
+                {'detail': 'User business profile not found.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = UserBusinessFullProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
