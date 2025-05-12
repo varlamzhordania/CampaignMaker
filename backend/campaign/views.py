@@ -1,17 +1,42 @@
 import datetime
+import logging
+
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
-from .forms import CampaignForm, CampaignSMSForm, CampaignEmailForm, CampaignAudioForm
-from .models import CampaignZip, Campaign, CampaignEmailType, CampaignAudio, CampaignSMS, \
-    CampaignEmail, \
-    CampaignEmailTemplate, CampaignType, SocialMedia, CampaignSocialMediaEntry, \
-    CampaignSocialMediaFieldValue
-from core.utils import fancy_message, is_admin
 from django.core.paginator import Paginator
 from django.conf import settings as django_settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.db import transaction
+
+from core.utils import fancy_message, is_admin
 from main.models import Ticket
+
+from .forms import (
+    CampaignForm,
+    CampaignSMSForm,
+    CampaignEmailForm,
+    CampaignAudioForm,
+    CampaignSocialMediaEntryForm,
+    CampaignSocialMediaFieldValueForm,
+)
+
+from .models import (
+    CampaignZip,
+    Campaign,
+    CampaignEmailType,
+    CampaignAudio,
+    CampaignSMS,
+    CampaignEmail,
+    CampaignEmailTemplate,
+    CampaignType,
+    SocialMedia,
+    CampaignSocialMediaEntry,
+)
+
+
+
+logger = logging.getLogger(__name__)
 
 
 @login_required(login_url="/login")
@@ -209,6 +234,7 @@ def EmailPreview(request, pk, *args, **kwargs):
         return HttpResponse("get not allowed", status=400)
 
 
+@transaction.atomic
 @login_required(login_url="/login")
 def CampaignCreate(request, *args, **kwargs):
     socials = SocialMedia.objects.filter(is_active=True).prefetch_related("social_media_fields")
@@ -217,113 +243,136 @@ def CampaignCreate(request, *args, **kwargs):
     campaign_email_data = {}
 
     if request.method == "POST":
-        campaign_data["type"] = request.POST.getlist("type")[0]
-        selected_template = request.POST.get("selected-template", None)
+        try:
+            campaign_data["type"] = request.POST.getlist("type")[0]
+            selected_template = request.POST.get("selected-template", None)
 
-        # Consolidate campaign data
-        campaign_sms_data.update(
-            {
-                "type": request.POST.getlist("type")[1],
-                "body": request.POST.getlist("body")[0]
-            }
-        )
+            # Consolidate campaign data
+            campaign_sms_data.update(
+                {
+                    "type": request.POST.getlist("type")[1],
+                    "body": request.POST.getlist("body")[0]
+                }
+            )
 
-        campaign_email_data.update(
-            {
-                "type": request.POST.getlist("type")[2],
-                "subject": request.POST.get("subject"),
-                "body": request.POST.getlist("body")[1]
-            }
-        )
+            campaign_email_data.update(
+                {
+                    "type": request.POST.getlist("type")[2],
+                    "subject": request.POST.get("subject"),
+                    "body": request.POST.getlist("body")[1]
+                }
+            )
 
-        zip_selects = [
-            int(request.POST.get(f"select-{i}", None))
-            for i in range(1, 4)
-            if request.POST.get(f"select-{i}", None) != "empty"
-        ]
+            zip_selects = [
+                int(request.POST.get(f"select-{i}", None))
+                for i in range(1, 4)
+                if request.POST.get(f"select-{i}", None) != "empty"
+            ]
 
-        if not zip_selects:
-            fancy_message(request, "Please select zip codes", level="error")
-            return redirect(request.path)
+            if not zip_selects:
+                fancy_message(request, "Please select zip codes", level="error")
+                return redirect(request.path)
 
-        form1 = CampaignForm(campaign_data)
-        if not form1.is_valid():
-            fancy_message(request, form1.errors, level="error")
-            return redirect(request.path)
+            form1 = CampaignForm(campaign_data)
+            if not form1.is_valid():
+                fancy_message(request, form1.errors, level="error")
+                return redirect(request.path)
 
-        if not selected_template:
-            fancy_message(request, "Please select an email template", level="error")
-            return redirect(request.path)
+            if not selected_template:
+                fancy_message(request, "Please select an email template", level="error")
+                return redirect(request.path)
 
-        form2 = CampaignSMSForm(campaign_sms_data)
-        if not form2.is_valid():
-            fancy_message(request, form2.errors, level="error")
-            return redirect(request.path)
+            form2 = CampaignSMSForm(campaign_sms_data)
+            if not form2.is_valid():
+                fancy_message(request, form2.errors, level="error")
+                return redirect(request.path)
 
-        form3 = CampaignEmailForm(campaign_email_data)
-        if not form3.is_valid():
-            fancy_message(request, form3.errors, level="error")
-            return redirect(request.path)
+            form3 = CampaignEmailForm(campaign_email_data)
+            if not form3.is_valid():
+                fancy_message(request, form3.errors, level="error")
+                return redirect(request.path)
 
-        form4 = CampaignAudioForm(request.POST, files=request.FILES)
-        if not form4.is_valid():
-            fancy_message(request, form4.errors, level="error")
-            return redirect(request.path)
+            form4 = CampaignAudioForm(request.POST, files=request.FILES)
+            if not form4.is_valid():
+                fancy_message(request, form4.errors, level="error")
+                return redirect(request.path)
 
-        # Save the campaign object and its related data
-        campaign_obj = form1.save(commit=False)
-        campaign_obj.customer = request.user
-        campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
-        campaign_obj.save()
-        campaign_obj.zips.set(zip_selects)
+            # Save the campaign object and its related data
+            campaign_obj = form1.save(commit=False)
+            campaign_obj.customer = request.user
+            campaign_obj.email_template = CampaignEmailTemplate.objects.get(id=selected_template)
+            campaign_obj.save()
+            campaign_obj.zips.set(zip_selects)
 
-        sms_obj = form2.save(commit=False)
-        sms_obj.campaign = campaign_obj
-        sms_obj.save()
+            sms_obj = form2.save(commit=False)
+            sms_obj.campaign = campaign_obj
+            sms_obj.save()
 
-        email_obj = form3.save(commit=False)
-        email_obj.campaign = campaign_obj
-        email_obj.save()
+            email_obj = form3.save(commit=False)
+            email_obj.campaign = campaign_obj
+            email_obj.save()
 
-        audio_obj = form4.save(commit=False)
-        audio_obj.campaign = campaign_obj
-        audio_obj.save()
+            audio_obj = form4.save(commit=False)
+            audio_obj.campaign = campaign_obj
+            audio_obj.save()
 
-        # Save social media entries
-        for social in socials:
-            social_media_data = {
-                field: request.POST.get(f"{social.object_name}_{field.object_name}")
-                for field in social.social_media_fields.all()
-                if request.POST.get(f"{social.object_name}_{field.object_name}")
-            }
+            # Save social media entries
+            for social in socials:
+                social_media_data = {
+                    field: request.POST.get(f"{social.object_name}_{field.object_name}")
+                    for field in social.social_media_fields.all()
+                    if request.POST.get(f"{social.object_name}_{field.object_name}")
+                }
 
-            if social_media_data:
-                entry = CampaignSocialMediaEntry.objects.create(
-                    campaign=campaign_obj,
-                    social_media=social
+                social_entry_form = CampaignSocialMediaEntryForm(
+                    data={
+                        "campaign": campaign_obj.id,
+                        "social_media": social.id,
+                        "post_frequency": request.POST.get(
+                            f"{social.object_name}_post_frequency",
+                            None
+                        ),
+                        "post_time": request.POST.get(f"{social.object_name}_post_time", None),
+                    }
                 )
 
-                for field, value in social_media_data.items():
-                    CampaignSocialMediaFieldValue.objects.create(
-                        entry=entry,
-                        field=field,
-                        value=value
-                    )
+                if social_media_data and social_entry_form.is_valid():
+                    entry = social_entry_form.save()
 
-        # Success message and redirect
-        fancy_message(request, "New campaign successfully created", level="success")
+                    for field, value in social_media_data.items():
+                        field_value_form = CampaignSocialMediaFieldValueForm(
+                            data={
+                                "entry": entry.id,
+                                "field": field.id,
+                                "value": value,
+                            }
+                        )
+                        if field_value_form.is_valid():
+                            field_value_form.save()
 
-        # Payment handling
-        if request.POST.get("payment_method") == "pay":
-            return redirect(f"/checkout/payment/{campaign_obj.id}/")
+            # Success message and redirect
+            fancy_message(request, "New campaign successfully created", level="success")
 
-        return redirect("campaign:dashboard")
+            # Payment handling
+            if request.POST.get("payment_method") == "pay":
+                return redirect(f"/checkout/payment/{campaign_obj.id}/")
+
+            return redirect("campaign:dashboard")
+        except Exception as e:
+            logger.exception(f"Unexpected error during campaign creation: {e}")
+            fancy_message(
+                request,
+                "An error occurred during processing of campaign creation, please try later",
+                level="error"
+            )
+            return redirect("campaign:campaignList")
 
     # Initialize the forms with existing data
     form1 = CampaignForm(initial=campaign_data)
     form2 = CampaignSMSForm(initial=campaign_sms_data)
     form3 = CampaignEmailForm(initial=campaign_email_data)
     form4 = CampaignAudioForm(initial=request.POST, files=request.FILES)
+    frequency_choices = CampaignSocialMediaEntry.FrequencyChoices.choices
 
     # Additional context for the template
     zips = CampaignZip.objects.filter(is_active=True)
@@ -338,6 +387,7 @@ def CampaignCreate(request, *args, **kwargs):
         "zips": zips,
         "templates": email_templates,
         "socials": socials,
+        "frequency_choices": frequency_choices,
     }
 
     return render(request, "dashboard/create_campaign.html", context)

@@ -1,7 +1,9 @@
 from rest_framework import serializers
 
-from .models import Campaign, CampaignZip, CampaignSMS, CampaignEmail, CampaignAudio, \
-    CampaignEmailTemplate, CampaignSocialMediaEntry, CampaignSocialMediaFieldValue
+from .models import (
+    Campaign, CampaignZip, CampaignSMS, CampaignEmail, CampaignAudio,
+    CampaignEmailTemplate, CampaignSocialMediaEntry, CampaignSocialMediaFieldValue,
+)
 
 
 class CampaignEmailTemplateSerializer(serializers.ModelSerializer):
@@ -53,7 +55,7 @@ class SocialMediaEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CampaignSocialMediaEntry
-        fields = ["name", "entry_fields"]
+        fields = ["name", "post_frequency", "post_time", "entry_fields",]
 
     def get_entry_fields(self, obj):
         queryset = CampaignSocialMediaFieldValue.objects.filter(entry_id=obj.pk)

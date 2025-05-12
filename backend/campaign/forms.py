@@ -1,8 +1,31 @@
 from django import forms
-from .models import Campaign, CampaignType, CampaignSMS, CampaignSMSType, CampaignEmailType, CampaignEmail, \
-    CampaignAudio
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.widgets import CKEditor5Widget
+
+from .models import (
+    Campaign,
+    CampaignType,
+    CampaignSMS,
+    CampaignSMSType,
+    CampaignEmailType,
+    CampaignEmail,
+    CampaignAudio,
+    CampaignSocialMediaEntry,
+    CampaignSocialMediaFieldValue
+)
+
+
+class CampaignSocialMediaEntryForm(forms.ModelForm):
+    class Meta:
+        model = CampaignSocialMediaEntry
+        fields = '__all__'
+
+
+class CampaignSocialMediaFieldValueForm(forms.ModelForm):
+    class Meta:
+        model = CampaignSocialMediaFieldValue
+        fields = '__all__'
+
 
 class CampaignDisapproveForm(forms.ModelForm):
     note = forms.CharField(

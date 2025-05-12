@@ -11,7 +11,7 @@ class SocialMediaFieldsInline(admin.TabularInline):
     model = SocialMediaFields
     extra = 0
     fieldsets = (
-        (None, {'fields': ('social_media', 'name','object_name', 'is_active')}),
+        (None, {'fields': ('social_media', 'name','object_name','is_optional' ,'is_active')}),
     )
 
 

@@ -378,13 +378,42 @@
                                                             id="id_{{ social.object_name }}_{{ field.object_name }}"
                                                             name="{{ social.object_name }}_{{ field.object_name }}"
                                                             class="form-control"
-                                                            required
+                                                            {% if not field.is_optional %}required{% endif %}
                                                     >
                                                 </div>
                                             {% endfor %}
                                         {% else %}
                                             <p>No fields available.</p>
                                         {% endif %}
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <div class="mb-3 w-100">
+                                                <label class="form-label"
+                                                       for="id_{{ social.object_name }}_post_frequency">
+                                                    Post Frequency
+                                                </label>
+                                                <select
+                                                        id="id_{{ social.object_name }}_post_frequency"
+                                                        name="{{ social.object_name }}_post_frequency"
+                                                        class="form-control"
+                                                >
+                                                    {% for value, label in frequency_choices %}
+                                                        <option value="{{ value }}">{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 w-100">
+                                                <label class="form-label"
+                                                       for="id_{{ social.object_name }}_post_time">
+                                                    Post Time
+                                                </label>
+                                                <input
+                                                        type="time"
+                                                        id="id_{{ social.object_name }}_post_time"
+                                                        name="{{ social.object_name }}_post_time"
+                                                        class="form-control"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 {% empty %}

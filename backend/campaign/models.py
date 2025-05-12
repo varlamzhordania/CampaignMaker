@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import time
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -508,6 +509,10 @@ class SocialMediaFields(BaseModel):
             "format: required, max-255 character, this name will be used to when sending the data, example: 'username':''}"
         )
     )
+    is_optional = models.BooleanField(
+        default=False,
+        verbose_name=_("Optional"),
+    )
 
     class Meta:
         verbose_name = _("Social Media Fields")
@@ -548,6 +553,12 @@ class SocialMediaAccounts(BaseModel):
 
 
 class CampaignSocialMediaEntry(BaseModel):
+    class FrequencyChoices(models.TextChoices):
+        DAILY = "daily", _("Daily")
+        TWO_DAY = "2_day", _("2-Day")
+        THREE_DAY = "3_day", _("3-Day")
+        WEEKLY = "weekly", _("Weekly")
+
     campaign = models.ForeignKey(
         Campaign,
         verbose_name=_("Campaign"),
@@ -565,6 +576,23 @@ class CampaignSocialMediaEntry(BaseModel):
         blank=False,
         null=False,
     )
+    post_frequency = models.CharField(
+        max_length=20,
+        verbose_name=_("Post Frequency"),
+        choices=FrequencyChoices.choices,
+        default=FrequencyChoices.DAILY,
+        blank=True,
+        null=True,
+        help_text=_("Frequency of social media posting")
+    )
+    post_time = models.TimeField(
+        verbose_name=_("Post Time"),
+        default=time(21, 0),  # 9:00 PM
+        blank=True,
+        null=True,
+        help_text=_("Post time of social media posting")
+    )
+
     is_active = None
 
     class Meta:
