@@ -73,7 +73,8 @@ class CampaignAdmin(NestedModelAdmin, admin.ModelAdmin):
 
 @admin.register(CampaignZip)
 class CampaignZipAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'code', 'timezone_offset', 'is_active', 'created_at',
+    list_display = ['id', 'name', 'code', 'timezone_name', 'timezone_offset', 'is_active',
+                    'created_at',
                     'updated_at']
     list_filter = ['is_active', 'created_at', 'updated_at']
     search_fields = ['name', 'code']

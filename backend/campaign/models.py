@@ -145,7 +145,14 @@ class CampaignZip(BaseModel):
         max_length=6,
         verbose_name=_("Timezone Offset"),
         default="UTC",
-        help_text=_("Timezone offset for the zip code (e.g. +02:00, UTC, etc.)")
+        help_text=_("Timezone offset for the zip code (e.g. -05:00, +02:00, etc.)")
+    )
+
+    timezone_name = models.CharField(
+        max_length=63,
+        verbose_name=_("Timezone Name"),
+        default="UTC",
+        help_text=_("Full name of the timezone (e.g. 'America/New_York', 'Europe/London')")
     )
 
     class Meta:

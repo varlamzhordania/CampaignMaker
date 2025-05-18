@@ -15,7 +15,7 @@ class CampaignEmailTemplateSerializer(serializers.ModelSerializer):
 class CampaignZipSerializer(serializers.ModelSerializer):
     class Meta:
         model = CampaignZip
-        fields = ['id', 'name', 'slug', 'code', 'timezone_offset']
+        fields = ['id', 'name', 'slug', 'code', 'timezone_name', 'timezone_offset']
 
 
 class CampaignSMSSerializer(serializers.ModelSerializer):
