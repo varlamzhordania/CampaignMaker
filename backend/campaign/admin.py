@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import CampaignZip, CampaignAudio, CampaignSMS, CampaignType, CampaignSMSType, \
-    Campaign, CampaignEmail, \
-    CampaignEmailType, CampaignEmailTemplate, SocialMedia, SocialMediaFields, \
-    CampaignSocialMediaEntry, CampaignSocialMediaFieldValue, SocialMediaAccounts
+from .models import (
+    CampaignZip, CampaignAudio, CampaignSMS, CampaignType, CampaignSMSType,
+    Campaign, CampaignEmail,
+    CampaignEmailType, CampaignEmailTemplate, SocialMedia, SocialMediaFields,
+    CampaignSocialMediaEntry, CampaignSocialMediaFieldValue, SocialMediaAccounts,
+)
 
 from nested_admin import NestedStackedInline, NestedModelAdmin
 
@@ -11,7 +13,7 @@ class SocialMediaFieldsInline(admin.TabularInline):
     model = SocialMediaFields
     extra = 0
     fieldsets = (
-        (None, {'fields': ('social_media', 'name','object_name','is_optional' ,'is_active')}),
+        (None, {'fields': ('social_media', 'name', 'object_name', 'is_optional', 'is_active')}),
     )
 
 
@@ -31,7 +33,7 @@ class SocialMediaAdmin(admin.ModelAdmin):
     inlines = [SocialMediaFieldsInline, SocialMediaAccountsInline]
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        (None, {'fields': ('name', 'object_name', 'is_active','created_at', 'updated_at')}),
+        (None, {'fields': ('name', 'object_name', 'is_active', 'created_at', 'updated_at')}),
         ('Guide', {'fields': ('tutorial_video', 'manual_guide',)}),
     )
 
@@ -71,7 +73,8 @@ class CampaignAdmin(NestedModelAdmin, admin.ModelAdmin):
 
 @admin.register(CampaignZip)
 class CampaignZipAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'code', 'is_active', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'code', 'timezone_offset', 'is_active', 'created_at',
+                    'updated_at']
     list_filter = ['is_active', 'created_at', 'updated_at']
     search_fields = ['name', 'code']
     readonly_fields = ['created_at', 'updated_at']

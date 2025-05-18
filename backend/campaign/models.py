@@ -141,6 +141,12 @@ class CampaignZip(BaseModel):
         unique=False,
         help_text=_("format: required, max-16")
     )
+    timezone_offset = models.CharField(
+        max_length=6,
+        verbose_name=_("Timezone Offset"),
+        default="UTC",
+        help_text=_("Timezone offset for the zip code (e.g. +02:00, UTC, etc.)")
+    )
 
     class Meta:
         verbose_name = _("Campaign Zip")

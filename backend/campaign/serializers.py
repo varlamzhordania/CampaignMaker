@@ -15,7 +15,7 @@ class CampaignEmailTemplateSerializer(serializers.ModelSerializer):
 class CampaignZipSerializer(serializers.ModelSerializer):
     class Meta:
         model = CampaignZip
-        fields = ['id', 'name', 'slug', 'code']
+        fields = ['id', 'name', 'slug', 'code', 'timezone_offset']
 
 
 class CampaignSMSSerializer(serializers.ModelSerializer):
@@ -55,7 +55,7 @@ class SocialMediaEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CampaignSocialMediaEntry
-        fields = ["name", "post_frequency", "post_time", "entry_fields",]
+        fields = ["name", "post_frequency", "post_time", "entry_fields", ]
 
     def get_entry_fields(self, obj):
         queryset = CampaignSocialMediaFieldValue.objects.filter(entry_id=obj.pk)
