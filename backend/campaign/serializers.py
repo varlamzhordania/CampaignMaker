@@ -66,6 +66,7 @@ class SocialMediaUploadFileSerializer(serializers.ModelSerializer):
 class SocialMediaEntrySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     entry_fields = serializers.SerializerMethodField()
+    entry_uploads = serializers.SerializerMethodField()
 
     class Meta:
         model = CampaignSocialMediaEntry
