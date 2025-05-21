@@ -13,8 +13,10 @@ from autoslug import AutoSlugField
 from main.models import Settings
 from core.models import BaseModel, UploadPath
 
-from .validators import validate_file_size, validate_file_extension, validate_file_duration, \
-    validate_template_format
+from .validators import (
+    validate_file_duration,
+    FileSizeValidator,
+)
 
 
 class CampaignEmailTemplate(BaseModel):
@@ -30,7 +32,7 @@ class CampaignEmailTemplate(BaseModel):
         upload_to=UploadPath("templates", "email"),
         blank=False,
         null=False,
-        validators=[validate_template_format],
+        validators=[FileExtensionValidator(allowed_extensions=["html", "htm"])],
         verbose_name=_("Template"),
         help_text=_("format: only .html .htm are allowed"),
     )
@@ -428,8 +430,8 @@ class CampaignAudio(BaseModel):
         verbose_name=_("File"),
         help_text=_("format: Only .mp3, .m4a and .wav files are allowed."),
         validators=[
-            validate_file_extension,
-            validate_file_size,
+            FileExtensionValidator(allowed_extensions=['mp3', 'm4a', 'wav']),
+            FileSizeValidator(max_size_mb=20),
             validate_file_duration,
         ],
         blank=True,
@@ -530,6 +532,46 @@ class SocialMediaFields(BaseModel):
     class Meta:
         verbose_name = _("Social Media Fields")
         verbose_name_plural = _("Social Media Fields")
+        ordering = ("social_media", "name",)
+        unique_together = ("social_media", "name", "object_name")
+
+    def __str__(self):
+        return f"{self.social_media.name} : {self.name}"
+
+
+class SocialMediaUploads(BaseModel):
+    social_media = models.ForeignKey(
+        SocialMedia,
+        verbose_name=_("Social Media"),
+        related_name="social_media_uploads",
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Field Name"),
+        blank=False,
+        null=False,
+        help_text=_("format: required, max-255 character, example: username, password...etc")
+    )
+    object_name = models.CharField(
+        max_length=255,
+        verbose_name=_("Object Name"),
+        blank=False,
+        null=False,
+        help_text=_(
+            "format: required, max-255 character, this name will be used to when sending the data, example: 'logo':''}"
+        )
+    )
+    is_optional = models.BooleanField(
+        default=False,
+        verbose_name=_("Optional"),
+    )
+
+    class Meta:
+        verbose_name = _("Social Media Upload")
+        verbose_name_plural = _("Social Media Uploads")
         ordering = ("social_media", "name",)
         unique_together = ("social_media", "name", "object_name")
 
@@ -643,3 +685,37 @@ class CampaignSocialMediaFieldValue(BaseModel):
 
     def __str__(self):
         return f"{self.entry} - {self.field.name}: {self.value}"
+
+
+class CampaignSocialMediaUploadFile(BaseModel):
+    entry = models.ForeignKey(
+        CampaignSocialMediaEntry,
+        verbose_name=_("Entry"),
+        related_name="upload_files",
+        on_delete=models.CASCADE
+    )
+    upload = models.ForeignKey(
+        SocialMediaUploads,
+        verbose_name=_("Field"),
+        related_name="entry_uploads_files",
+        on_delete=models.CASCADE
+    )
+    file = models.FileField(
+        verbose_name=_("Value"),
+        upload_to=UploadPath("uploads", "socials"),
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=["jpeg", "jpg", "png", "mp4", "mov", "avi", "webm"]
+            ),
+            FileSizeValidator(max_size_mb=5),
+        ],
+    )
+    is_active = None
+
+    class Meta:
+        verbose_name = _("Social Media Upload File")
+        verbose_name_plural = _("Social Media Upload Files")
+        unique_together = ('entry', 'upload')
+
+    def __str__(self):
+        return f"{self.entry} - {self.upload.name}: {self.file.url}"

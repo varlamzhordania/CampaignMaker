@@ -1,8 +1,18 @@
 from rest_framework import serializers
-from account.models import Industry, IndustryQuestion, UserIndustryAnswer, User, \
-    UserBusinessProfile, \
-    BusinessAudience
-from campaign.models import CampaignEmailTemplate, CampaignAudio
+from account.models import (
+    Industry,
+    IndustryQuestion,
+    UserIndustryAnswer,
+    User,
+    UserBusinessProfile,
+    BusinessAudience,
+)
+from campaign.models import CampaignEmailTemplate, CampaignAudio, CampaignSocialMediaUploadFile
+
+class CampaignSocialUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CampaignSocialMediaUploadFile
+        fields = '__all__'
 
 
 class CampaignAudioSerializer(serializers.ModelSerializer):

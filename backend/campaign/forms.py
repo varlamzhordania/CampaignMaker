@@ -11,7 +11,8 @@ from .models import (
     CampaignEmail,
     CampaignAudio,
     CampaignSocialMediaEntry,
-    CampaignSocialMediaFieldValue
+    CampaignSocialMediaFieldValue,
+    CampaignSocialMediaUploadFile,
 )
 
 
@@ -24,6 +25,12 @@ class CampaignSocialMediaEntryForm(forms.ModelForm):
 class CampaignSocialMediaFieldValueForm(forms.ModelForm):
     class Meta:
         model = CampaignSocialMediaFieldValue
+        fields = '__all__'
+
+
+class CampaignSocialMediaUploadFileForm(forms.ModelForm):
+    class Meta:
+        model = CampaignSocialMediaUploadFile
         fields = '__all__'
 
 

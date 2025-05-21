@@ -385,6 +385,24 @@
                                         {% else %}
                                             <p>No fields available.</p>
                                         {% endif %}
+                                        {% if social.social_media_uploads.all %}
+                                            {% for field in social.social_media_uploads.all %}
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="id_uploads_{{ social.object_name }}_{{ field.object_name }}">{{ field.name }}</label>
+                                                    <input
+                                                            type="file"
+                                                            id="id_uploads_{{ social.object_name }}_{{ field.object_name }}"
+                                                            name="uploads_{{ social.object_name }}_{{ field.object_name }}"
+                                                            class="form-control"
+                                                            {% if not field.is_optional %}required{% endif %}
+                                                            accept=".jpeg,.jpg,.png,.mp4,.mov,.avi,.webm,image/*,video/*"
+                                                    >
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No upload fields available.</p>
+                                        {% endif %}
                                         <div class="d-flex justify-content-center align-items-center gap-2">
                                             <div class="mb-3 w-100">
                                                 <label class="form-label"

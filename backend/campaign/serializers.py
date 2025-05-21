@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import (
     Campaign, CampaignZip, CampaignSMS, CampaignEmail, CampaignAudio,
     CampaignEmailTemplate, CampaignSocialMediaEntry, CampaignSocialMediaFieldValue,
+    CampaignSocialMediaUploadFile,
 )
 
 
@@ -49,18 +50,36 @@ class SocialMediaFieldValueSerializer(serializers.ModelSerializer):
         return None
 
 
+class SocialMediaUploadFileSerializer(serializers.ModelSerializer):
+    key = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CampaignSocialMediaUploadFile
+        fields = ['id','key']
+
+    def get_key(self, obj):
+        if obj.upload:
+            return obj.upload.object_name
+        return None
+
+
 class SocialMediaEntrySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     entry_fields = serializers.SerializerMethodField()
 
     class Meta:
         model = CampaignSocialMediaEntry
-        fields = ["name", "post_frequency", "post_time", "entry_fields", ]
+        fields = ["name", "post_frequency", "post_time", "entry_fields", "entry_uploads"]
 
     def get_entry_fields(self, obj):
         queryset = CampaignSocialMediaFieldValue.objects.filter(entry_id=obj.pk)
 
         return SocialMediaFieldValueSerializer(queryset, many=True).data
+
+    def get_entry_uploads(self, obj):
+        queryset = CampaignSocialMediaUploadFile.objects.filter(entry_id=obj.pk)
+
+        return SocialMediaUploadFileSerializer(queryset, many=True).data
 
     def get_name(self, obj):
         return obj.social_media.object_name

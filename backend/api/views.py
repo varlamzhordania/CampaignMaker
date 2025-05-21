@@ -7,13 +7,17 @@ from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db import transaction
 
-from account.models import Industry, IndustryQuestion, UserBusinessProfile, BusinessAudience, \
-    UserIndustryAnswer
-from campaign.models import CampaignEmailTemplate, CampaignAudio
+from account.models import (
+    Industry, IndustryQuestion, UserBusinessProfile, BusinessAudience,
+    UserIndustryAnswer,
+)
+from campaign.models import CampaignEmailTemplate, CampaignAudio, CampaignSocialMediaUploadFile
 
-from .serializers import IndustrySerializer, IndustryQuestionSerializer, \
-    UserBusinessProfileSerializer, BusinessAudienceSerializer, CampaignEmailTemplateSerializer, \
-    CampaignAudioSerializer, UserBusinessFullProfileSerializer
+from .serializers import (
+    IndustrySerializer, IndustryQuestionSerializer,
+    UserBusinessProfileSerializer, BusinessAudienceSerializer, CampaignEmailTemplateSerializer,
+    CampaignAudioSerializer, UserBusinessFullProfileSerializer, CampaignSocialUploadSerializer,
+)
 
 
 class IndustryListAPIView(ListAPIView):
@@ -106,6 +110,12 @@ class CampaignAudioRetrieveView(RetrieveAPIView):
     permission_classes = [IsAdminUser]
     queryset = CampaignAudio.objects.all()
     serializer_class = CampaignAudioSerializer
+
+
+class CampaignSocialUploadRetrieveView(RetrieveAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = CampaignSocialMediaUploadFile.objects.all()
+    serializer_class = CampaignSocialUploadSerializer
 
 
 class UserBusinessFullProfileAPIView(APIView):

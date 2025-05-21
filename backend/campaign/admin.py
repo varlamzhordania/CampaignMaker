@@ -4,6 +4,7 @@ from .models import (
     Campaign, CampaignEmail,
     CampaignEmailType, CampaignEmailTemplate, SocialMedia, SocialMediaFields,
     CampaignSocialMediaEntry, CampaignSocialMediaFieldValue, SocialMediaAccounts,
+    SocialMediaUploads, CampaignSocialMediaUploadFile,
 )
 
 from nested_admin import NestedStackedInline, NestedModelAdmin
@@ -11,6 +12,14 @@ from nested_admin import NestedStackedInline, NestedModelAdmin
 
 class SocialMediaFieldsInline(admin.TabularInline):
     model = SocialMediaFields
+    extra = 0
+    fieldsets = (
+        (None, {'fields': ('social_media', 'name', 'object_name', 'is_optional', 'is_active')}),
+    )
+
+
+class SocialMediaUploadsInline(admin.TabularInline):
+    model = SocialMediaUploads
     extra = 0
     fieldsets = (
         (None, {'fields': ('social_media', 'name', 'object_name', 'is_optional', 'is_active')}),
@@ -30,7 +39,7 @@ class SocialMediaAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'slug', 'object_name', 'is_active', 'created_at', 'updated_at']
     list_filter = ['is_active', 'created_at', 'updated_at']
     search_fields = ['name', 'slug', 'object_name']
-    inlines = [SocialMediaFieldsInline, SocialMediaAccountsInline]
+    inlines = [SocialMediaFieldsInline, SocialMediaUploadsInline, SocialMediaAccountsInline]
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
         (None, {'fields': ('name', 'object_name', 'is_active', 'created_at', 'updated_at')}),
@@ -43,9 +52,14 @@ class CampaignSocialMediaFieldValueInline(NestedStackedInline):
     extra = 0
 
 
+class CampaignSocialMediaUploadFileInline(NestedStackedInline):
+    model = CampaignSocialMediaUploadFile
+    extra = 0
+
+
 class CampaignSocialMediaEntryStackedInline(NestedStackedInline):
     model = CampaignSocialMediaEntry
-    inlines = [CampaignSocialMediaFieldValueInline]
+    inlines = [CampaignSocialMediaFieldValueInline, CampaignSocialMediaUploadFileInline]
     extra = 0
 
 

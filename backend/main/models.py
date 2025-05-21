@@ -4,8 +4,7 @@ import os
 from decimal import Decimal
 
 from django.db import models
-from django.utils import timezone
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django_ckeditor_5.fields import CKEditor5Field
@@ -91,7 +90,7 @@ class Components(BaseModel):
         upload_to=UploadPath("components", "template"),
         blank=False,
         null=False,
-        validators=[validate_template_format],
+        validators=[FileExtensionValidator(allowed_extensions=["html", "htm"])],
         verbose_name=_("Template"),
         help_text=_("format: only .html .htm are allowed"),
     )

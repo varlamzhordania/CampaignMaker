@@ -18,7 +18,7 @@ from .forms import (
     CampaignEmailForm,
     CampaignAudioForm,
     CampaignSocialMediaEntryForm,
-    CampaignSocialMediaFieldValueForm,
+    CampaignSocialMediaFieldValueForm, CampaignSocialMediaUploadFileForm,
 )
 
 from .models import (
@@ -33,8 +33,6 @@ from .models import (
     SocialMedia,
     CampaignSocialMediaEntry,
 )
-
-
 
 logger = logging.getLogger(__name__)
 
@@ -323,6 +321,13 @@ def CampaignCreate(request, *args, **kwargs):
                     for field in social.social_media_fields.all()
                     if request.POST.get(f"{social.object_name}_{field.object_name}")
                 }
+                social_media_upload_data = {
+                    field: request.FILES.get(f"uploads_{social.object_name}_{field.object_name}")
+                    for field in social.social_media_uploads.all()
+                    if request.FILES.get(f"uploads_{social.object_name}_{field.object_name}")
+                }
+
+                print(social_media_upload_data)
 
                 social_entry_form = CampaignSocialMediaEntryForm(
                     data={
@@ -336,8 +341,10 @@ def CampaignCreate(request, *args, **kwargs):
                     }
                 )
 
-                if social_media_data and social_entry_form.is_valid():
+                if (social_media_data or social_media_upload_data) and social_entry_form.is_valid():
                     entry = social_entry_form.save()
+
+                    invalid = False
 
                     for field, value in social_media_data.items():
                         field_value_form = CampaignSocialMediaFieldValueForm(
@@ -349,6 +356,27 @@ def CampaignCreate(request, *args, **kwargs):
                         )
                         if field_value_form.is_valid():
                             field_value_form.save()
+                        else:
+                            invalid = True
+                            fancy_message(request, field_value_form.errors, level="error")
+
+                    for field, value in social_media_upload_data.items():
+                        field_value_form = CampaignSocialMediaUploadFileForm(
+                            data={
+                                "entry": entry.id,
+                                "upload": field.id,
+                            },
+                            files={"file": value}
+                        )
+                        if field_value_form.is_valid():
+                            field_value_form.save()
+                        else:
+                            invalid = True
+                            fancy_message(request, field_value_form.errors, level="error")
+
+                    if invalid:
+                        raise Exception("Invalid social media field value or file upload.")
+
 
             # Success message and redirect
             fancy_message(request, "New campaign successfully created", level="success")
