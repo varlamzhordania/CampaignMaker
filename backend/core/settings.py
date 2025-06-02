@@ -135,12 +135,35 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+if env.bool("MEDIA_USE_SFTP", False):
+    MEDIA_ROOT = env.str("MEDIA_ROOT", "/media")
+    MEDIA_URL = env.str("MEDIA_URL", "/media/")
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.sftpstorage.SFTPStorage",
+            "OPTIONS": {
+                "host": env.str("SFTP_HOST", "localhost"),
+                "root_path": MEDIA_ROOT,
+                "params": {
+                    "username": env.str("SFTP_USERNAME", "user"),
+                    "password": env.str("SFTP_PASSWORD", "password"),
+                    "port": env.int("SFTP_PORT", 22),
+                }
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    STATICFILES_STORAGE = "staticfiles"
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "uploads/"

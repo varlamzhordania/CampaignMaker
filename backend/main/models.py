@@ -12,7 +12,7 @@ from django.urls import reverse
 from autoslug import AutoSlugField
 from mptt.models import TreeForeignKey, MPTTModel
 
-from campaign.validators import video_validator, validate_template_format, ticket_safe_extensions
+from campaign.validators import video_validator, ticket_safe_extensions
 from core.models import BaseModel, UploadPath
 
 
