@@ -6,9 +6,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 
-ENV_FILE_PATH = BASE_DIR.parent / "development.env"
+development_env_path = BASE_DIR / "development.env"
+docker_env_path = BASE_DIR.parent / "docker.env"
 
-environ.Env.read_env(env_file=ENV_FILE_PATH)
+env_file_path = development_env_path if development_env_path.exists() else docker_env_path
+
+environ.Env.read_env(env_file=env_file_path)
 
 SECRET_KEY = env('DJANGO_SECRET_KEY', default="dsadsaldadsaskdladkalsdkdald")
 
