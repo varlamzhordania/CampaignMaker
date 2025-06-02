@@ -49,8 +49,8 @@ services:
     image: postgres:latest
     container_name: postgres
     restart: always
-    ports:
-      - '5432:5432'
+#    ports:
+#      - '5432:5432'
     env_file:
       - ./docker.env
     environment:
@@ -63,16 +63,16 @@ services:
     container_name: redis
     restart: always
     image: redis
-    ports:
-      - '6379:6379'
+#    ports:
+#      - '6379:6379'
 #    volumes:
 #      - ./redis.conf:/usr/local/etc/redis/redis.conf
 #    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
   memcached:
     image: memcached
     container_name: memcached
-    ports:
-      - "11211:11211"
+#    ports:
+#      - "11211:11211"
     restart: always
 
 
